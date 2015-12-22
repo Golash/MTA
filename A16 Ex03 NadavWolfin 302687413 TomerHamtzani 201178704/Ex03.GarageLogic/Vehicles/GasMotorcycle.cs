@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.GarageLogic
+namespace Ex03.GarageLogic.Vehicles
 {
-    internal class ElectricMotorcycle : Motorcycle
+    internal class GasMotorcycle : Motorcycle
     {
-        public ElectricMotorcycle(string i_LicenseNumber, string i_ModelName, float i_MaxBatteryTime)
+        public GasMotorcycle(string i_LicenseNumber, string i_ModelName, float i_MaxGasAmount)
             : base(i_LicenseNumber, i_ModelName)
         {
-            m_Engine = new ElectricEngine(i_MaxBatteryTime);
+            m_Engine = new GasEngine(i_MaxGasAmount);
         }
 
         public override string VehicleDetails()
@@ -19,11 +19,11 @@ namespace Ex03.GarageLogic
             return base.VehicleDetails();
         }
 
-        public ElectricEngine Engine
+        public GasEngine Engine
         {
             get
             {
-                return (ElectricEngine)m_Engine;
+                return (GasEngine)m_Engine;
             }
             set
             {

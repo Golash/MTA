@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.GarageLogic
+namespace Ex03.GarageLogic.Vehicles
 {
-    internal class ElectricCar : Car
+    internal class ElectricMotorcycle : Motorcycle
     {
-        public ElectricCar(string i_LicenseNumber, string i_ModelName, float i_MaxBatteryTime) 
+        public ElectricMotorcycle(string i_LicenseNumber, string i_ModelName, float i_MaxBatteryTime)
             : base(i_LicenseNumber, i_ModelName)
         {
             m_Engine = new ElectricEngine(i_MaxBatteryTime);
@@ -30,6 +30,5 @@ namespace Ex03.GarageLogic
                 m_Engine = value;
             }
         }
-
     }
 }

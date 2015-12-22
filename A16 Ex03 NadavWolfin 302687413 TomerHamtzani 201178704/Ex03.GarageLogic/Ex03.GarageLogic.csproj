@@ -40,25 +40,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Car.cs" />
+    <Compile Include="Vehicles\Car.cs" />
     <Compile Include="eColor.cs" />
     <Compile Include="eDoors.cs" />
     <Compile Include="eGasType.cs" />
-    <Compile Include="ElectricCar.cs" />
+    <Compile Include="Vehicles\ElectricCar.cs" />
     <Compile Include="ElectricEngine.cs" />
-    <Compile Include="ElectricMotorcycle.cs" />
+    <Compile Include="Vehicles\ElectricMotorcycle.cs" />
     <Compile Include="eLicenceType.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="eVehicleStatus.cs" />
-    <Compile Include="Factory.cs" />
+    <Compile Include="Factory\CarFactory.cs" />
     <Compile Include="GarageManager.cs" />
     <Compile Include="GasEngine.cs" />
-    <Compile Include="Motorcycle.cs" />
-    <Compile Include="RegularCar.cs" />
-    <Compile Include="RegularMotorcycle.cs" />
-    <Compile Include="Truck.cs" />
-    <Compile Include="ValueOutOfRangeException.cs" />
-    <Compile Include="Vehicle.cs" />
+    <Compile Include="Vehicles\Motorcycle.cs" />
+    <Compile Include="Vehicles\GasCar.cs" />
+    <Compile Include="Vehicles\GasMotorcycle.cs" />
+    <Compile Include="Vehicles\Truck.cs" />
+    <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
+    <Compile Include="Vehicles\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VehicleInGarage.cs" />
     <Compile Include="VehicleOwnerDetails.cs" />
