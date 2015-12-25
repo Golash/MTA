@@ -13,12 +13,22 @@ namespace Ex03.ConsoleUI
     {
         static void Main()
         {
-            m_GarageManager = new GarageManager();
-            UserOperation[] operations = loadUserOperations();
-            Menu mainMenu = GetMainMenu(operations);
-            int operationNumber = mainMenu.ReadUserSelectedNumber();
-            operations[operationNumber].Execute();
-
+            bool userRequestToExit = false;
+            while (!userRequestToExit)
+            {
+                m_GarageManager = new GarageManager();
+                UserOperation[] operations = loadUserOperations();
+                Menu mainMenu = GetMainMenu(operations);
+                int operationNumber = mainMenu.ReadUserSelectedNumber();
+                if (operations[operationNumber] is ExitOperation)
+                {
+                    userRequestToExit = true;
+                }
+                else
+                {
+                    operations[operationNumber].Execute();
+                }
+            }
 
             Console.WriteLine("Press Enter to exit...");
             Console.ReadLine();

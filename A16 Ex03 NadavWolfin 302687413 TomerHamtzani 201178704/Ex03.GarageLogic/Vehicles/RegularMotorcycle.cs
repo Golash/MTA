@@ -9,18 +9,21 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class RegularMotorcycle : Motorcycle
     {
-        public RegularMotorcycle(string i_LicenseNumber)
-            : base(i_LicenseNumber, new GasEngine(k_MaxGasAmount))
+        public RegularMotorcycle(string i_LicenseNumber, string i_ModelName)
+            : base(i_LicenseNumber, i_ModelName, new GasEngine(k_MaxGasAmount, eGasType.Octan96))
         {
         }
-        
-        protected override void fillAdditionalParameters()
+
+
+        public override bool SetField(string fieldName, string fieldValue)
         {
-            base.fillAdditionalParameters();
-            foreach (string field in Engine.AdditionalParameters.Keys)
+            switch (fieldName)
             {
-                m_AdditionalParameters.Add(field, Engine.AdditionalParameters[field]);
+                default:
+                    throw new VehicleParameterNotExistsException(fieldName);
             }
+
+            return true;
         }
 
         public void FillGas(eGasType i_GasType, float i_LittersToAdd)
@@ -36,7 +39,6 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        // TODO why 6?
         private const int k_MaxGasAmount = 6;
     }
 }

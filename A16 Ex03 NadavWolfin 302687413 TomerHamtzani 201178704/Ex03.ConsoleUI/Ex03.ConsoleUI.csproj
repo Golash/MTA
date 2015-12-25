@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Menu.cs" />
     <Compile Include="Operations\AddNewVehicleOperation.cs" />
+    <Compile Include="Operations\ExitOperation.cs" />
     <Compile Include="Operations\UserOperation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\VehicleParameterNotExistsException.cs" />
     <Compile Include="GarageOperations\AddNewVehicleGarageOperation.cs" />
     <Compile Include="Helpers\ReflactionHelper.cs" />
+    <Compile Include="Helpers\Validator.cs" />
     <Compile Include="Vehicles\Car.cs" />
     <Compile Include="Enums\eColor.cs" />
     <Compile Include="Enums\eDoors.cs" />

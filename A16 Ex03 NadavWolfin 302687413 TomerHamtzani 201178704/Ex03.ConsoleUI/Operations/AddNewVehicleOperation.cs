@@ -20,9 +20,8 @@ namespace Ex03.ConsoleUI.Operations
 
         public override void Execute()
         {
-            // Get vehicle license number
-            Console.Write("License Number:");
-            string licenseNumber = Console.ReadLine();
+            // Get vehicle license number (insure that the value is not empty)
+            string licenseNumber = readNotEmptyStringValue("License Number");
 
             if (m_GarageManager.IsExists(licenseNumber))
             {
@@ -38,8 +37,7 @@ namespace Ex03.ConsoleUI.Operations
                 string vehicleTypeName = vehicleTypesMenu.ReadUserSelectedValue();
 
                 // Get model name
-                Console.Write("Model Name:");
-                string modelName = Console.ReadLine();
+                string modelName = readNotEmptyStringValue("Model name");
 
                 // Create a defualt vehicle
                 Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, modelName, vehicleTypeName);
@@ -51,8 +49,8 @@ namespace Ex03.ConsoleUI.Operations
                 IDictionary<string,string> fieldToUserMessage = vehicle.GetAdditionalParameters();
                 foreach (string field in fieldToUserMessage.Keys)
                 {
-                    string fieldMessage = fieldToUserMessage[field];
-                    Console.Write("{0}: ", fieldMessage);
+                    string fieldMessage = string.Format("{0}: ", fieldToUserMessage[field]);
+                    Console.Write(fieldMessage);
                     string fieldValue = Console.ReadLine();
                     bool isValidField = false;
                     while(!isValidField)
@@ -66,20 +64,38 @@ namespace Ex03.ConsoleUI.Operations
                             string meesage = string.Format("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
                             Console.WriteLine(meesage);
                             Console.Write(fieldMessage);
-                            Console.ReadLine();
+                            fieldValue = Console.ReadLine();
                         }
                     }
                 }
 
-                Console.WriteLine("Insert vehicle owner details:");
-                Console.Write("Name: ");
-                string vehicleOwnerName = Console.ReadLine();
-                Console.Write("Phone number: ");
-                string vehicleOwnerPhoneNumber = Console.ReadLine();
+                Console.WriteLine(); // Empty line for better visualization
+                Console.WriteLine("Insert vehicle owner details");
+                string vehicleOwnerName = readNotEmptyStringValue("Vehicle Owner Name");
+                string vehicleOwnerPhoneNumber = readNotEmptyStringValue("Vehicle Owner Phone number");
 
                 m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerName, vehicleOwnerPhoneNumber);
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
             }
+
+        }
+
+        private string readNotEmptyStringValue(string userInputMessage)
+        {
+            string value = string.Empty;
+            bool isEmptyValue = true;
+            do
+            {
+                Console.Write(string.Format("{0}: ", userInputMessage));
+                value = Console.ReadLine();
+                isEmptyValue = value == string.Empty;
+                if (isEmptyValue)
+                {
+                    Console.WriteLine("Value can't be empty, please try again");
+                }
+            } while (isEmptyValue);
+
+            return value;
         }
 
             //string[] requiredParameters = newVehicle.GetRequiredParameters();
@@ -94,28 +110,41 @@ namespace Ex03.ConsoleUI.Operations
 
         private void readWheelsDetails(IEnumerable<Wheel> i_Wheels)
         {
+            Console.WriteLine(); // One line space for better visualization
             Console.WriteLine("Please insert the wheels details:");
             int wheelIndex = 1;
             foreach(Wheel wheel in i_Wheels)
             {
-                Console.WriteLine("Insert Details for wheel number: {0}:", wheelIndex);
-                Console.Write("Wheel Manufacturer:");
-                string manufacturerName = Console.ReadLine();
-                Console.Write("Wheel current air pressure:");
-                string currentAirPressureStr = Console.ReadLine();
-                float currentAirPressure;
-                while (!float.TryParse(currentAirPressureStr, out currentAirPressure))
+                Console.WriteLine("Insert details for wheel number {0}:", wheelIndex);
+                IDictionary<string,string> fieldToUserMessage = wheel.GetAdditionalParameters();
+                foreach(string field in fieldToUserMessage.Keys)
                 {
-                    Console.WriteLine("Invalid air pressure, Please try again");
-                    Console.Write("Wheel current air pressure:");
-                    currentAirPressureStr = Console.ReadLine();
+                    string userMessage = string.Format("{0}: ",fieldToUserMessage[field]);
+                    string fieldValue = string.Empty;
+                    bool isValidValue = false;
+                    while (!isValidValue)
+                    {
+                        try
+                        {
+                            Console.Write(userMessage);
+                            fieldValue = Console.ReadLine();
+                            wheel.SetField(field, fieldValue);
+                            isValidValue = true;
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                        }
+                    }
                 }
-
-                wheel.CurrentAirPressure = currentAirPressure;
-                wheel.Manufacturer = manufacturerName;
 
                 wheelIndex++;
             }
+        }
+
+        private bool isValidAirPressure(Wheel i_Wheel, float i_AirPressure)
+        {
+            return 0 <= i_AirPressure && i_AirPressure <= i_Wheel.MaxAirPressure; 
         }
 
         public Menu getSupportedVehicleMenu()

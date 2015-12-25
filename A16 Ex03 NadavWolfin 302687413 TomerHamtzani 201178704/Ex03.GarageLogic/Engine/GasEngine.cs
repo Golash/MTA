@@ -9,10 +9,9 @@ namespace Ex03.GarageLogic
     internal class GasEngine : Engine
     {
 
-        public GasEngine(float i_MaxGasAmount) 
-            : base(i_MaxGasAmount)
+        public GasEngine(float i_MaxGasAmount, eGasType i_GasType): base(i_MaxGasAmount)
         {
-            // TODO - change GasType to const
+            GasType = i_GasType;
         }
 
         protected override void fillAdditionalParameters()
