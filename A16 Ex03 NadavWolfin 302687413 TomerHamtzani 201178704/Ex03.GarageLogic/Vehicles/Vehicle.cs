@@ -9,13 +9,6 @@ namespace Ex03.GarageLogic.Vehicles
 {
     public abstract class Vehicle
     {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
->>>>>>> 8b571e8... Added
->>>>>>> 6e0414f... Added
         public Vehicle(string i_LicenseNumber, Engine i_Engine, int i_WheelsCount, float i_MaxWheelAirPressure)
         {
             m_LicenseNumber = i_LicenseNumber;

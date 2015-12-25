@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic
             }
             private set
             {
-                Validator.IsNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
+                Validator.ValidateNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
                 m_OwnerName = value;
             }
         }
@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
             }
             private set
             {
-                Validator.IsNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
+                Validator.ValidateNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
                 m_OwnerPhone = value;
             }
         }

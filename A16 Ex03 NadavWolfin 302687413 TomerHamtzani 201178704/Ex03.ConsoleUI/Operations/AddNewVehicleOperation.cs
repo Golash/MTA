@@ -45,12 +45,8 @@ namespace Ex03.ConsoleUI.Operations
                 {
                     string fieldMessage = string.Format("{0}: ", fieldToUserMessage[field]);
                     bool isValidField = false;
-<<<<<<< HEAD
                     string fieldValue = string.Empty;
                     while(!isValidField)
-=======
-                    while (!isValidField)
->>>>>>> 8b571e8... Added
                     {
                         try
                         {
@@ -60,7 +56,6 @@ namespace Ex03.ConsoleUI.Operations
                         }
                         catch (ArgumentException)
                         {
-<<<<<<< HEAD
                             Console.WriteLine("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
                         }
                         catch (ValueOutOfRangeException ex)
@@ -70,31 +65,13 @@ namespace Ex03.ConsoleUI.Operations
                         catch (FormatException)
                         {
                             Console.WriteLine("Invalid format value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
-=======
-                            string meesage = string.Format("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
-                            Console.WriteLine(meesage);
-                            Console.Write(fieldMessage);
-                            fieldValue = Console.ReadLine();
->>>>>>> 8b571e8... Added
                         }
                     }
                 }
 
-<<<<<<< HEAD
                 VehicleOwnerDetails vehicleOwnerDetails = readVehicleOwnerDetails();
                   
                 m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerDetails);
-=======
-                // read wheels details from the user
-                readWheelsDetails(vehicle.Wheels);
-
-                Console.WriteLine(); // Empty line for better visualization
-                Console.WriteLine("Insert vehicle owner details");
-                string vehicleOwnerName = readNotEmptyStringValue("Vehicle Owner Name");
-                string vehicleOwnerPhoneNumber = readNotEmptyStringValue("Vehicle Owner Phone number");
-
-                m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerName, vehicleOwnerPhoneNumber);
->>>>>>> 8b571e8... Added
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
             }
 
