@@ -1,4 +1,5 @@
 ﻿using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,22 +55,14 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetColor(string fieldValue)
         {
-            eColor color;
-            if (!Enum.TryParse<eColor>(fieldValue, out color))
-            {
-                string colorOptions = string.Join(",", Enum.GetNames(typeof(eColor)));
-                string errorMessage = string.Format("Color value: '{0}' is invalid, optional colors are: {1}", fieldValue, colorOptions);
-                throw new ArgumentException(errorMessage, "Color");
-            }
-
-            Color = color;
+            Color = EnumHelper.ParseByName<eColor>(fieldValue);
         }
 
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();
-            m_AdditionalParameters.Add("Color", "Please insert the car color");
-            m_AdditionalParameters.Add("DoorsNumber", "Please insert the doors number");
+            m_AdditionalParameters.Add(k_ColorFieldName, "Please insert the car color");
+            m_AdditionalParameters.Add(k_DoorsFieldName, "Please insert the doors number");
         }
 
         
@@ -98,6 +91,8 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
+        private const string k_DoorsFieldName = "DoorsNumber";
+        private const string k_ColorFieldName = "Color";
         private eDoors m_Doors;
         private eColor m_Color;
         private const int k_WheelsCount = 4;

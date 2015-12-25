@@ -14,9 +14,9 @@ namespace Ex03.ConsoleUI
         static void Main()
         {
             bool userRequestToExit = false;
+            m_GarageManager = new GarageManager();
             while (!userRequestToExit)
             {
-                m_GarageManager = new GarageManager();
                 UserOperation[] operations = loadUserOperations();
                 Menu mainMenu = GetMainMenu(operations);
                 int operationNumber = mainMenu.ReadUserSelectedNumber();

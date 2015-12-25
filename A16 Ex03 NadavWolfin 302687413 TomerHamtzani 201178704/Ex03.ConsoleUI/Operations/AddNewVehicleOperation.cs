@@ -47,21 +47,27 @@ namespace Ex03.ConsoleUI.Operations
                 foreach (string field in fieldToUserMessage.Keys)
                 {
                     string fieldMessage = string.Format("{0}: ", fieldToUserMessage[field]);
-                    Console.Write(fieldMessage);
-                    string fieldValue = Console.ReadLine();
                     bool isValidField = false;
+                    string fieldValue = string.Empty;
                     while(!isValidField)
                     {
                         try
                         {
+                            Console.Write(fieldMessage);
+                            fieldValue = Console.ReadLine();
                             isValidField = vehicle.SetField(field, fieldValue);
                         }
                         catch (ArgumentException)
-                       { 
-                            string meesage = string.Format("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
-                            Console.WriteLine(meesage);
-                            Console.Write(fieldMessage);
-                            fieldValue = Console.ReadLine();
+                        {
+                            Console.WriteLine("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
+                        }
+                        catch (ValueOutOfRangeException ex)
+                        {
+                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Invalid format value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
                         }
                     }
                 }

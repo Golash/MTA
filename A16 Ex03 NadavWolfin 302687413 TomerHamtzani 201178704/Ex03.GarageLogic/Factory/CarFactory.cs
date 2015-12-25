@@ -46,8 +46,8 @@ namespace Ex03.GarageLogic.Factory
         {
             if (!m_SupportedVehicle.ContainsKey(vehicleTypeName))
             {
-                throw new NotSupportedVehicleType(vehicleTypeName);
-            }
+                throw new ArgumentException(string.Format("There is no vehicle type: '{0}'",vehicleTypeName));
+            }   
 
             Vehicle vehicle = null;
             Type vehicleType = m_SupportedVehicle[vehicleTypeName];

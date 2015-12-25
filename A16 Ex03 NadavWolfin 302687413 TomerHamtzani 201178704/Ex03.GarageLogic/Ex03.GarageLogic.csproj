@@ -40,11 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\NotSupportedVehicleType.cs" />
-    <Compile Include="Exceptions\VehicleAlreadyExistsException.cs" />
-    <Compile Include="Exceptions\VehicleNotExistsException.cs" />
     <Compile Include="Exceptions\VehicleParameterNotExistsException.cs" />
-    <Compile Include="GarageOperations\AddNewVehicleGarageOperation.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\ReflactionHelper.cs" />
     <Compile Include="Helpers\Validator.cs" />
     <Compile Include="Vehicles\Car.cs" />

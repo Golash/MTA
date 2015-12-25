@@ -21,7 +21,7 @@ namespace Ex03.GarageLogic
             string licenseNumber = i_Vehicle.LicenseNumber;
             if (m_GarageVehicles.ContainsKey(licenseNumber))
             {
-                throw new VehicleAlreadyExistsException(licenseNumber);
+                throw new ArgumentException("Vehicle with the license number: '{0}' already exists", licenseNumber);
             }
 
             GarageVehicle garageVehicle = new GarageVehicle(i_Vehicle, i_VehicleOwnerPhoneDetails, eVehicleStatus.Repairing);
@@ -68,7 +68,7 @@ namespace Ex03.GarageLogic
         {
             if (!m_GarageVehicles.ContainsKey(licenseNumber))
             {
-                throw new VehicleNotExistsException(licenseNumber);
+                throw new ArgumentException("Vehicle with the license number: '{0}' not exists", licenseNumber);
             }
 
             m_GarageVehicles[licenseNumber].Status = eVehicleStatus;
