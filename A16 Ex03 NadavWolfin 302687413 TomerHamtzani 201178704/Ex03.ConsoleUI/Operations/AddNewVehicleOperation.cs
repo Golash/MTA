@@ -21,7 +21,7 @@ namespace Ex03.ConsoleUI.Operations
         public override void Execute()
         {
             // Get vehicle license number (insure that the value is not empty)
-            string licenseNumber = readNotEmptyStringValue("License Number");
+            string licenseNumber = readValidLicenseNumber();
 
             if (m_GarageManager.IsExists(licenseNumber))
             {
@@ -66,33 +66,65 @@ namespace Ex03.ConsoleUI.Operations
                     }
                 }
 
-                Console.WriteLine(); // Empty line for better visualization
-                Console.WriteLine("Insert vehicle owner details");
-                string vehicleOwnerName = readNotEmptyStringValue("Vehicle Owner Name");
-                string vehicleOwnerPhoneNumber = readNotEmptyStringValue("Vehicle Owner Phone number");
-
-                m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerName, vehicleOwnerPhoneNumber);
+                VehicleOwnerDetails vehicleOwnerDetails = readVehicleOwnerDetails();
+                  
+                m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerDetails);
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
             }
 
         }
 
-        private string readNotEmptyStringValue(string userInputMessage)
+            private static VehicleOwnerDetails readVehicleOwnerDetails()
+            {
+                Console.WriteLine(); // Empty line for better visualization
+                Console.WriteLine("Insert vehicle owner details");
+
+                VehicleOwnerDetails vehicleOwnerDetails = new VehicleOwnerDetails();
+                IDictionary<string,string> fieldToUserMessage = vehicleOwnerDetails.GetAdditionalParameters();
+                foreach(string field in fieldToUserMessage.Keys)
+                {
+                    string userMessage = string.Format("{0}: ",fieldToUserMessage[field]);
+                    string fieldValue = string.Empty;
+                    bool isValidValue = false;
+                    while (!isValidValue)
+                    {
+                        try
+                        {
+                            Console.Write(userMessage);
+                            fieldValue = Console.ReadLine();
+                            vehicleOwnerDetails.SetField(field, fieldValue);
+                            isValidValue = true;
+                        }
+                        catch (ArgumentException)
+                        {
+                            Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                        }
+                        catch (ValueOutOfRangeException ex)
+                        {
+                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
+                        }
+                    }
+                }
+
+                return vehicleOwnerDetails;
+            }
+
+        private string readValidLicenseNumber()
         {
-            string value = string.Empty;
-            bool isEmptyValue = true;
+            string licenseNumber = string.Empty;
+            bool isValidLicense = true;
             do
             {
-                Console.Write(string.Format("{0}: ", userInputMessage));
-                value = Console.ReadLine();
-                isEmptyValue = value == string.Empty;
-                if (isEmptyValue)
+                Console.Write("License number: ");
+                licenseNumber = Console.ReadLine();
+                isValidLicense = Vehicle.IsValidLicenseNumber(licenseNumber);
+                if (!isValidLicense)
                 {
-                    Console.WriteLine("Value can't be empty, please try again");
+                    Console.WriteLine("Invalid License number, please try again.");
                 }
-            } while (isEmptyValue);
+            } while (!isValidLicense);
 
-            return value;
+            return licenseNumber;
         }
 
         private void readWheelsDetails(IEnumerable<Wheel> i_Wheels)

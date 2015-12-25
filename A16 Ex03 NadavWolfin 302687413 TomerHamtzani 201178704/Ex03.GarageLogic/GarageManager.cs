@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
             m_GarageVehicles = new Dictionary<string, GarageVehicle>();
         }
 
-        public void AddNewVehicle(Vehicle i_Vehicle, string i_VehicleOwnerName, string i_VehicleOwnerPhoneNumber)
+        public void AddNewVehicle(Vehicle i_Vehicle, VehicleOwnerDetails i_VehicleOwnerPhoneDetails)
         {
             string licenseNumber = i_Vehicle.LicenseNumber;
             if (m_GarageVehicles.ContainsKey(licenseNumber))
@@ -24,8 +24,7 @@ namespace Ex03.GarageLogic
                 throw new VehicleAlreadyExistsException(licenseNumber);
             }
 
-            VehicleOwnerDetails vehicleOwnerDetails = new VehicleOwnerDetails(i_VehicleOwnerName, i_VehicleOwnerPhoneNumber);
-            GarageVehicle garageVehicle = new GarageVehicle(i_Vehicle, vehicleOwnerDetails, eVehicleStatus.Repairing);
+            GarageVehicle garageVehicle = new GarageVehicle(i_Vehicle, i_VehicleOwnerPhoneDetails, eVehicleStatus.Repairing);
             m_GarageVehicles.Add(licenseNumber, garageVehicle);
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +9,49 @@ namespace Ex03.GarageLogic
 {
     public class VehicleOwnerDetails
     {
-        public VehicleOwnerDetails(string ownerName, string ownerPhoneNumber)
+        public VehicleOwnerDetails()
         {
-            m_OwnerName = ownerName;
-            m_OwnerPhone = ownerPhoneNumber;
+            m_OwnerName = string.Empty;
+            m_OwnerPhone = string.Empty;
+
+            m_AdditionalFields = new Dictionary<string, string>()
+            {
+                {k_OwnerNameFieldName,"Vehicle owner name"},
+                {k_OwnerPhoneFieldName,"Vehicle owner phone number"}
+            };
         }
+
+        public IDictionary<string,string> GetAdditionalParameters()
+        {
+            return m_AdditionalFields;
+        }
+
+        public bool SetField(string fieldName, string fieldValue)
+        {
+            switch (fieldName)
+            {
+                case k_OwnerNameFieldName:
+                    OwnerName = fieldValue;
+                    break;
+                case k_OwnerPhoneFieldName:
+                    OwnerPhone = fieldValue;
+                    break;
+                default:
+                    throw new ArgumentException("The field: '{0}' not exists", fieldName);
+            }
+
+            return true;
+        }
+
         public string OwnerName
         {
             get
             {
                 return m_OwnerName;
             }
-            set
+            private set
             {
+                Validator.IsNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
                 m_OwnerName = value;
             }
         }
@@ -31,14 +62,17 @@ namespace Ex03.GarageLogic
             {
                 return m_OwnerPhone;
             }
-            set
+            private set
             {
+                Validator.IsNotNullOrWhiteSpace(value, k_OwnerPhoneFieldName);
                 m_OwnerPhone = value;
             }
         }
 
-
-        string m_OwnerName;
+        private const string k_OwnerNameFieldName = "OwnerName";
+        private const string k_OwnerPhoneFieldName = "OwnerPhone";
+        private IDictionary<string, string> m_AdditionalFields;
+        private string m_OwnerName;
         string m_OwnerPhone;
     }
 }
