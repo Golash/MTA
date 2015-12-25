@@ -69,6 +69,9 @@ namespace Ex03.ConsoleUI.Operations
                     }
                 }
 
+                // read wheels details from the user
+                readWheelsDetails(vehicle.Wheels);
+
                 VehicleOwnerDetails vehicleOwnerDetails = readVehicleOwnerDetails();
                   
                 m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerDetails);
