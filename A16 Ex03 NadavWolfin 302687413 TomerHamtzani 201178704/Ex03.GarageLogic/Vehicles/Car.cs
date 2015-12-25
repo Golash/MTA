@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic.Vehicles
                     SetDoorsNumber(fieldValue);
                     break;
                 default:
-                    m_Engine.SetField(fieldName, fieldValue);
+                    base.SetField(fieldName, fieldValue);
                     break;
             }
 

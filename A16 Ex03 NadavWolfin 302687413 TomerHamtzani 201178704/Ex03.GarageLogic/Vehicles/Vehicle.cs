@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,7 @@ namespace Ex03.GarageLogic.Vehicles
 {
     public abstract class Vehicle
     {
-        private const string k_LicenseNumberFieldName = "LicenseNumber";
-        private const string k_WheelsFieldName = "Wheels";
-        private const string k_ModelNameFieldName = "ModelName";
+
 
         public Vehicle(string i_LicenseNumber, Engine i_Engine, int i_WheelsCount, float i_MaxWheelAirPressure)
         {
@@ -24,20 +23,20 @@ namespace Ex03.GarageLogic.Vehicles
 
             m_Wheels = wheels;
             fillAdditionalParameters();
-            
         }
 
         protected virtual void fillAdditionalParameters()
         {
             m_AdditionalParameters = new Dictionary<string, string>();
+            m_AdditionalParameters.Add(k_ModelNameFieldName, "Please insert the car Model");
         }
 
         public virtual bool SetField(string fieldName, string fieldValue)
         {
             switch (fieldName)
             {
-                case "ModelName":
-                    SetModelName(fieldValue);
+                case k_ModelNameFieldName:
+                    ModelName = fieldValue;
                     break;
                 default:
                     m_Engine.SetField(fieldName, fieldValue);
@@ -47,15 +46,9 @@ namespace Ex03.GarageLogic.Vehicles
             return true;
         }
 
-        private void SetModelName(string fieldValue)
-        {
-            // TODO add validation
-            m_ModelName = fieldValue;
-        }
-
         public virtual IDictionary<string,string> GetAdditionalParameters()
         {
-            m_AdditionalParameters.Add("ModelName", "Please insert the car Model");
+            
             return m_AdditionalParameters;
         }
 
@@ -64,6 +57,11 @@ namespace Ex03.GarageLogic.Vehicles
             get
             {
                 return m_ModelName;
+            }
+            private set
+            {
+                Validator.IsNotNullOrWhiteSpace(value, k_ModelNameFieldName);
+                m_ModelName = value;
             }
         }
 
@@ -83,6 +81,9 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
+        private const string k_LicenseNumberFieldName = "LicenseNumber";
+        private const string k_WheelsFieldName = "Wheels";
+        private const string k_ModelNameFieldName = "ModelName";
         protected string m_ModelName;
         protected readonly string m_LicenseNumber;        
         private IEnumerable<Wheel> m_Wheels;

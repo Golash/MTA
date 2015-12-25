@@ -82,9 +82,9 @@ namespace Ex03.GarageLogic
             return CarFactory.SupportedVehicle;
         }
 
-        public Vehicle CreateVehicle(string licenseNumber, string modelName, string vehicleTypeName)
+        public Vehicle CreateVehicle(string licenseNumber, string vehicleTypeName)
         {
-            return CarFactory.CreateVehicle(licenseNumber, modelName, vehicleTypeName);
+            return CarFactory.CreateVehicle(licenseNumber, vehicleTypeName);
         }
     }
 }

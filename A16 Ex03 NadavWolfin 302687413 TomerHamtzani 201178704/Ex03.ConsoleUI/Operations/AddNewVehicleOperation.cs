@@ -36,11 +36,8 @@ namespace Ex03.ConsoleUI.Operations
                 Menu vehicleTypesMenu = getSupportedVehicleMenu();
                 string vehicleTypeName = vehicleTypesMenu.ReadUserSelectedValue();
 
-                // Get model name
-                string modelName = readNotEmptyStringValue("Model name");
-
                 // Create a defualt vehicle
-                Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, modelName, vehicleTypeName);
+                Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, vehicleTypeName);
 
                 // read wheels details from the user
                 readWheelsDetails(vehicle.Wheels);
@@ -98,16 +95,6 @@ namespace Ex03.ConsoleUI.Operations
             return value;
         }
 
-            //string[] requiredParameters = newVehicle.GetRequiredParameters();
-            //IDictionary<string, string> fieldToValue = readDetailesFromUser(requiredParameters);
-
-           
-
-        private int getWheelsCountByVehicleType(Type vehicleType)
-        {
-            return 0;
-        }
-
         private void readWheelsDetails(IEnumerable<Wheel> i_Wheels)
         {
             Console.WriteLine(); // One line space for better visualization
@@ -131,9 +118,13 @@ namespace Ex03.ConsoleUI.Operations
                             wheel.SetField(field, fieldValue);
                             isValidValue = true;
                         }
-                        catch (ArgumentException ex)
+                        catch (ArgumentException)
                         {
                             Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                        }
+                        catch (ValueOutOfRangeException ex)
+                        {
+                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
                         }
                     }
                 }

@@ -42,7 +42,7 @@ namespace Ex03.GarageLogic.Factory
 
 
 
-        public static Vehicle CreateVehicle(string licenseNumber, string modelName, string vehicleTypeName)
+        public static Vehicle CreateVehicle(string licenseNumber, string vehicleTypeName)
         {
             if (!m_SupportedVehicle.ContainsKey(vehicleTypeName))
             {

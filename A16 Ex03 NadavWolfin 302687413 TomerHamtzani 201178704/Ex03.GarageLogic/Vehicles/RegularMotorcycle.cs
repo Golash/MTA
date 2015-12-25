@@ -9,8 +9,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class RegularMotorcycle : Motorcycle
     {
-        public RegularMotorcycle(string i_LicenseNumber, string i_ModelName)
-            : base(i_LicenseNumber, i_ModelName, new GasEngine(k_MaxGasAmount, eGasType.Octan96))
+        public RegularMotorcycle(string i_LicenseNumber)
+            : base(i_LicenseNumber, new GasEngine(k_MaxGasAmount, eGasType.Octan96))
         {
         }
 

@@ -45,6 +45,9 @@ namespace Ex03.ConsoleUI
             List<UserOperation> userOperations = new List<UserOperation>();
             userOperations.Add(new AddNewVehicleOperation(m_GarageManager));
 
+            // Always add the Exit operation at the end of the list
+            userOperations.Add(new ExitOperation());
+
             return userOperations.ToArray();
         }
 

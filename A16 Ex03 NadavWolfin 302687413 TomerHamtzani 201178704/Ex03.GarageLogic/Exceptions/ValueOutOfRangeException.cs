@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class ValueOutOfRangeException : Exception
+    public class ValueOutOfRangeException : Exception
     {
         public ValueOutOfRangeException(Exception i_InnerException, float i_MinValue, float i_MaxValue) 
             : base(string.Format("Value out of range error, the value should be between {0} to {1}", i_MinValue, i_MaxValue))
