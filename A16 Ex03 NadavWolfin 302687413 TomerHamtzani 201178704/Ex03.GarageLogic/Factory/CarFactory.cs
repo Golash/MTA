@@ -19,6 +19,7 @@ namespace Ex03.GarageLogic.Factory
 
         private static void LoadSupportedVehicle()
         {
+            // TODO add gas type
             m_SupportedVehicle = new Dictionary<string,Type>();
             m_SupportedVehicle.Add("Regular Motorcycle", typeof(RegularMotorcycle));
             m_SupportedVehicle.Add("Electric Motorcycle", typeof(ElectricMotorcycle));
@@ -52,23 +53,23 @@ namespace Ex03.GarageLogic.Factory
             Type vehicleType = m_SupportedVehicle[vehicleTypeName];
             if (vehicleType == typeof(RegularCar))
             {
-                vehicle = new RegularCar(licenseNumber, modelName);
+                vehicle = new RegularCar(licenseNumber);
             }
             else if (vehicleType == typeof(ElectricCar))
             {
-                vehicle = new ElectricCar(licenseNumber, modelName);
+                vehicle = new ElectricCar(licenseNumber);
             }
             if (vehicleType == typeof(RegularMotorcycle))
             {
-                vehicle = new RegularMotorcycle(licenseNumber, modelName);
+                vehicle = new RegularMotorcycle(licenseNumber);
             }
             else if (vehicleType == typeof(ElectricMotorcycle))
             {
-                vehicle = new ElectricMotorcycle(licenseNumber, modelName);
+                vehicle = new ElectricMotorcycle(licenseNumber);
             }
             else if (vehicleType == typeof(Truck))
             {
-                vehicle = new Truck(licenseNumber, modelName);
+                vehicle = new Truck(licenseNumber);
             } 
             
             return vehicle;

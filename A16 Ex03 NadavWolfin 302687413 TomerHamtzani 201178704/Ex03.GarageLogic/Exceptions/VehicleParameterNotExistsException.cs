@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic.Exceptions
 {
+
+    // TODO why not argument exception?
     class VehicleParameterNotExistsException : Exception
     {
         public VehicleParameterNotExistsException(string i_ParameterName) :

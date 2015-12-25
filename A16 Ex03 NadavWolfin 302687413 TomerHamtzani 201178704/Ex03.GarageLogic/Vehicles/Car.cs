@@ -9,8 +9,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal abstract class Car : Vehicle
     {
-        public Car(string i_LicenseNumber, string i_ModelName, Engine i_Engine)
-            : base(i_LicenseNumber, i_ModelName,i_Engine, k_WheelsCount, k_MaxWheelsAirPressure)
+        public Car(string i_LicenseNumber, Engine i_Engine)
+            : base(i_LicenseNumber, i_Engine, k_WheelsCount, k_MaxWheelsAirPressure)
         {
         }
 

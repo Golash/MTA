@@ -44,8 +44,6 @@ namespace Ex03.ConsoleUI.Operations
                 // Create a defualt vehicle
                 Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, modelName, vehicleTypeName);
 
-               
-
                 // read wheels details from the user
                 readWheelsDetails(vehicle.Wheels);
                 

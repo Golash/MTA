@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class ElectricCar : Car
     {
-        public ElectricCar(string i_LicenseNumber, string i_ModelName)
-            : base(i_LicenseNumber, i_ModelName, new ElectricEngine(k_MaxBatteryTime))
+        public ElectricCar(string i_LicenseNumber)
+            : base(i_LicenseNumber, new ElectricEngine(k_MaxBatteryTime))
         {
         }
 
@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic.Vehicles
         {
             switch (fieldName)
             {
-                case "BattaryLeftTimeInHours":
+                case "CurrentEnergy":
                     SetBattaryLeftTimeInHours(fieldValue);
                     break;
                 default:

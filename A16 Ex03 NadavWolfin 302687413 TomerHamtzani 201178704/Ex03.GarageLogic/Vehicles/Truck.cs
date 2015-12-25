@@ -9,8 +9,8 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck : Vehicle
     {
-        public Truck(string i_LicenseNumber, string i_ModelName)
-            : base(i_LicenseNumber, i_ModelName,new GasEngine(k_MaxGasAmount), k_WheelsCount, k_MaxWheelsAirPressure)
+        public Truck(string i_LicenseNumber)
+            : base(i_LicenseNumber,new GasEngine(k_MaxGasAmount), k_WheelsCount, k_MaxWheelsAirPressure)
         {
         }
 

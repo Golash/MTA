@@ -8,10 +8,38 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal abstract class Motorcycle : Vehicle
     {
-        public Motorcycle(string i_LicenseNumber, string i_ModelName, Engine i_Engine)
-            : base(i_LicenseNumber, i_ModelName, i_Engine, k_WheelsCount, k_MaxWheelsAirPressure)
+        public Motorcycle(string i_LicenseNumber, Engine i_Engine)
+            : base(i_LicenseNumber, i_Engine, k_WheelsCount, k_MaxWheelsAirPressure)
         {
 
+        }
+
+        public override bool SetField(string fieldName, string fieldValue)
+        {
+            switch (fieldName)
+            {
+                case "LicenceType":
+                    SetLicenceTyper(fieldValue);
+                    break;
+                case "EngineVolume":
+                    SetEngineVolume(fieldValue);
+                    break;
+                default:
+                    base.SetField(fieldName, fieldValue);
+                    break;
+            }
+
+            return true;
+        }
+
+        private void SetEngineVolume(string fieldValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SetLicenceTyper(string fieldValue)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void fillAdditionalParameters()
