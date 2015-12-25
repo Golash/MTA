@@ -1,4 +1,5 @@
 ﻿using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace Ex03.GarageLogic
         public Engine(float i_MaxEnergyCapacity)
         {
             m_MaxEnergyCapacity = i_MaxEnergyCapacity;
-            m_CurrentEnergy = 0;
             m_MinEnergyCapacity = 0;
+            fillAdditionalParameters();
         }
 
         public float GetCurrentEnergyPercentage()
@@ -23,15 +24,15 @@ namespace Ex03.GarageLogic
 
         private void SetCurrentGasAmount(string fieldValue)
         {
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "CurrentEnergy");
+            
             float currentGasAmount;
-            if (float.TryParse(fieldValue, out currentGasAmount))
+            if (!float.TryParse(fieldValue, out currentGasAmount))
             {
-                throw new FormatException();
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "CurrentEnergy"));
             }
-            if (currentGasAmount > MaxEnergyCapacity || currentGasAmount < MinEnergyCapacity)
-            {
-                throw new ValueOutOfRangeException(null, MinEnergyCapacity, MaxEnergyCapacity);
-            }
+
+            Validator.ValidateValueInRange(currentGasAmount, MinEnergyCapacity, MaxEnergyCapacity);
             
             CurrentEnergy = currentGasAmount;
         }

@@ -13,35 +13,6 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-        public override bool SetField(string fieldName, string fieldValue)
-        {
-            switch (fieldName)
-            {
-                case "CurrentEnergy":
-                    SetBattaryLeftTimeInHours(fieldValue);
-                    break;
-                default:
-                    base.SetField(fieldName, fieldValue);
-                    break;
-            }
-
-            return true;
-        }
-
-        public void SetBattaryLeftTimeInHours(string i_BattaryLeftTimeInHours)
-        {
-            throw new ValueOutOfRangeException(null, 0, k_MaxBatteryTime);
-        }
-
-        protected override void fillAdditionalParameters()
-        {
-            base.fillAdditionalParameters();
-            foreach (string field in Engine.AdditionalParameters.Keys)
-            {
-                m_AdditionalParameters.Add(field, Engine.AdditionalParameters[field]);
-            }
-        }
-
         public ElectricEngine Engine
         {
             get

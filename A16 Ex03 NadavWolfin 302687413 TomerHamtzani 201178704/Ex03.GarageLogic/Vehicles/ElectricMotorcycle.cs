@@ -14,17 +14,6 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-        public override bool SetField(string fieldName, string fieldValue)
-        {
-            switch (fieldName)
-            {
-                default:
-                    throw new VehicleParameterNotExistsException(fieldName);
-            }
-
-            return true;
-        }
-
         public ElectricEngine Engine
         {
             get

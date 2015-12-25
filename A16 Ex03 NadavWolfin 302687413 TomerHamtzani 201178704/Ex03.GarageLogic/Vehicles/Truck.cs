@@ -1,4 +1,5 @@
 ﻿using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,50 @@ namespace Ex03.GarageLogic.Vehicles
         {
             switch (fieldName)
             {
+                case "IsCarryDangerousMaterials":
+                    SetIsCarryDangerousMaterials(fieldValue);
+                    break;
+                case "MaxCarryWeight":
+                    SetMaxCarryWeight(fieldValue);
+                    break;
                 default:
-                    throw new VehicleParameterNotExistsException(fieldName);
+                    base.SetField(fieldName, fieldValue);
+                    break;
             }
 
             return true;
+        }
+
+        
+        private void SetIsCarryDangerousMaterials(string fieldValue)
+        {
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "IsCarryDangerousMaterials");
+
+            if (fieldValue == "Y")
+            {
+                IsCarryDangerousMaterials = true;
+            }
+            else if (fieldValue == "N")
+            {
+                IsCarryDangerousMaterials = false;
+            }
+            else
+            {
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "IsCarryDangerousMaterials"));
+            }
+        }
+
+        private void SetMaxCarryWeight(string fieldValue)
+        {
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "MaxCarryWeight");
+
+            float maxCarryWeight;
+            if (!float.TryParse(fieldValue, out maxCarryWeight))
+            {
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "MaxCarryWeight"));
+            }
+
+            MaxCarryWeight = maxCarryWeight;
         }
 
         public ElectricEngine Engine

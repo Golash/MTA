@@ -14,18 +14,6 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-
-        public override bool SetField(string fieldName, string fieldValue)
-        {
-            switch (fieldName)
-            {
-                default:
-                    throw new VehicleParameterNotExistsException(fieldName);
-            }
-
-            return true;
-        }
-
         public void FillGas(eGasType i_GasType, float i_LittersToAdd)
         {
             Engine.FillGas(i_GasType, i_LittersToAdd);

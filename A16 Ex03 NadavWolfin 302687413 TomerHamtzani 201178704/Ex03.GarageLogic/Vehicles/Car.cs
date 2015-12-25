@@ -34,7 +34,9 @@ namespace Ex03.GarageLogic.Vehicles
         }
 
         private void SetDoorsNumber(string fieldValue)
-        {            
+        {
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "DoorsNumber");
+
             IEnumerable<int> enumValues = Enum.GetValues(typeof(eDoors)).Cast<int>();
             
             int doorsNumber;
@@ -55,7 +57,21 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetColor(string fieldValue)
         {
+<<<<<<< HEAD
             Color = EnumHelper.ParseByName<eColor>(fieldValue);
+=======
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "Color");
+
+            eColor color;
+            if (!Enum.TryParse<eColor>(fieldValue, out color))
+            {
+                string colorOptions = string.Join(",", Enum.GetNames(typeof(eColor)));
+                string errorMessage = string.Format("Color value: '{0}' is invalid, optional colors are: {1}", fieldValue, colorOptions);
+                throw new ArgumentException(errorMessage, "Color");
+            }
+
+            Color = color;
+>>>>>>> 8b571e8... Added
         }
 
         protected override void fillAdditionalParameters()

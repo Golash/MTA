@@ -66,7 +66,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                Validator.IsNotNullOrWhiteSpace(value, k_ManufactureFieldName);
+                Validator.ValidateNotNullOrWhiteSpace(value, k_ManufactureFieldName);
                 m_Manufacturer = value;
             }
         }
@@ -79,7 +79,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                Validator.IsInRange(value, MinAirPressure, MaxAirPressure);
+                Validator.ValidateValueInRange(value, MinAirPressure, MaxAirPressure);
                 m_CurrentAirPressure = value;
             }
         }

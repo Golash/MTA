@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,12 +35,29 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetEngineVolume(string fieldValue)
         {
-            throw new NotImplementedException();
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "EngineVolume");
+
+            int engineVolume;
+            if (!int.TryParse(fieldValue, out engineVolume))
+            {
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "EngineVolume"));
+            }
+
+            EngineVolume = engineVolume;
         }
 
         private void SetLicenceTyper(string fieldValue)
         {
-            throw new NotImplementedException();
+            
+            eLicenceType licenceType;
+            if (!Enum.TryParse<eLicenceType>(fieldValue, out licenceType)  || !Enum.GetNames(typeof(eLicenceType)).Contains(fieldValue))
+            {
+                string licenceTypeOptions = string.Join(",", Enum.GetNames(typeof(eLicenceType)));
+                string errorMessage = string.Format("licence type value: '{0}' is invalid, optional licence Type are: {1}", fieldValue, licenceTypeOptions);
+                throw new ArgumentException(errorMessage, "LicenceType");
+            }
+
+            LicenceType = licenceType;
         }
 
         protected override void fillAdditionalParameters()
@@ -68,7 +86,7 @@ namespace Ex03.GarageLogic.Vehicles
                 return m_EngineVolume;
             }
             set
-            {
+            {                
                 m_EngineVolume = value;
             }
         }

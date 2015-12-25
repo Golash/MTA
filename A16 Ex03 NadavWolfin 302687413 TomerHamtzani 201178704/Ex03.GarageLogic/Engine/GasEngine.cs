@@ -14,12 +14,6 @@ namespace Ex03.GarageLogic
             GasType = i_GasType;
         }
 
-        protected override void fillAdditionalParameters()
-        {
-            base.fillAdditionalParameters();
-            m_AdditionalParameters.Add("GasType", "Please insert the car gas type");
-        }
-
         public void FillGas(eGasType i_GasType, float i_LittersToAdd)
         {
 

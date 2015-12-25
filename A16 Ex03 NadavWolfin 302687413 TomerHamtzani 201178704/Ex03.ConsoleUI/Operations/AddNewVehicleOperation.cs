@@ -13,7 +13,7 @@ namespace Ex03.ConsoleUI.Operations
     class AddNewVehicleOperation : UserOperation
     {
 
-        public AddNewVehicleOperation(GarageManager  manager)
+        public AddNewVehicleOperation(GarageManager manager)
             : base(manager, "AddNewVehicleOperation", "Add new vehicle")
         {
         }
@@ -39,17 +39,18 @@ namespace Ex03.ConsoleUI.Operations
                 // Create a defualt vehicle
                 Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, vehicleTypeName);
 
-                // read wheels details from the user
-                readWheelsDetails(vehicle.Wheels);
-                
                 // Read additional required fields from user
-                IDictionary<string,string> fieldToUserMessage = vehicle.GetAdditionalParameters();
+                IDictionary<string, string> fieldToUserMessage = vehicle.GetAdditionalParameters();
                 foreach (string field in fieldToUserMessage.Keys)
                 {
                     string fieldMessage = string.Format("{0}: ", fieldToUserMessage[field]);
                     bool isValidField = false;
+<<<<<<< HEAD
                     string fieldValue = string.Empty;
                     while(!isValidField)
+=======
+                    while (!isValidField)
+>>>>>>> 8b571e8... Added
                     {
                         try
                         {
@@ -59,6 +60,7 @@ namespace Ex03.ConsoleUI.Operations
                         }
                         catch (ArgumentException)
                         {
+<<<<<<< HEAD
                             Console.WriteLine("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
                         }
                         catch (ValueOutOfRangeException ex)
@@ -68,13 +70,31 @@ namespace Ex03.ConsoleUI.Operations
                         catch (FormatException)
                         {
                             Console.WriteLine("Invalid format value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
+=======
+                            string meesage = string.Format("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
+                            Console.WriteLine(meesage);
+                            Console.Write(fieldMessage);
+                            fieldValue = Console.ReadLine();
+>>>>>>> 8b571e8... Added
                         }
                     }
                 }
 
+<<<<<<< HEAD
                 VehicleOwnerDetails vehicleOwnerDetails = readVehicleOwnerDetails();
                   
                 m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerDetails);
+=======
+                // read wheels details from the user
+                readWheelsDetails(vehicle.Wheels);
+
+                Console.WriteLine(); // Empty line for better visualization
+                Console.WriteLine("Insert vehicle owner details");
+                string vehicleOwnerName = readNotEmptyStringValue("Vehicle Owner Name");
+                string vehicleOwnerPhoneNumber = readNotEmptyStringValue("Vehicle Owner Phone number");
+
+                m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerName, vehicleOwnerPhoneNumber);
+>>>>>>> 8b571e8... Added
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
             }
 
@@ -138,13 +158,13 @@ namespace Ex03.ConsoleUI.Operations
             Console.WriteLine(); // One line space for better visualization
             Console.WriteLine("Please insert the wheels details:");
             int wheelIndex = 1;
-            foreach(Wheel wheel in i_Wheels)
+            foreach (Wheel wheel in i_Wheels)
             {
                 Console.WriteLine("Insert details for wheel number {0}:", wheelIndex);
-                IDictionary<string,string> fieldToUserMessage = wheel.GetAdditionalParameters();
-                foreach(string field in fieldToUserMessage.Keys)
+                IDictionary<string, string> fieldToUserMessage = wheel.GetAdditionalParameters();
+                foreach (string field in fieldToUserMessage.Keys)
                 {
-                    string userMessage = string.Format("{0}: ",fieldToUserMessage[field]);
+                    string userMessage = string.Format("{0}: ", fieldToUserMessage[field]);
                     string fieldValue = string.Empty;
                     bool isValidValue = false;
                     while (!isValidValue)
@@ -173,7 +193,7 @@ namespace Ex03.ConsoleUI.Operations
 
         private bool isValidAirPressure(Wheel i_Wheel, float i_AirPressure)
         {
-            return 0 <= i_AirPressure && i_AirPressure <= i_Wheel.MaxAirPressure; 
+            return 0 <= i_AirPressure && i_AirPressure <= i_Wheel.MaxAirPressure;
         }
 
         public Menu getSupportedVehicleMenu()

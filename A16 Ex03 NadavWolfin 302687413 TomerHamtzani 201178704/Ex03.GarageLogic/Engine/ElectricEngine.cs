@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return "Please Insert Remaining Battery Time";
+                return "Please Insert Remaining Battery Time (in hours)";
             }
         }
 

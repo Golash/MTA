@@ -25,6 +25,6 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        private const int k_MaxGasAmount = 6;
+        private const int k_MaxGasAmount = 42;
     }
 }
