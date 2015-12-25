@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace Ex03.ConsoleUI.Operations
 {
     internal abstract class UserOperation
     {
-        public UserOperation(string name, string displayName)
+        public UserOperation(GarageManager manager, string name, string displayName)
         {
-            
+            m_GarageManager = manager;
             _Name = name;
             _DisplayName = displayName;
         }
@@ -43,5 +44,6 @@ namespace Ex03.ConsoleUI.Operations
 
         protected string _Name;
         protected string _DisplayName;
+        protected GarageManager m_GarageManager;
     }
 }

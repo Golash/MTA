@@ -8,9 +8,9 @@ namespace Ex03.GarageLogic
 {
     public enum eDoors
     {
-        Two,
-        three,
-        four,
-        five
+        Two=2,
+        Three=3,
+        Four=4,
+        Five=5
     }
 }

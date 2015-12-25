@@ -8,6 +8,11 @@ namespace Ex03.GarageLogic
 {
     public class VehicleOwnerDetails
     {
+        public VehicleOwnerDetails(string ownerName, string ownerPhoneNumber)
+        {
+            m_OwnerName = ownerName;
+            m_OwnerPhone = ownerPhoneNumber;
+        }
         public string OwnerName
         {
             get

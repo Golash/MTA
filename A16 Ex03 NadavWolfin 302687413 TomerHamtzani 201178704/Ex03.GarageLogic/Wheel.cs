@@ -8,8 +8,9 @@ namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-        public Wheel()
+        public Wheel(float maxWheelAirPressure)
         {
+            m_MaxAirPressure = maxWheelAirPressure;
         }
 
         public void FillAir(float i_AirToFill)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,20 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class ElectricMotorcycle : Motorcycle
     {
-        public ElectricMotorcycle(string i_LicenseNumber, string i_ModelName, float i_MaxBatteryTime)
-            : base(i_LicenseNumber, i_ModelName)
+        public ElectricMotorcycle(string i_LicenseNumber, string i_ModelName)
+            : base(i_LicenseNumber, i_ModelName, new ElectricEngine(k_MaxBatteryTime))
         {
-            m_Engine = new ElectricEngine(i_MaxBatteryTime);
         }
 
-        public override string VehicleDetails()
+        public override bool SetField(string fieldName, string fieldValue)
         {
-            return base.VehicleDetails();
+            switch (fieldName)
+            {
+                default:
+                    throw new VehicleParameterNotExistsException(fieldName);
+            }
+
+            return true;
         }
 
         public ElectricEngine Engine
@@ -25,10 +31,8 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return (ElectricEngine)m_Engine;
             }
-            set
-            {
-                m_Engine = value;
-            }
         }
+
+        private const float k_MaxBatteryTime = 2.4f;
     }
 }

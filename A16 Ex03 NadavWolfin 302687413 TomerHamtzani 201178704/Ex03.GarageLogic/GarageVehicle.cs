@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class VehicleInGarage
+    class GarageVehicle
     {
-        public VehicleInGarage()
+        public GarageVehicle(Vehicle i_Vehicle, VehicleOwnerDetails i_VehicleOwnerDetails, eVehicleStatus i_VehicleStatus)
         {
+            m_Vehicle = i_Vehicle;
+            m_OwnerDetails = i_VehicleOwnerDetails;
+            m_Status = i_VehicleStatus;
         }
 
         public eVehicleStatus Status

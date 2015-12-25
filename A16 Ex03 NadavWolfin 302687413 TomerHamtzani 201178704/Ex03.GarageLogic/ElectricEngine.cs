@@ -10,12 +10,12 @@ namespace Ex03.GarageLogic
     {
         public ElectricEngine(float i_MaxBatteryTime): base (i_MaxBatteryTime)
         {
-
         }
 
-        public void FillGas(eGasType i_GasType, float i_GasLiterToAdd)
+        public void ChargeBattary(float i_NumberOHoursToAdd)
         {
-
+            // TODO: call base.Add
         }
+
     }
 }

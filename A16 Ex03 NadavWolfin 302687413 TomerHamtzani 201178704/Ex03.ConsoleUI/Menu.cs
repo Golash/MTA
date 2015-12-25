@@ -8,16 +8,17 @@ namespace Ex03.ConsoleUI
 {
     internal class Menu
     {
-        public Menu(IEnumerable<string> options)
+        public Menu(string title, IEnumerable<string> options)
         {
             m_Options = options.ToArray();
+            m_Title = title;
         }
-
-        private string[] m_Options;
 
         internal void Display()
         {
             StringBuilder menuStringBuilder = new StringBuilder();
+            menuStringBuilder.AppendFormat("{0}:",m_Title);
+            menuStringBuilder.AppendLine();
             for (int i=1; i<=m_Options.Count(); i++)
             {
                 menuStringBuilder.AppendFormat("{0}. {1}", i, m_Options[i - 1]);
@@ -27,8 +28,13 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(menuStringBuilder);
         }
 
-        internal int ReadUserSelected()
+        internal string ReadUserSelectedValue()
         {
+            return m_Options[ReadUserSelectedNumber()];
+        }
+        internal int ReadUserSelectedNumber()
+        {
+            Display();
             int selectedNumber;
             bool isValidOption = false;
             do 
@@ -51,5 +57,24 @@ namespace Ex03.ConsoleUI
         {
             return option - 1 >= 0 && option <= m_Options.Length; 
         }
+
+        public string[] Options
+        {
+            get
+            {
+                return m_Options;
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                return m_Title;
+            }
+        }
+
+        private string[] m_Options;
+        private string m_Title;
     }
 }

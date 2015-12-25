@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ex03.GarageLogic.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,38 +9,46 @@ namespace Ex03.GarageLogic.Vehicles
 {
     internal class Truck : Vehicle
     {
-        public Truck(string i_LicenseNumber, string i_ModelName, float i_MaxGasAmount) 
-            : base(i_LicenseNumber, i_ModelName)
+        public Truck(string i_LicenseNumber, string i_ModelName)
+            : base(i_LicenseNumber, i_ModelName,new GasEngine(k_MaxGasAmount), k_WheelsCount, k_MaxWheelsAirPressure)
         {
-            m_Engine = new GasEngine(i_MaxGasAmount);
         }
 
-        public override string VehicleDetails()
+        protected override void fillAdditionalParameters()
         {
-            return base.VehicleDetails();
+            base.fillAdditionalParameters();
+            m_AdditionalParameters.Add("IsCarryDangerousMaterials","Does the truck carry dangerous materials (Y=Yes, N=No)");
+            m_AdditionalParameters.Add("MaxCarryWeight", "Please insert truck max carry weight");
         }
 
-        public GasEngine Engine
+        public override bool SetField(string fieldName, string fieldValue)
+        {
+            switch (fieldName)
+            {
+                default:
+                    throw new VehicleParameterNotExistsException(fieldName);
+            }
+
+            return true;
+        }
+
+        public ElectricEngine Engine
         {
             get
             {
-                return (GasEngine)m_Engine;
-            }
-            set
-            {
-                m_Engine = value;
+                return (ElectricEngine)m_Engine;
             }
         }
 
-        public bool CarryDangerousMaterials
+        public bool IsCarryDangerousMaterials
         {
             get
             {
-                return m_CarryDangerousMaterials;
+                return m_IsCarryDangerousMaterials;
             }
             set
             {
-                m_CarryDangerousMaterials = value;
+                m_IsCarryDangerousMaterials = value;
             }
         }
 
@@ -55,7 +64,10 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        private bool m_CarryDangerousMaterials;
+        private bool m_IsCarryDangerousMaterials;
         private float m_MaxCarryWeight;
+        private const int k_WheelsCount = 12;
+        private const int k_MaxGasAmount = 160;
+        private const int k_MaxWheelsAirPressure = 34;
     }
 }

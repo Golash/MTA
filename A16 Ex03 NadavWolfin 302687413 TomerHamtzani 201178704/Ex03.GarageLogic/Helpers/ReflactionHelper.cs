@@ -5,9 +5,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.ConsoleUI.Helpers
+namespace Ex03.GarageLogic.Helpers
 {
-    internal static class ReflactionHelper
+    public static class ReflactionHelper
     {
         public static string GetConstValue(Type type, string constName)
         {
@@ -22,6 +22,11 @@ namespace Ex03.ConsoleUI.Helpers
             }
 
             return constValue;
+        }
+
+        public static object InvokeMethod(Type type, string methodName)
+        {
+            return type.GetMethod(methodName).Invoke(null,null);
         }
 
         public static IEnumerable<Type> GetSubClasses<T>()

@@ -8,16 +8,36 @@ namespace Ex03.GarageLogic.Vehicles
 {
     public abstract class Vehicle
     {
-        public Vehicle(string i_LicenseNumber, string i_ModelName)
+        private const string k_LicenseNumberFieldName = "LicenseNumber";
+        private const string k_WheelsFieldName = "Wheels";
+        private const string k_ModelNameFieldName = "ModelName";
+
+        public Vehicle(string i_LicenseNumber, string i_ModelName, Engine i_Engine, int i_WheelsCount, float maxWheelAirPressure)
         {
-            m_Wheels = new List<Wheel>();
             m_LicenseNumber = i_LicenseNumber;
             m_ModelName = i_ModelName;
+            m_Engine = i_Engine;
+            List<Wheel> wheels = new List<Wheel>(i_WheelsCount);
+            for (int i=0; i<i_WheelsCount; i++)
+            {
+                wheels.Add(new Wheel(maxWheelAirPressure));
+            }
+
+            m_Wheels = wheels;
+            fillAdditionalParameters();
+            
         }
 
-        public virtual string VehicleDetails()
+        protected virtual void fillAdditionalParameters()
         {
-            return string.Empty;
+            m_AdditionalParameters = new Dictionary<string, string>();
+        }
+
+        public abstract bool SetField(string fieldName, string fieldValue);
+
+        public virtual IDictionary<string,string> GetAdditionalParameters()
+        {
+            return m_AdditionalParameters;
         }
 
         public string ModelName
@@ -36,21 +56,18 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        public List<Wheel> Wheels
+        public IEnumerable<Wheel> Wheels
         {
             get
             {
                 return m_Wheels;
             }
-            set
-            {
-                m_Wheels = value;
-            }
         }
 
-        private readonly string m_ModelName;
-        private readonly string m_LicenseNumber;        
-        private List<Wheel> m_Wheels;
+        protected readonly string m_ModelName;
+        protected readonly string m_LicenseNumber;        
+        private IEnumerable<Wheel> m_Wheels;
         protected Engine m_Engine;
+        protected IDictionary<string,string> m_AdditionalParameters;
     }
 }

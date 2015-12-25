@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\NotSupportedVehicleType.cs" />
+    <Compile Include="Exceptions\VehicleAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\VehicleNotExistsException.cs" />
+    <Compile Include="Exceptions\VehicleParameterNotExistsException.cs" />
+    <Compile Include="GarageOperations\AddNewVehicleGarageOperation.cs" />
+    <Compile Include="Helpers\ReflactionHelper.cs" />
     <Compile Include="Vehicles\Car.cs" />
     <Compile Include="eColor.cs" />
     <Compile Include="eDoors.cs" />
@@ -54,13 +60,13 @@
     <Compile Include="GarageManager.cs" />
     <Compile Include="GasEngine.cs" />
     <Compile Include="Vehicles\Motorcycle.cs" />
-    <Compile Include="Vehicles\GasCar.cs" />
+    <Compile Include="Vehicles\RegularCar.cs" />
     <Compile Include="Vehicles\GasMotorcycle.cs" />
     <Compile Include="Vehicles\Truck.cs" />
     <Compile Include="Exceptions\ValueOutOfRangeException.cs" />
     <Compile Include="Vehicles\Vehicle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VehicleInGarage.cs" />
+    <Compile Include="GarageVehicle.cs" />
     <Compile Include="VehicleOwnerDetails.cs" />
     <Compile Include="Wheel.cs" />
   </ItemGroup>
