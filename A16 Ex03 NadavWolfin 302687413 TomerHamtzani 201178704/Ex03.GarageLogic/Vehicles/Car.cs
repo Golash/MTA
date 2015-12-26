@@ -33,6 +33,13 @@ namespace Ex03.GarageLogic.Vehicles
             return true;
         }
 
+        public override void VehicleDetails(StringBuilder i_VehicleDetailsStr)
+        {
+            base.VehicleDetails(i_VehicleDetailsStr);
+            i_VehicleDetailsStr.AppendLine(string.Format("Color: {0}", m_Color));
+            i_VehicleDetailsStr.AppendLine(string.Format("Doors: {0}", m_Doors));
+        }
+
         private void SetDoorsNumber(string fieldValue)
         {
             Validator.ValidateNotNullOrWhiteSpace(fieldValue, "DoorsNumber");

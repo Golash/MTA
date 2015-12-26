@@ -23,7 +23,7 @@ namespace Ex03.ConsoleUI.Operations
             // Get vehicle license number (insure that the value is not empty)
             string licenseNumber = readValidLicenseNumber();
 
-            if (m_GarageManager.IsExists(licenseNumber))
+            if (m_GarageManager.IsExistsVehicle(licenseNumber))
             {
                 m_GarageManager.ChangeVehicleStatus(licenseNumber, eVehicleStatus.Repairing);
                 Console.WriteLine("The vehicle details was found. Vehicle {0} is now in repairing status", licenseNumber);
@@ -34,7 +34,7 @@ namespace Ex03.ConsoleUI.Operations
 
                 // Get the vehicle type
                 Menu vehicleTypesMenu = getSupportedVehicleMenu();
-                string vehicleTypeName = vehicleTypesMenu.ReadUserSelectedValue();
+                string vehicleTypeName = vehicleTypesMenu.ReadUserselectedValue();
 
                 // Create a defualt vehicle
                 Vehicle vehicle = m_GarageManager.CreateVehicle(licenseNumber, vehicleTypeName);
@@ -75,7 +75,12 @@ namespace Ex03.ConsoleUI.Operations
                 VehicleOwnerDetails vehicleOwnerDetails = readVehicleOwnerDetails();
                   
                 m_GarageManager.AddNewVehicle(vehicle, vehicleOwnerDetails);
+
+                Console.WriteLine(); // Empty line for better visualization
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
+                Console.WriteLine("Press Enter to back to main menu");
+                Console.ReadLine();
+                Console.WriteLine(); // Empty line for better visualization
             }
 
         }

@@ -56,8 +56,27 @@ namespace Ex03.GarageLogic.Vehicles
 
         public virtual IDictionary<string, string> GetAdditionalParameters()
         {
-
             return m_AdditionalParameters;
+        }
+
+        public virtual void VehicleDetails(StringBuilder i_VehicleDetailsStr)
+        {
+            i_VehicleDetailsStr.AppendLine(string.Format("License Number: {0}", m_LicenseNumber));
+            i_VehicleDetailsStr.AppendLine(string.Format("Model Name: {0}", m_ModelName));
+
+            i_VehicleDetailsStr.AppendLine("Wheels Info:");
+
+            int index = 1;
+            foreach (var wheel in Wheels)
+            {
+                string msg = string.Format("wheel number: {0}, manufacturer: {1}, current air pressure: {2}",
+                    index, wheel.Manufacturer, wheel.CurrentAirPressure);
+
+                i_VehicleDetailsStr.AppendLine(msg);
+                index++;
+            }
+
+            Engine.EngineDetails(i_VehicleDetailsStr);
         }
 
         public string ModelName
@@ -86,6 +105,14 @@ namespace Ex03.GarageLogic.Vehicles
             get
             {
                 return m_Wheels;
+            }
+        }
+
+        public Engine Engine
+        {
+            get
+            {
+                return m_Engine;
             }
         }
 

@@ -37,7 +37,8 @@ namespace Ex03.GarageLogic
                     OwnerPhone = fieldValue;
                     break;
                 default:
-                    throw new ArgumentException("The field: '{0}' not exists", fieldName);
+                    string errorMessage = string.Format("The field: '{0}' not exists", fieldName);
+                    throw new ArgumentException(errorMessage);
             }
 
             return true;

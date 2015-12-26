@@ -12,9 +12,10 @@ namespace Ex03.GarageLogic.Vehicles
             : base(i_LicenseNumber,new GasEngine(k_MaxGasAmount, eGasType.Octan98))
         {
         }
+
         public void FillGas(eGasType i_GasType, float i_LittersToAdd)
         {
-            Engine.FillGas(i_GasType, i_LittersToAdd);
+            Engine.FillGas(i_LittersToAdd);
         }
 
         public GasEngine Engine

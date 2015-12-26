@@ -8,7 +8,6 @@ namespace Ex03.GarageLogic
 {
     internal class ElectricEngine : Engine
     {
-         
         public ElectricEngine(float i_MaxBatteryTime): base (i_MaxBatteryTime)
         {
         }
@@ -21,9 +20,17 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ChargeBattary(float i_NumberOHoursToAdd)
+        public void ChargeBattary(float i_NumberOfHoursToAdd)
         {
-            // TODO: call base.Add
+            base.FillEnergy(i_NumberOfHoursToAdd);
+        }
+        
+        protected override string CurrentEnergyAmountMsg
+        {
+            get
+            {
+                return "Battery Remaining Time (in hours)";
+            }
         }
 
     }

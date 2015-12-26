@@ -11,15 +11,20 @@ namespace Ex03.GarageLogic
 
         public GasEngine(float i_MaxGasAmount, eGasType i_GasType): base(i_MaxGasAmount)
         {
-            GasType = i_GasType;
+            m_GasType = i_GasType;
         }
 
-        public void FillGas(eGasType i_GasType, float i_LittersToAdd)
+        public void FillGas(float i_LittersToAdd)
         {
-
+            base.FillEnergy(i_LittersToAdd);
         }
+        
+        public override void EngineDetails(StringBuilder i_EngineDetails)
+        {
+            base.EngineDetails(i_EngineDetails);
 
-        public eGasType GasType { get; set; }
+            i_EngineDetails.AppendLine(string.Format("Gas Type: {0}", m_GasType));
+        }
 
         protected override string CurrentEnergyMsg
         {
@@ -28,5 +33,27 @@ namespace Ex03.GarageLogic
                 return "Please Insert Current Gas Amount";
             }
         }
+
+        protected override string CurrentEnergyAmountMsg
+        {
+            get
+            {
+                return "Current Gas Amount";
+            }
+        }
+
+        public eGasType GasType
+        {
+            get
+            {
+                return m_GasType;
+            }
+            set
+            {
+                m_GasType = value;
+            }
+        }
+
+        private eGasType m_GasType;
     }
 }

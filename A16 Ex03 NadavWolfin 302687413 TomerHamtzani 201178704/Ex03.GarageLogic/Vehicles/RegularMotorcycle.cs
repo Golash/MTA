@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic.Vehicles
 
         public void FillGas(eGasType i_GasType, float i_LittersToAdd)
         {
-            Engine.FillGas(i_GasType, i_LittersToAdd);
+            Engine.FillGas(i_LittersToAdd);
         }
 
         public GasEngine Engine

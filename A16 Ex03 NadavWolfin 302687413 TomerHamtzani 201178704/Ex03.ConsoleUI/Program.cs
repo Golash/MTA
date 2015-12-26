@@ -19,7 +19,7 @@ namespace Ex03.ConsoleUI
             {
                 UserOperation[] operations = loadUserOperations();
                 Menu mainMenu = GetMainMenu(operations);
-                int operationNumber = mainMenu.ReadUserSelectedNumber();
+                int operationNumber = mainMenu.ReadUserselectedNumber();
                 if (operations[operationNumber] is ExitOperation)
                 {
                     userRequestToExit = true;
@@ -44,6 +44,12 @@ namespace Ex03.ConsoleUI
         {
             List<UserOperation> userOperations = new List<UserOperation>();
             userOperations.Add(new AddNewVehicleOperation(m_GarageManager));
+            userOperations.Add(new ShowLicensesNumbersOperation(m_GarageManager));
+            userOperations.Add(new ChangeVehicleStatusOperation(m_GarageManager));
+            userOperations.Add(new FillAirInWheelsToMaxOperation(m_GarageManager));
+            userOperations.Add(new FillVehicleInGasOperation(m_GarageManager));
+            userOperations.Add(new FillElectricVehicleOperation(m_GarageManager));
+            userOperations.Add(new VehicleDetailsOperation(m_GarageManager));
 
             // Always add the Exit operation at the end of the list
             userOperations.Add(new ExitOperation());

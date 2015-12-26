@@ -19,7 +19,18 @@ namespace Ex03.GarageLogic
 
         public float GetCurrentEnergyPercentage()
         {
+            // TODO imliment and add to details
             return 0;
+        }
+
+        protected void FillEnergy(float i_LittersToAdd)
+        {
+            if ((CurrentEnergy + i_LittersToAdd) > MaxEnergyCapacity)
+            {
+                throw new ValueOutOfRangeException(null, MinEnergyCapacity, MaxEnergyCapacity);
+            }
+
+            CurrentEnergy += i_LittersToAdd;
         }
 
         private void SetCurrentGasAmount(string fieldValue)
@@ -80,6 +91,11 @@ namespace Ex03.GarageLogic
             return true;
         }
 
+        public virtual void EngineDetails(StringBuilder i_EngineDetails)
+        {
+            i_EngineDetails.AppendLine(string.Format("{0}: {1}", CurrentEnergyAmountMsg, CurrentEnergy));
+        }
+
         protected virtual void fillAdditionalParameters()
         {
             m_AdditionalParameters = new Dictionary<string, string>();
@@ -99,6 +115,7 @@ namespace Ex03.GarageLogic
         }
 
         protected abstract string CurrentEnergyMsg { get;}
+        protected abstract string CurrentEnergyAmountMsg { get; }
 
         protected IDictionary<string,string> m_AdditionalParameters;
         private float m_CurrentEnergy;

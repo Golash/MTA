@@ -9,7 +9,7 @@ namespace Ex03.ConsoleUI.Operations
 {
     class ExitOperation : UserOperation
     {
-        public ExitOperation() : base(null,"Exit","Exit")
+        public ExitOperation() : base(null, "ExitOperation", "Exit")
         {
 
         }

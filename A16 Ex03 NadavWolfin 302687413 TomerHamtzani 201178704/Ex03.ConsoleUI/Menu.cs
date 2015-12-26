@@ -28,11 +28,11 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(menuStringBuilder);
         }
 
-        internal string ReadUserSelectedValue()
+        internal string ReadUserselectedValue()
         {
-            return m_Options[ReadUserSelectedNumber()];
+            return m_Options[ReadUserselectedNumber()];
         }
-        internal int ReadUserSelectedNumber()
+        internal int ReadUserselectedNumber()
         {
             Display();
             int selectedNumber;

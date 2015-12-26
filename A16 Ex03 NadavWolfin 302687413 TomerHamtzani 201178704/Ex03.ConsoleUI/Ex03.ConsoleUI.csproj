@@ -45,8 +45,14 @@
   <ItemGroup>
     <Compile Include="Menu.cs" />
     <Compile Include="Operations\AddNewVehicleOperation.cs" />
+    <Compile Include="Operations\ChangeVehicleStatusOperation.cs" />
     <Compile Include="Operations\ExitOperation.cs" />
+    <Compile Include="Operations\FillAirInWheelsToMaxOperation.cs" />
+    <Compile Include="Operations\FillElectricVehicleOperation.cs" />
+    <Compile Include="Operations\FillVehicleInGasOperation.cs" />
+    <Compile Include="Operations\ShowLicensesNumbersOperation.cs" />
     <Compile Include="Operations\UserOperation.cs" />
+    <Compile Include="Operations\VehicleDetailsOperation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

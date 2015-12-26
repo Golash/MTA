@@ -40,7 +40,13 @@ namespace Ex03.GarageLogic.Vehicles
             return true;
         }
 
-        
+        public override void VehicleDetails(StringBuilder i_VehicleDetailsStr)
+        {
+            base.VehicleDetails(i_VehicleDetailsStr);
+            i_VehicleDetailsStr.AppendLine(string.Format("Max Carry Weight: {0}", m_MaxCarryWeight));
+            i_VehicleDetailsStr.AppendLine(string.Format("Carry Dangerous Materials: {0}", m_IsCarryDangerousMaterials));
+        }
+
         private void SetIsCarryDangerousMaterials(string fieldValue)
         {
             Validator.ValidateNotNullOrWhiteSpace(fieldValue, "IsCarryDangerousMaterials");

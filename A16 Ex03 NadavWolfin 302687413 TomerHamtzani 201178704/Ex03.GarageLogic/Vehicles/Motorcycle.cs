@@ -60,6 +60,13 @@ namespace Ex03.GarageLogic.Vehicles
             LicenceType = licenceType;
         }
 
+        public override void VehicleDetails(StringBuilder i_VehicleDetailsStr)
+        {
+            base.VehicleDetails(i_VehicleDetailsStr);
+            i_VehicleDetailsStr.AppendLine(string.Format("Model: {0}", m_ModelName));
+            i_VehicleDetailsStr.AppendLine(string.Format("Engine Volume: {0}", m_EngineVolume));
+        }
+
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();

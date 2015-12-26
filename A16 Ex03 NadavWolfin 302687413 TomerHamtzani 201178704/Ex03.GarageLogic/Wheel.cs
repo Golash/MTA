@@ -48,14 +48,15 @@ namespace Ex03.GarageLogic
             float currentAirPressure;
             if(!float.TryParse(currentAirPressureStrValue, out currentAirPressure))
             {
-                throw new ArgumentException("The field '{0}' must be float", k_CurrentAirPressureFieldName);
+                string errorMessage = string.Format("The field '{0}' must be float", k_CurrentAirPressureFieldName);
+                throw new ArgumentException(errorMessage);
             }
 
             CurrentAirPressure = currentAirPressure;
         }
         public void FillAir(float i_AirToFill)
         {
-
+            this.CurrentAirPressure = i_AirToFill;
         }
 
         public string Manufacturer
