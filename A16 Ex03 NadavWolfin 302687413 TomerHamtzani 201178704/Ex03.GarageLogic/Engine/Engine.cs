@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic
 
         private void SetCurrentGasAmount(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "CurrentEnergy");
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_CurrentEnergyFieldName);
             
             float currentGasAmount;
             if (!float.TryParse(fieldValue, out currentGasAmount))
@@ -80,7 +80,7 @@ namespace Ex03.GarageLogic
         {
             switch (fieldName)
             {
-                case "CurrentEnergy":
+                case k_CurrentEnergyFieldName:
                     SetCurrentGasAmount(fieldValue);
                     break;
                 default:
@@ -99,7 +99,7 @@ namespace Ex03.GarageLogic
         protected virtual void fillAdditionalParameters()
         {
             m_AdditionalParameters = new Dictionary<string, string>();
-            AdditionalParameters.Add("CurrentEnergy", CurrentEnergyMsg);
+            AdditionalParameters.Add(k_CurrentEnergyFieldName, CurrentEnergyMsg);
         }
 
         public IDictionary<string, string> AdditionalParameters
@@ -117,6 +117,7 @@ namespace Ex03.GarageLogic
         protected abstract string CurrentEnergyMsg { get;}
         protected abstract string CurrentEnergyAmountMsg { get; }
 
+        private const string k_CurrentEnergyFieldName = "CurrentEnergy";
         protected IDictionary<string,string> m_AdditionalParameters;
         private float m_CurrentEnergy;
         private readonly float m_MaxEnergyCapacity;

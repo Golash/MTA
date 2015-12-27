@@ -14,14 +14,6 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-        public ElectricEngine Engine
-        {
-            get
-            {
-                return (ElectricEngine)m_Engine;
-            }
-        }
-
         private const float k_MaxBatteryTime = 2.4f;
     }
 }

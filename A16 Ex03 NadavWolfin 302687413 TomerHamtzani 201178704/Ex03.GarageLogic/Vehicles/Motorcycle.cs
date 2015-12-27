@@ -19,10 +19,10 @@ namespace Ex03.GarageLogic.Vehicles
         {
             switch (fieldName)
             {
-                case "LicenceType":
+                case k_LicenceTypeFieldName:
                     SetLicenceTyper(fieldValue);
                     break;
-                case "EngineVolume":
+                case k_EngineVolumeFieldName:
                     SetEngineVolume(fieldValue);
                     break;
                 default:
@@ -35,7 +35,7 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetEngineVolume(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "EngineVolume");
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_EngineVolumeFieldName);
 
             int engineVolume;
             if (!int.TryParse(fieldValue, out engineVolume))
@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 string licenceTypeOptions = string.Join(",", Enum.GetNames(typeof(eLicenceType)));
                 string errorMessage = string.Format("licence type value: '{0}' is invalid, optional licence Type are: {1}", fieldValue, licenceTypeOptions);
-                throw new ArgumentException(errorMessage, "LicenceType");
+                throw new ArgumentException(errorMessage, k_LicenceTypeFieldName);
             }
 
             LicenceType = licenceType;
@@ -70,8 +70,8 @@ namespace Ex03.GarageLogic.Vehicles
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();
-            m_AdditionalParameters.Add("LicenceType","Please insert licence type");
-            m_AdditionalParameters.Add("EngineVolume", "Please insert the engine volume");
+            m_AdditionalParameters.Add(k_LicenceTypeFieldName, "Please insert licence type");
+            m_AdditionalParameters.Add(k_EngineVolumeFieldName, "Please insert the engine volume");
         }
 
         public eLicenceType LicenceType
@@ -98,6 +98,8 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
+        private const string k_LicenceTypeFieldName = "LicenceType";
+        private const string k_EngineVolumeFieldName = "EngineVolume";
         private eLicenceType m_LicenceType;
         private int m_EngineVolume;
         private const int k_MaxWheelsAirPressure = 32;

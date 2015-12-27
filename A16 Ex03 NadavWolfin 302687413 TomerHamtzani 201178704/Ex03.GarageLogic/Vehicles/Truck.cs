@@ -18,18 +18,18 @@ namespace Ex03.GarageLogic.Vehicles
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();
-            m_AdditionalParameters.Add("IsCarryDangerousMaterials","Does the truck carry dangerous materials (Y=Yes, N=No)");
-            m_AdditionalParameters.Add("MaxCarryWeight", "Please insert truck max carry weight");
+            m_AdditionalParameters.Add(k_IsCarryDangerousMaterialsFieldName,"Does the truck carry dangerous materials (Y=Yes, N=No)");
+            m_AdditionalParameters.Add(k_MaxCarryWeightFieldName, "Please insert truck max carry weight");
         }
 
         public override bool SetField(string fieldName, string fieldValue)
         {
             switch (fieldName)
             {
-                case "IsCarryDangerousMaterials":
+                case k_IsCarryDangerousMaterialsFieldName:
                     SetIsCarryDangerousMaterials(fieldValue);
                     break;
-                case "MaxCarryWeight":
+                case k_MaxCarryWeightFieldName:
                     SetMaxCarryWeight(fieldValue);
                     break;
                 default:
@@ -49,7 +49,7 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetIsCarryDangerousMaterials(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "IsCarryDangerousMaterials");
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_IsCarryDangerousMaterialsFieldName);
 
             if (fieldValue == "Y")
             {
@@ -61,18 +61,18 @@ namespace Ex03.GarageLogic.Vehicles
             }
             else
             {
-                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "IsCarryDangerousMaterials"));
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, k_IsCarryDangerousMaterialsFieldName));
             }
         }
 
         private void SetMaxCarryWeight(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "MaxCarryWeight");
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_MaxCarryWeightFieldName);
 
             float maxCarryWeight;
             if (!float.TryParse(fieldValue, out maxCarryWeight))
             {
-                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "MaxCarryWeight"));
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, k_MaxCarryWeightFieldName));
             }
 
             MaxCarryWeight = maxCarryWeight;
@@ -110,6 +110,8 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
+        private const string k_IsCarryDangerousMaterialsFieldName = "IsCarryDangerousMaterials";
+        private const string k_MaxCarryWeightFieldName = "MaxCarryWeight";
         private bool m_IsCarryDangerousMaterials;
         private float m_MaxCarryWeight;
         private const int k_WheelsCount = 12;

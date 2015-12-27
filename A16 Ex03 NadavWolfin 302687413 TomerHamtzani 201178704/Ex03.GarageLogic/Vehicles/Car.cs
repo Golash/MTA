@@ -19,10 +19,10 @@ namespace Ex03.GarageLogic.Vehicles
         {
             switch (fieldName)
             {
-                case "Color":
+                case k_ColorFieldName:
                     SetColor(fieldValue);
                     break;
-                case "DoorsNumber":
+                case k_DoorsFieldName:
                     SetDoorsNumber(fieldValue);
                     break;
                 default:
@@ -42,7 +42,7 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetDoorsNumber(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, "DoorsNumber");
+            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_DoorsFieldName);
 
             IEnumerable<int> enumValues = Enum.GetValues(typeof(eDoors)).Cast<int>();
             
@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 string doorsOptionString = getEnumsOptionsString(Enum.GetValues(typeof(eDoors)));
                 string errorMessage = string.Format("Doors number value: '{0}' is invalid. optional values are: {1}",fieldValue, doorsOptionString);
-                throw new ArgumentException(errorMessage,"DoorsNumber");
+                throw new ArgumentException(errorMessage, k_DoorsFieldName);
             }
             
             Doors = (eDoors)Enum.Parse(typeof(eDoors), fieldValue);
@@ -81,7 +81,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_Color;
             }
-            set
+            private set
             {
                 m_Color = value;
             }
@@ -94,7 +94,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_Doors;
             }
-            set
+            private set
             {
                 m_Doors = value;
             }

@@ -69,7 +69,7 @@ namespace Ex03.GarageLogic
 
         public void FillGas(string i_LicenseNumber, eGasType i_GasType, string i_LiterToAdd)
         {
-            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, "licenseNumber");
+            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, "LicenseNumber");
 
             float literToAdd;
             if (!float.TryParse(i_LiterToAdd, out literToAdd))
