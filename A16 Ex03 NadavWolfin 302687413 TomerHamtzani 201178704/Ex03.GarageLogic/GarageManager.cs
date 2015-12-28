@@ -69,67 +69,41 @@ namespace Ex03.GarageLogic
 
         public void FillGas(string i_LicenseNumber, eGasType i_GasType, string i_LiterToAdd)
         {
-            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, "LicenseNumber");
+            ValidateIsGasVehicle(i_LicenseNumber);
 
-            float literToAdd;
-            if (!float.TryParse(i_LiterToAdd, out literToAdd))
-            {
-                string errorMessage = string.Format("Invalid format value '{0}' for gas amount to add", literToAdd);
-                throw new FormatException(errorMessage);
-            }
-
-            if (!IsExistsVehicle(i_LicenseNumber))
-            {
-                string errorMessage = string.Format("Vehicle with the license number: '{0}' not exists", i_LicenseNumber);
-                throw new ArgumentException(errorMessage);
-            }
-
-            Vehicle vehicle = m_GarageVehicles[i_LicenseNumber].Vehicle;
-            GasEngine gasEngine = vehicle.Engine as GasEngine;
-            if (gasEngine == null)
-            {
-                string errorMessage = string.Format("The vehicle {0} not support in gas Engine", i_LicenseNumber);
-                throw new ArgumentException(errorMessage);
-            }
-
+            GasEngine gasEngine = (GasEngine)m_GarageVehicles[i_LicenseNumber].Vehicle.Engine;
             if (gasEngine.GasType != i_GasType)
             {
-                string errorMessage = string.Format("The vehicle {0} not support in gas type {1}, the gas type of the vehicle is {2}",
+                string errorMessage = string.Format("The vehicle {0} not support gas type {1}, the gas type of the vehicle is {2}",
                     i_LicenseNumber, i_GasType, gasEngine.GasType);
 
-                throw new ArgumentException(errorMessage);
+                throw new InvalidGasTypeException(i_GasType, gasEngine.GasType);
             }
 
-            gasEngine.FillGas(literToAdd);
+            fillEnergy(i_LicenseNumber, i_LiterToAdd);
         }
 
-        public void ChargeBattery(string i_LicenseNumber, string i_MinutesToCharge)
+        public void ChargeBattery(string i_LicenseNumber, string i_HoursToAdd)
         {
-            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, "licenseNumber");
+            ValidateVehicleIsElectric(i_LicenseNumber);
+            fillEnergy(i_LicenseNumber, i_HoursToAdd);
+        }
 
-            float MinutesToCharge;
-            if (!float.TryParse(i_MinutesToCharge, out MinutesToCharge))
+        public void fillEnergy(string i_LicenseNumber, string i_EnergyToTadd)
+        {
+            ValidateIsVehicleExists(i_LicenseNumber);
+            
+            float energyToAdd;
+            if (!float.TryParse(i_EnergyToTadd, out energyToAdd))
             {
-                throw new FormatException(string.Format("Invalid format value '{0}' for minutes to charge", i_MinutesToCharge));
-            }
-
-            if (!IsExistsVehicle(i_LicenseNumber))
-            {
-                string errorMessage = string.Format("Vehicle with the license number: '{0}' not exists", i_LicenseNumber);
-                throw new ArgumentException(errorMessage);
+                throw new FormatException(string.Format("Invalid format. the value to add must be a float", energyToAdd));
             }
 
             Vehicle vehicle = m_GarageVehicles[i_LicenseNumber].Vehicle;
-            ElectricEngine electricEngine = vehicle.Engine as ElectricEngine;
-            if (electricEngine == null)
-            {
-                string errorMessage = string.Format("The vehicle {0} not support in electric engine", i_LicenseNumber);
-                throw new ArgumentException(errorMessage);
-            }
-
-            float timeToChargeInHour = MinutesToCharge / 60f;
-            electricEngine.ChargeBattary(timeToChargeInHour);
+            GasEngine engine = vehicle.Engine as GasEngine;
+            vehicle.Engine.FillEnergy(energyToAdd);
         }
+
 
         public StringBuilder GetVehicleInfo(string i_LicenseNumber)
         {
@@ -174,6 +148,36 @@ namespace Ex03.GarageLogic
             }
 
             m_GarageVehicles[licenseNumber].Status = eVehicleStatus;
+        }
+
+        public void ValidateIsVehicleExists(string i_LicenseNumber)
+        {
+            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, Vehicle.k_LicenseNumberFieldName);
+
+            if (!IsExistsVehicle(i_LicenseNumber))
+            {
+                throw new VehicleNotExistsException(i_LicenseNumber);
+            }
+        }
+        public void ValidateVehicleIsElectric(string i_LicenseNumber)
+        {
+            validateEngineType(i_LicenseNumber, typeof(ElectricEngine));
+        }
+
+        internal void ValidateIsGasVehicle(string i_LicenseNumber)
+        {
+            validateEngineType(i_LicenseNumber, typeof(GasEngine));
+        }
+
+        private void validateEngineType(string i_LicenseNumber, Type engineType)
+        {
+            ValidateIsVehicleExists(i_LicenseNumber);
+            Engine engine = m_GarageVehicles[i_LicenseNumber].Vehicle.Engine;
+
+            if (engine.GetType() != engineType)
+            {
+                throw new InvalidEngineTypeException();
+            }
         }
 
         private IDictionary<string, GarageVehicle> m_GarageVehicles;

@@ -19,37 +19,40 @@ namespace Ex03.ConsoleUI.Operations
         public override void Execute() 
         {
             List<string> licenseNumbers;
-            Console.WriteLine("Press 'S' to sort by Status, any other key will show all license numbers");
-            string userOption = Console.ReadLine();
+            IList<string> menuOptions = Enum.GetNames(typeof(eVehicleStatus)).ToList();
+            menuOptions.Add(k_AllVehicleKey);
+            Menu menu = new Menu("Vehicle Status", menuOptions);
+            string userselectedOption = menu.ReadUserselectedValue();
 
-            if (userOption == "S")
-            {
-                Menu menu = new Menu("Vehicle Status", Enum.GetNames(typeof(eVehicleStatus)));
-                string userselectedOption = menu.ReadUserselectedValue();
-                eVehicleStatus selectedStatus = EnumHelper.ParseByName<eVehicleStatus>(userselectedOption);
-
-                licenseNumbers = m_GarageManager.GetLicensesNumbers(selectedStatus);
-            }
-            else
+            if (userselectedOption == k_AllVehicleKey)
             {
                 licenseNumbers = m_GarageManager.GetLicensesNumbers();
             }
+            else
+            {
+                eVehicleStatus selectedStatus = EnumHelper.ParseByName<eVehicleStatus>(userselectedOption);
+                licenseNumbers = m_GarageManager.GetLicensesNumbers(selectedStatus);
+            }
             
             Console.WriteLine(); // Empty line for better visualization
-            Console.WriteLine("The Licenses Numbers are:");
-
-            int lineNumber = 1;
-            foreach (var licenseNumber in licenseNumbers)
+            if (licenseNumbers.Count > 0)
             {
-                Console.WriteLine("{0}: {1}", lineNumber, licenseNumber);
-                lineNumber++;
-            }
+                Console.WriteLine("The licenses numbers are:");
 
-            Console.WriteLine(); // Empty line for better visualization
-            Console.WriteLine("Press Enter to back to main menu");
-            Console.ReadLine();
-            Console.WriteLine(); // Empty line for better visualization
+                int lineNumber = 1;
+                foreach (var licenseNumber in licenseNumbers)
+                {
+                    Console.WriteLine("{0}: {1}", lineNumber, licenseNumber);
+                    lineNumber++;
+                }
+            }
+            else
+            {
+                Console.WriteLine("No licences numbers founds.");
+            }
         }
+
+        private const string k_AllVehicleKey = "All";
     }
 }
 

@@ -39,7 +39,7 @@ namespace Ex03.ConsoleUI
             bool isValidOption = false;
             do 
             {
-                Console.Write("Please choose the option number:");
+                Console.Write("Please choose the option number: ");
                 string selectedNumberStr = Console.ReadLine();
                 isValidOption = int.TryParse(selectedNumberStr, out selectedNumber) && inRange(selectedNumber);
                 if (!isValidOption)

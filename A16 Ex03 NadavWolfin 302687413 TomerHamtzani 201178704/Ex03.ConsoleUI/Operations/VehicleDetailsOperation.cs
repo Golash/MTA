@@ -35,11 +35,6 @@ namespace Ex03.ConsoleUI.Operations
                     licenseNumber = Console.ReadLine();
                 }
             }
-
-            Console.WriteLine(); // Empty line for better visualization
-            Console.WriteLine("Press Enter to back to main menu");
-            Console.ReadLine();
-            Console.WriteLine(); // Empty line for better visualization
         }
     }
 }

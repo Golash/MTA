@@ -24,5 +24,12 @@ namespace Ex03.GarageLogic.Helpers
                 throw new ValueOutOfRangeException(null, i_MinValue, i_MaxValue);
             }
         }
+        public static void ValidateIsNotNull(object i_Obj, string i_Name)
+        {
+            if (i_Obj == null)
+            {
+                throw new NullReferenceException(string.Format("The {0} can't be null", i_Name));
+            }
+        }
     }
 }

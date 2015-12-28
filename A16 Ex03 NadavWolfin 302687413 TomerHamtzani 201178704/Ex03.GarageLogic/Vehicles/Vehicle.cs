@@ -116,7 +116,7 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        private const string k_LicenseNumberFieldName = "LicenseNumber";
+        internal const string k_LicenseNumberFieldName = "LicenseNumber";
         private const string k_WheelsFieldName = "Wheels";
         private const string k_ModelNameFieldName = "ModelName";
         protected string m_ModelName;

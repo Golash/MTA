@@ -23,14 +23,12 @@ namespace Ex03.GarageLogic
             return 0;
         }
 
-        protected void FillEnergy(float i_LittersToAdd)
+        public void FillEnergy(float i_energyToAdd)
         {
-            if ((CurrentEnergy + i_LittersToAdd) > MaxEnergyCapacity)
-            {
-                throw new ValueOutOfRangeException(null, MinEnergyCapacity, MaxEnergyCapacity);
-            }
+            float energyFreeSpace = MaxEnergyCapacity - CurrentEnergy;
+            Validator.ValidateValueInRange(i_energyToAdd, 0, energyFreeSpace);
 
-            CurrentEnergy += i_LittersToAdd;
+            CurrentEnergy += i_energyToAdd;
         }
 
         private void SetCurrentGasAmount(string fieldValue)
@@ -56,6 +54,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
+                Validator.ValidateValueInRange(value, m_MinEnergyCapacity, m_MaxEnergyCapacity);
                 m_CurrentEnergy = value;
             }
         }

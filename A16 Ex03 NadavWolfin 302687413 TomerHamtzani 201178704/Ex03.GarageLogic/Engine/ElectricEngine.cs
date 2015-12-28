@@ -19,11 +19,6 @@ namespace Ex03.GarageLogic
                 return "Please Insert Remaining Battery Time (in hours)";
             }
         }
-
-        public void ChargeBattary(float i_NumberOfHoursToAdd)
-        {
-            base.FillEnergy(i_NumberOfHoursToAdd);
-        }
         
         protected override string CurrentEnergyAmountMsg
         {

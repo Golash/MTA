@@ -7,50 +7,39 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class FillElectricVehicleOperation : UserOperation
+    class FillElectricVehicleOperation : FillVehicleOperation
     {
-        public FillElectricVehicleOperation(GarageManager manager)
-            : base(manager, "FillElectricVehicleOperation", "Fill Electric Vehicle")
+        public FillElectricVehicleOperation(GarageManager i_GarageManager) : base (i_GarageManager, "Minutes", "Fill electric car")
         {
+
         }
 
-        public override void Execute()
+        private float convertMinuteToHours(float minute)
         {
-            bool isOperationSucceeded = false;
-            while (!isOperationSucceeded)
+            return minute / 60;
+        }
+
+        private float convertHoursToMinute(float hours)
+        {
+            return hours * 60;
+        }
+
+        protected override void FillEnergy(string i_LicenseNumber, string i_EnergyAmountToAddStrVal)
+        {
+            float minutes;
+            if (!float.TryParse(i_EnergyAmountToAddStrVal, out minutes))
             {
-                Console.Write("Insert license number: ");
-                string licenseNumber = Console.ReadLine();
-
-                Console.Write("Insert minutes amount to Charge: ");
-                string minutesToCharge = Console.ReadLine();
-
-                try
-                {
-                    m_GarageManager.ChargeBattery(licenseNumber, minutesToCharge);
-                    Console.WriteLine(); // Empty line for better visualization
-                    Console.WriteLine("The Vehicle with license number {0} has now more {1} mintuts of battery", licenseNumber, minutesToCharge);
-                    isOperationSucceeded = true;
-                }
-                catch (FormatException ex)
-                {
-                    string errorMessage = string.Format("{0}, Plesat try again", ex.Message);
-                    Console.WriteLine(errorMessage);
-                }
-                catch (ArgumentException ex)
-                {
-                    string errorMessage = string.Format("{0}, Plesat try again", ex.Message);
-                    Console.WriteLine(errorMessage);
-                }
-                catch (ValueOutOfRangeException ex)
-                {
-                    Console.WriteLine("The minitus to charge that you wand to add, will cause to pass the battary maximum capacity for this vehicle ({0}), please try again: ", ex.MaxValue);
-                }
+                throw new FormatException("Minutes must be a float number, the value '{0}' is invalid");
             }
 
-            Console.WriteLine("Press Enter to back to main menu");
-            Console.ReadLine();
-            Console.WriteLine(); // Empty line for better visualization
+            try
+            {
+                m_GarageManager.ChargeBattery(i_LicenseNumber, convertMinuteToHours(minutes).ToString());
+            }
+            catch (ValueOutOfRangeException ex)
+            {
+                throw new ValueOutOfRangeException(ex, convertMinuteToHours(ex.MinValue), convertHoursToMinute(ex.MaxValue));
+            }
         }
     }
 }

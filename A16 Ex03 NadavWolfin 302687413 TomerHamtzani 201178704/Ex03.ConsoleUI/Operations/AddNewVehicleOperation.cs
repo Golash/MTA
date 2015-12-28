@@ -64,7 +64,7 @@ namespace Ex03.ConsoleUI.Operations
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("Invalid format value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
+                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
                         }
                     }
                 }
@@ -78,9 +78,6 @@ namespace Ex03.ConsoleUI.Operations
 
                 Console.WriteLine(); // Empty line for better visualization
                 Console.WriteLine("The vehicle with license number: {0} was added successfully to the garage ", vehicle.LicenseNumber);
-                Console.WriteLine("Press Enter to back to main menu");
-                Console.ReadLine();
-                Console.WriteLine(); // Empty line for better visualization
             }
 
         }
@@ -109,6 +106,10 @@ namespace Ex03.ConsoleUI.Operations
                         catch (ArgumentException)
                         {
                             Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
                         }
                         catch (ValueOutOfRangeException ex)
                         {
@@ -164,6 +165,10 @@ namespace Ex03.ConsoleUI.Operations
                         catch (ArgumentException)
                         {
                             Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
                         }
                         catch (ValueOutOfRangeException ex)
                         {

@@ -39,11 +39,12 @@ namespace Ex03.ConsoleUI.Operations
                     Console.Write("The license number {0} doesn't exists, please insert license number again: ", licenseNumber);
                     licenseNumber = Console.ReadLine(); 
                 }
+                catch (FormatException)
+                {
+                    Console.Write("The license number {0} doesn't exists, please insert license number again: ", licenseNumber);
+                    licenseNumber = Console.ReadLine(); 
+                }
             }
-
-            Console.WriteLine("Press Enter to back to main menu");
-            Console.ReadLine();
-            Console.WriteLine(); // Empty line for better visualization
         }
     }
 }
