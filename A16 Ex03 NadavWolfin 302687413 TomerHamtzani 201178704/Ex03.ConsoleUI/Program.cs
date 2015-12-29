@@ -25,47 +25,39 @@ namespace Ex03.ConsoleUI
                 Menu mainMenu = GetMainMenu(operations);
                 int operationNumber = mainMenu.ReadUserSelectedNumber();
                 UserOperation operation = operations[operationNumber];
-                if (operation is ExitOperation)
+                try
                 {
-                    userRequestToExit = true;
+                    operation.Execute();
                 }
-                else
+                catch (InvalidEngineTypeException ex)
                 {
-                    
-                    try
-                    {
-                        operation.Execute();
-                    }
-                    catch (InvalidEngineTypeException ex)
-                    {
-                        Console.WriteLine("Invalid input, Vehicle engine type: '{0}' is not supported for operation: '{1}', engine type: '{2}' is required ",ex.VehicleEngineType, ex.RequiredEngineType);
-                    }
-                    catch (VehicleNotExistsException ex)
-                    {
-                        Console.WriteLine("Invalid input, vehicle with license number: '{0}' not exists in the garage", ex.LisenceNumber);
-                    }
-                    catch (ValueOutOfRangeException ex)
-                    {
-                        Console.WriteLine("Invalid input, the field: '{0}' must be between {1} to {2} ", ex.FieldName, ex.MinValue, ex.MaxValue);
-                    }
-                    catch (FormatException ex)
-                    {
-                        Console.WriteLine("One of the operation parameter has invalid format [Server Details: {0}]", ex.Message);
-                    }
-                    catch (ArgumentException ex)
-                    {
-                        Console.WriteLine("The parameter '{0}' is invalid, [Server Details: {0}]", ex.ParamName, ex.Message);
-                    }
-                    catch (Exception ex)
-                    {
-                        // In case of unknown exception - catch it and print the internal server message
-                        Console.WriteLine("Internal Server Error, [Server Details: {0}]", ex.Message);
-                    }
-                    
-                    Console.WriteLine(); // Empty line for better visualization
-                    Console.WriteLine("Press Enter to back to the Main Menu");
-                    Console.ReadLine();
+                    Console.WriteLine("Invalid input, Vehicle engine type: '{0}' is not supported for operation: '{1}', engine type: '{2}' is required ", ex.InvalidEngineType, operation.DisplayName, ex.RequiredEngineType);
                 }
+                catch (VehicleNotExistsException ex)
+                {
+                    Console.WriteLine("Invalid input, vehicle with license number: '{0}' not exists in the garage", ex.LisenceNumber);
+                }
+                catch (ValueOutOfRangeException ex)
+                {
+                    Console.WriteLine("Invalid input, the field: '{0}' must be between {1} to {2} ", ex.FieldName, ex.MinValue, ex.MaxValue);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine("One of the operation parameter has invalid format [Server Details: {0}]", ex.Message);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine("The parameter '{0}' is invalid, [Server Details: {1}]", ex.ParamName, ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    // In case of unknown exception - catch it and print the internal server message
+                    Console.WriteLine("Internal Server Error, [Server Details: {0}]", ex.Message);
+                }
+
+                Console.WriteLine(); // Empty line for better visualization
+                Console.WriteLine("Press Enter to back to the Main Menu");
+                Console.ReadLine();
             }
 
             Console.WriteLine("Press Enter to exit...");
@@ -154,9 +146,6 @@ namespace Ex03.ConsoleUI
             userOperations.Add(new FillGasVehicleOperation(m_GarageManager));
             userOperations.Add(new FillElectricVehicleOperation(m_GarageManager));
             userOperations.Add(new VehicleDetailsOperation(m_GarageManager));
-
-            // Always add the Exit operation at the end of the list
-            userOperations.Add(new ExitOperation());
 
             return userOperations.ToArray();
         }

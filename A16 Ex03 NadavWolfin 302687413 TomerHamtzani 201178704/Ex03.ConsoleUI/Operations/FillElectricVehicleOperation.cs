@@ -52,7 +52,8 @@ namespace Ex03.ConsoleUI.Operations
             }
             catch (ValueOutOfRangeException ex)
             {
-                throw new ValueOutOfRangeException(convertMinuteToHours(ex.MinValue), convertHoursToMinute(ex.MaxValue), ex.FieldName);
+                // Conver the Min and Max limitations from hours to minutes
+                throw new ValueOutOfRangeException(convertHoursToMinute(ex.MinValue), convertHoursToMinute(ex.MaxValue), ex.FieldName);
             }
         }
     }

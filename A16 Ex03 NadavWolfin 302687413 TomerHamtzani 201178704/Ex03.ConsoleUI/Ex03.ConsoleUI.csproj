@@ -46,7 +46,6 @@
     <Compile Include="Menu.cs" />
     <Compile Include="Operations\AddNewVehicleOperation.cs" />
     <Compile Include="Operations\ChangeVehicleStatusOperation.cs" />
-    <Compile Include="Operations\ExitOperation.cs" />
     <Compile Include="Operations\FillAirInWheelsToMaxOperation.cs" />
     <Compile Include="Operations\FillElectricVehicleOperation.cs" />
     <Compile Include="Operations\FillGasVehicleOperation.cs" />
