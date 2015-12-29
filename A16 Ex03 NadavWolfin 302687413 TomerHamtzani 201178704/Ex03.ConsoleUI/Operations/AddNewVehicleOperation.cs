@@ -189,11 +189,6 @@ namespace Ex03.ConsoleUI.Operations
             }
         }
 
-        private bool isValidAirPressure(Wheel i_Wheel, float i_AirPressure)
-        {
-            return 0 <= i_AirPressure && i_AirPressure <= i_Wheel.MaxAirPressure;
-        }
-
         public Menu getSupportedVehicleMenu()
         {
             return new Menu("Please choose vehicle type", m_GarageManager.GetSupportedVehicle());

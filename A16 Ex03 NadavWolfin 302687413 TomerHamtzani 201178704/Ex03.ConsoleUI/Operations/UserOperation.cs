@@ -12,19 +12,19 @@ namespace Ex03.ConsoleUI.Operations
         public UserOperation(GarageManager manager, string name, string displayName)
         {
             m_GarageManager = manager;
-            _Name = name;
-            _DisplayName = displayName;
+            m_Name = name;
+            m_DisplayName = displayName;
         }
 
         public string DisplayName
         {
             get
             {
-                return _DisplayName;
+                return m_DisplayName;
             }
             set
             {
-                _DisplayName = value;
+                m_DisplayName = value;
             }
         }
 
@@ -32,11 +32,11 @@ namespace Ex03.ConsoleUI.Operations
         {
             get
             {
-                return _Name;
+                return m_Name;
             }
             protected set
             {
-                _Name = value;
+                m_Name = value;
             }
         }
 
@@ -48,8 +48,8 @@ namespace Ex03.ConsoleUI.Operations
 
         public abstract void Execute();
 
-        protected string _Name;
-        protected string _DisplayName;
+        protected string m_Name;
+        protected string m_DisplayName;
         protected GarageManager m_GarageManager;
     }
 }
