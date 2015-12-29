@@ -52,7 +52,7 @@
     <Compile Include="Vehicles\ElectricCar.cs" />
     <Compile Include="Engine\ElectricEngine.cs" />
     <Compile Include="Vehicles\ElectricMotorcycle.cs" />
-    <Compile Include="Enums\eLicenceType.cs" />
+    <Compile Include="Enums\eLicenseType.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Enums\eVehicleStatus.cs" />
     <Compile Include="Factory\CarFactory.cs" />

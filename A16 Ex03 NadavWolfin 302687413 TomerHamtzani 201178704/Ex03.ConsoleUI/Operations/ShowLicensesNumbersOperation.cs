@@ -48,7 +48,7 @@ namespace Ex03.ConsoleUI.Operations
             }
             else
             {
-                Console.WriteLine("No licences numbers founds.");
+                Console.WriteLine("No licenses numbers founds.");
             }
         }
 
