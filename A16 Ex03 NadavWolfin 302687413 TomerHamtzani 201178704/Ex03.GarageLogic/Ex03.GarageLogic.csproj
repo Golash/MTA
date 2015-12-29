@@ -43,7 +43,6 @@
     <Compile Include="Exceptions\RequiredValueException.cs" />
     <Compile Include="Exceptions\VehicleNotExistsException.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Helpers\ReflactionHelper.cs" />
     <Compile Include="Helpers\Validator.cs" />
     <Compile Include="Vehicles\Car.cs" />
     <Compile Include="Enums\eColor.cs" />

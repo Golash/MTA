@@ -1,4 +1,5 @@
 ﻿using Ex03.GarageLogic;
+using Ex03.GarageLogic.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Ex03.ConsoleUI.Operations
     class FillElectricVehicleOperation : FillVehicleOperation
     {
 
-        public FillElectricVehicleOperation(GarageManager i_GarageManager) : base (i_GarageManager, "Minutes", "Fill electric car")
+        public FillElectricVehicleOperation(GarageManager i_GarageManager)
+            : base(i_GarageManager, "Minutes", "Chareg Battery For Elctric Vehicle")
         {
         }
 

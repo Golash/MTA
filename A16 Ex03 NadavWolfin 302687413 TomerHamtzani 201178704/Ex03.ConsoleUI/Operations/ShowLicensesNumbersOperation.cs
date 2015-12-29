@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI.Operations
     class ShowLicensesNumbersOperation : UserOperation
     {
         public ShowLicensesNumbersOperation(GarageManager manager)
-            : base(manager, "ShowLicensesNumbersOperation", "Show Licenses Numbers")
+            : base(manager, "ShowLicensesNumbersOperation", "Show License Numbers")
         {
 
         }

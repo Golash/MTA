@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class FillGasVehicleOperation : FillVehicleOperation
+    class FillRegularVehicleOperation : FillVehicleOperation
     {
-        public FillGasVehicleOperation(GarageManager i_GarageManager)
-            : base(i_GarageManager, "Gas Litters", "Fill regular car")
+        public FillRegularVehicleOperation(GarageManager i_GarageManager)
+            : base(i_GarageManager, "Gas Litters", "Fill Gas To Regular Vehicle")
         {
         }
 

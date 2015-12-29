@@ -10,7 +10,7 @@ namespace Ex03.ConsoleUI.Operations
     class VehicleDetailsOperation : UserOperation
     {
         public VehicleDetailsOperation(GarageManager manager) : 
-            base(manager, "VehicleDetailsOperation", "Vehicle Details")
+            base(manager, "VehicleDetailsOperation", "Display Vehicle Details")
         {
 
         }

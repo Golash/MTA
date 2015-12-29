@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.ConsoleUI.Operations
 {
@@ -14,7 +15,7 @@ namespace Ex03.ConsoleUI.Operations
     {
 
         public AddNewVehicleOperation(GarageManager manager)
-            : base(manager, "AddNewVehicleOperation", "Add new vehicle")
+            : base(manager, "AddNewVehicleOperation", "Add New Vehicle")
         {
         }
 
@@ -58,6 +59,7 @@ namespace Ex03.ConsoleUI.Operations
                         {
                             if (ex.MaxValue == int.MaxValue)
                             {
+                                // Print nice message to the user in case of unlimit upper
                                 Console.WriteLine("The value: '{0}' is out of range. Please insert value greater or equal to {1}", fieldValue, ex.MinValue);
                             }
                             else
@@ -67,7 +69,7 @@ namespace Ex03.ConsoleUI.Operations
                         }
                         catch (ArgumentException)
                         {
-                            Console.WriteLine("Invalid value '{0}', Please try again.'", fieldValue);
+                            Console.WriteLine("Invalid value '{0}', Please try again.", fieldValue);
                         }
                         catch (FormatException)
                         {

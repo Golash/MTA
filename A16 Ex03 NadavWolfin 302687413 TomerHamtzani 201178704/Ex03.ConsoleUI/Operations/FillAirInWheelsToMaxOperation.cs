@@ -10,7 +10,7 @@ namespace Ex03.ConsoleUI.Operations
     class FillAirInWheelsToMaxOperation : UserOperation
     {
         public FillAirInWheelsToMaxOperation(GarageManager manager)
-            : base(manager, "FillAirInWheelsToMaxOperation", "Fill Air In Wheels ToMax")
+            : base(manager, "FillAirInWheelsToMaxOperation", "Fill Air In Wheels To Max")
         {
         }
 
