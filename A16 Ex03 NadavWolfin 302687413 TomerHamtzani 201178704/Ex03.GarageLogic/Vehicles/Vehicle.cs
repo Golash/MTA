@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic.Vehicles
         protected virtual void fillAdditionalParameters()
         {
             m_AdditionalParameters = new Dictionary<string, string>();
-            m_AdditionalParameters.Add(k_ModelNameFieldName, "Please insert the car Model");
+            m_AdditionalParameters.Add(k_ModelNameFieldName, "Please insert the vehicle Model");
 
             foreach (string parameter in m_Engine.AdditionalParameters.Keys)
             {

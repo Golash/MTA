@@ -17,12 +17,6 @@ namespace Ex03.GarageLogic
             fillAdditionalParameters();
         }
 
-        public float GetCurrentEnergyPercentage()
-        {
-            // TODO imliment and add to details
-            return 0;
-        }
-
         public void FillEnergy(float i_energyToAdd)
         {
             float energyFreeSpace = MaxEnergyCapacity - CurrentEnergy;
@@ -59,6 +53,15 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public float CurrentEnergyPercentage
+        {
+            get
+            {
+                return (CurrentEnergy / MaxEnergyCapacity) * 100;
+            }
+        }
+
+        
         public float MaxEnergyCapacity
         {
             get
@@ -93,6 +96,7 @@ namespace Ex03.GarageLogic
         public virtual void EngineDetails(StringBuilder i_EngineDetails)
         {
             i_EngineDetails.AppendLine(string.Format("{0}: {1}", CurrentEnergyAmountMsg, CurrentEnergy));
+            i_EngineDetails.AppendLine(string.Format("{0}: {1} %", k_CurrentEnergyPercentage, CurrentEnergyPercentage));
         }
 
         protected virtual void fillAdditionalParameters()
@@ -117,6 +121,7 @@ namespace Ex03.GarageLogic
         protected abstract string CurrentEnergyAmountMsg { get; }
 
         private const string k_CurrentEnergyFieldName = "CurrentEnergy";
+        private const string k_CurrentEnergyPercentage = "Current Energy Percentage";
         protected IDictionary<string,string> m_AdditionalParameters;
         private float m_CurrentEnergy;
         private readonly float m_MaxEnergyCapacity;

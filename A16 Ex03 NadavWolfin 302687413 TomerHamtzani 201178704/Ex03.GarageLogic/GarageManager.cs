@@ -119,7 +119,7 @@ namespace Ex03.GarageLogic
             vehicleInfo.AppendLine(string.Format("Owner Phone: {0}", m_GarageVehicles[i_LicenseNumber].OwnerDetails.OwnerPhone));
             
             vehicleInfo.AppendLine(); // Empty line for better visualization
-            vehicleInfo.AppendLine("Vehicle Status: Info");
+            vehicleInfo.AppendLine("Status Info:");
             vehicleInfo.AppendLine(string.Format("Vehicle Status: {0}", m_GarageVehicles[i_LicenseNumber].Status));
 
             return vehicleInfo;
