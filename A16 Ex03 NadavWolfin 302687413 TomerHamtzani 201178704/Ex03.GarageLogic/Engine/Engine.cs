@@ -122,6 +122,7 @@ namespace Ex03.GarageLogic
 
         private const string k_CurrentEnergyFieldName = "CurrentEnergy";
         private const string k_CurrentEnergyPercentage = "Current Energy Percentage";
+		internal const string k_EngineTypeFieldName = "Engine Type";
         protected IDictionary<string,string> m_AdditionalParameters;
         private float m_CurrentEnergy;
         private readonly float m_MaxEnergyCapacity;

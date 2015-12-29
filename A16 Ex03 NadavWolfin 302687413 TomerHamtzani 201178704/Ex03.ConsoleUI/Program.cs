@@ -29,9 +29,9 @@ namespace Ex03.ConsoleUI
                 {
                     operation.Execute();
                 }
-                catch (InvalidEngineTypeException ex)
+                catch (RequiredValueException ex)
                 {
-                    Console.WriteLine("Invalid input, Vehicle engine type: '{0}' is not supported for operation: '{1}', engine type: '{2}' is required ", ex.InvalidEngineType, operation.DisplayName, ex.RequiredEngineType);
+                    Console.WriteLine("Invalid input, operation parameter {0} required value is: '{1}', but '{2}' was given ", ex.ParamName, ex.RequiredValue, ex.InvalidValue);
                 }
                 catch (VehicleNotExistsException ex)
                 {

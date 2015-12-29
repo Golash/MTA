@@ -71,7 +71,7 @@ namespace Ex03.GarageLogic
                 string errorMessage = string.Format("The vehicle {0} not support gas type {1}, the gas type of the vehicle is {2}",
                     i_LicenseNumber, i_GasType, gasEngine.GasType);
 
-                throw new InvalidGasTypeException(i_GasType, gasEngine.GasType);
+                throw new RequiredValueException(gasEngine.GasType.ToString(), i_GasType.ToString(), GasEngine.k_GasTypeFieldName);
             }
 
             fillEnergy(i_LicenseNumber, i_LiterToAdd);
@@ -165,7 +165,7 @@ namespace Ex03.GarageLogic
 
             if (engine.GetType() != i_EngineType)
             {
-                throw new InvalidEngineTypeException(engine.GetType().Name, i_EngineType.Name);
+                throw new RequiredValueException(engine.GetType().Name, i_EngineType.Name, Engine.k_EngineTypeFieldName);
             }
         }
 

@@ -40,8 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\InvalidEngineTypeException.cs" />
-    <Compile Include="Exceptions\InvalidGasTypeException.cs" />
+    <Compile Include="Exceptions\RequiredValueException.cs" />
     <Compile Include="Exceptions\VehicleNotExistsException.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\ReflactionHelper.cs" />

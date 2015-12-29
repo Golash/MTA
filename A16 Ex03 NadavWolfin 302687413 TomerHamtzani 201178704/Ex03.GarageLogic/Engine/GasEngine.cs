@@ -49,11 +49,12 @@ namespace Ex03.GarageLogic
                 return m_GasType;
             }
             set
-            {
+           { 
                 m_GasType = value;
             }
         }
 
         private eGasType m_GasType;
+        internal const string k_GasTypeFieldName = "Gas Type";
     }
 }
