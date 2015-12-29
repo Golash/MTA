@@ -7,18 +7,32 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI.Operations
 {
+    /// <summary>
+    /// This class in extended the abstract class <see cref="FillVehicleOperation"/>
+    /// by convert the energy amount from minutes to hours.
+    /// </summary>
     class FillElectricVehicleOperation : FillVehicleOperation
     {
+
         public FillElectricVehicleOperation(GarageManager i_GarageManager) : base (i_GarageManager, "Minutes", "Fill electric car")
         {
-
         }
 
-        private float convertMinuteToHours(float minute)
+        /// <summary>
+        /// Convert the given <paramref name="minutes"/> from minutes to hours
+        /// </summary>
+        /// <param name="minute"></param>
+        /// <returns></returns>
+        private float convertMinuteToHours(float minutes)
         {
-            return minute / 60;
+            return minutes / 60;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hours"></param>
+        /// <returns></returns>
         private float convertHoursToMinute(float hours)
         {
             return hours * 60;
@@ -38,7 +52,7 @@ namespace Ex03.ConsoleUI.Operations
             }
             catch (ValueOutOfRangeException ex)
             {
-                throw new ValueOutOfRangeException(ex, convertMinuteToHours(ex.MinValue), convertHoursToMinute(ex.MaxValue));
+                throw new ValueOutOfRangeException(convertMinuteToHours(ex.MinValue), convertHoursToMinute(ex.MaxValue), ex.FieldName);
             }
         }
     }

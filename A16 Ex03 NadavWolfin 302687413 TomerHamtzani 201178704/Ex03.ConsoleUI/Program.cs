@@ -1,5 +1,6 @@
 ﻿using Ex03.ConsoleUI.Operations;
 using Ex03.GarageLogic;
+using Ex03.GarageLogic.Exceptions;
 using Ex03.GarageLogic.Helpers;
 using Ex03.GarageLogic.Vehicles;
 using System;
@@ -19,22 +20,52 @@ namespace Ex03.ConsoleUI
             fillGarageManagerForTests(); // TODO: Remove this - it's only for tests
             
             while (!userRequestToExit)
-            {
+            {               
                 UserOperation[] operations = loadUserOperations();
                 Menu mainMenu = GetMainMenu(operations);
-                int operationNumber = mainMenu.ReadUserselectedNumber();
-                if (operations[operationNumber] is ExitOperation)
+                int operationNumber = mainMenu.ReadUserSelectedNumber();
+                UserOperation operation = operations[operationNumber];
+                if (operation is ExitOperation)
                 {
                     userRequestToExit = true;
                 }
                 else
                 {
-                    operations[operationNumber].Execute();
+                    
+                    try
+                    {
+                        operation.Execute();
+                    }
+                    catch (InvalidEngineTypeException ex)
+                    {
+                        Console.WriteLine("Invalid input, Vehicle engine type: '{0}' is not supported for operation: '{1}', engine type: '{2}' is required ",ex.VehicleEngineType, ex.RequiredEngineType);
+                    }
+                    catch (VehicleNotExistsException ex)
+                    {
+                        Console.WriteLine("Invalid input, vehicle with license number: '{0}' not exists in the garage", ex.LisenceNumber);
+                    }
+                    catch (ValueOutOfRangeException ex)
+                    {
+                        Console.WriteLine("Invalid input, the field: '{0}' must be between {1} to {2} ", ex.FieldName, ex.MinValue, ex.MaxValue);
+                    }
+                    catch (FormatException ex)
+                    {
+                        Console.WriteLine("One of the operation parameter has invalid format [Server Details: {0}]", ex.Message);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        Console.WriteLine("The parameter '{0}' is invalid, [Server Details: {0}]", ex.ParamName, ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        // In case of unknown exception - catch it and print the internal server message
+                        Console.WriteLine("Internal Server Error, [Server Details: {0}]", ex.Message);
+                    }
+                    
+                    Console.WriteLine(); // Empty line for better visualization
+                    Console.WriteLine("Press Enter to back to the Main Menu");
+                    Console.ReadLine();
                 }
-
-                Console.WriteLine(); // Empty line for better visualization
-                Console.WriteLine("Press Enter to back to the Main Menu");
-                Console.ReadLine();
             }
 
             Console.WriteLine("Press Enter to exit...");
@@ -58,6 +89,8 @@ namespace Ex03.ConsoleUI
                 wheel.CurrentAirPressure = 12.4f;
             });
             truck.Engine.CurrentEnergy = 14.2f;
+            truck.SetField("ModelName", "Model1");
+            //truck.
 
             Vehicle electricMotorcycle = m_GarageManager.CreateVehicle("2", "Electric Motorcycle");
             electricMotorcycle.Wheels.ToList().ForEach(wheel =>
@@ -66,6 +99,7 @@ namespace Ex03.ConsoleUI
                 wheel.CurrentAirPressure = 12.4f;
             });
             electricMotorcycle.Engine.CurrentEnergy = 1.2f;
+            electricMotorcycle.SetField("ModelName", "Model1");
 
             Vehicle electricCar = m_GarageManager.CreateVehicle("3", "Electric Car");
             electricCar.Wheels.ToList().ForEach(wheel =>
@@ -74,6 +108,7 @@ namespace Ex03.ConsoleUI
                 wheel.CurrentAirPressure = 24.4f;
             });
             electricCar.Engine.CurrentEnergy = 1.2f;
+            electricCar.SetField("ModelName", "Model1");
 
             Vehicle regularCar = m_GarageManager.CreateVehicle("4", "Regular Car");
             regularCar.Wheels.ToList().ForEach(wheel =>
@@ -82,6 +117,7 @@ namespace Ex03.ConsoleUI
                 wheel.CurrentAirPressure = 21.4f;
             });
             regularCar.Engine.CurrentEnergy = 11.2f;
+            regularCar.SetField("ModelName", "Model1");
 
             Vehicle regularMotorcycle = m_GarageManager.CreateVehicle("5", "Regular Motorcycle");
             regularMotorcycle.Wheels.ToList().ForEach(wheel =>
@@ -90,6 +126,7 @@ namespace Ex03.ConsoleUI
                 wheel.CurrentAirPressure = 14.4f;
             });
             regularMotorcycle.Engine.CurrentEnergy = 1.2f;
+            regularMotorcycle.SetField("ModelName", "Model1");
 
             m_GarageManager.AddNewVehicle(truck, nadav);
             m_GarageManager.AddNewVehicle(regularCar, nadav);

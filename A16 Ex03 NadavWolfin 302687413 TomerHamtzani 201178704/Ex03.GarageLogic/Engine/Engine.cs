@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
         public void FillEnergy(float i_energyToAdd)
         {
             float energyFreeSpace = MaxEnergyCapacity - CurrentEnergy;
-            Validator.ValidateValueInRange(i_energyToAdd, 0, energyFreeSpace);
+            Validator.ValidateValueInRange(k_CurrentEnergyFieldName, i_energyToAdd, 0, energyFreeSpace);
 
             CurrentEnergy += i_energyToAdd;
         }
@@ -41,7 +41,7 @@ namespace Ex03.GarageLogic
                 throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "CurrentEnergy"));
             }
 
-            Validator.ValidateValueInRange(currentGasAmount, MinEnergyCapacity, MaxEnergyCapacity);
+            Validator.ValidateValueInRange(k_CurrentEnergyFieldName, currentGasAmount, MinEnergyCapacity, MaxEnergyCapacity);
             
             CurrentEnergy = currentGasAmount;
         }
@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                Validator.ValidateValueInRange(value, m_MinEnergyCapacity, m_MaxEnergyCapacity);
+                Validator.ValidateValueInRange(k_CurrentEnergyFieldName, value, m_MinEnergyCapacity, m_MaxEnergyCapacity);
                 m_CurrentEnergy = value;
             }
         }

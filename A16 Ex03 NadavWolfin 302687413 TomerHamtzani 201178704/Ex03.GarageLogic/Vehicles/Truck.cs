@@ -51,18 +51,12 @@ namespace Ex03.GarageLogic.Vehicles
         {
             Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_IsCarryDangerousMaterialsFieldName);
 
-            if (fieldValue == "Y")
-            {
-                IsCarryDangerousMaterials = true;
-            }
-            else if (fieldValue == "N")
-            {
-                IsCarryDangerousMaterials = false;
-            }
-            else
+            // fieldValue represent an answer for boolean question - It can be YES = "Y" or NOT = "N"
+            if (fieldValue != NO && fieldValue != YES)
             {
                 throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, k_IsCarryDangerousMaterialsFieldName));
             }
+            IsCarryDangerousMaterials = fieldValue == YES;
         }
 
         private void SetMaxCarryWeight(string fieldValue)
@@ -109,7 +103,8 @@ namespace Ex03.GarageLogic.Vehicles
                 m_MaxCarryWeight = value;
             }
         }
-
+        private const string YES = "Y";
+        private const string NO = "N";
         private const string k_IsCarryDangerousMaterialsFieldName = "IsCarryDangerousMaterials";
         private const string k_MaxCarryWeightFieldName = "MaxCarryWeight";
         private bool m_IsCarryDangerousMaterials;

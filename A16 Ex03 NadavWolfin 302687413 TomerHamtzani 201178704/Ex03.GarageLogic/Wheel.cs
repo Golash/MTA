@@ -54,9 +54,13 @@ namespace Ex03.GarageLogic
 
             CurrentAirPressure = currentAirPressure;
         }
-        public void FillAir(float i_AirToFill)
+        
+        /// <summary>
+        /// Fill the wheel air pressure to maximum
+        /// </summary>
+        public void FillToMax()
         {
-            this.CurrentAirPressure = i_AirToFill;
+            this.CurrentAirPressure = MaxAirPressure;
         }
 
         public string Manufacturer
@@ -80,7 +84,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                Validator.ValidateValueInRange(value, MinAirPressure, MaxAirPressure);
+                Validator.ValidateValueInRange(k_CurrentAirPressureFieldName, value, MinAirPressure, MaxAirPressure);
                 m_CurrentAirPressure = value;
             }
         }

@@ -16,25 +16,14 @@ namespace Ex03.ConsoleUI.Operations
 
         public override void Execute()
         {
-            Console.Write("Insert license number: ");
-            string licenseNumber = Console.ReadLine();
+            // Read the license number form the user
+            string licenseNumber = ReadLicenseNumber();
 
-            bool isOperationSucceeded = false;
-            while (!isOperationSucceeded)
-            {
-                try
-                {
-                    m_GarageManager.FillAirInWheelsToMax(licenseNumber);
-                    Console.WriteLine(); // Empty line for better visualization
-                    Console.WriteLine("The wheels of vehicle with license number {0} are full", licenseNumber);
-                    isOperationSucceeded = true;
-                }
-                catch (ArgumentException)
-                {
-                    Console.Write("The license number {0} doesn't exists, please insert license number again: ", licenseNumber);
-                    licenseNumber = Console.ReadLine();
-                }
-            }
+            // Use the garage manage to fill air in all the vehicle wheels
+            m_GarageManager.FillAirInWheelsToMax(licenseNumber);
+
+            // Print successfull message to the user
+            Console.WriteLine("The wheels of vehicle with license number {0} are full", licenseNumber);
         }
     }
 }

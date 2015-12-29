@@ -43,7 +43,6 @@
     <Compile Include="Exceptions\InvalidEngineTypeException.cs" />
     <Compile Include="Exceptions\InvalidGasTypeException.cs" />
     <Compile Include="Exceptions\VehicleNotExistsException.cs" />
-    <Compile Include="Exceptions\VehicleParameterNotExistsException.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\ReflactionHelper.cs" />
     <Compile Include="Helpers\Validator.cs" />

@@ -19,39 +19,23 @@ namespace Ex03.ConsoleUI.Operations
 
         public override void Execute()
         {
-            bool isOperationSucceeded = false;
-            while (!isOperationSucceeded)
+            Console.Write("Insert license number: ");
+            string licenseNumber = Console.ReadLine();
+
+            Console.Write("Insert the amount to fill (in {0}): ", m_EnergyType);
+            string energyToAdd = Console.ReadLine();
+
+            try
             {
-                Console.Write("Insert license number: ");
-                string licenseNumber = Console.ReadLine();
-
-                Console.Write("Insert the amount to fill (in {0}): ", m_EnergyType);
-                string energyToAdd = Console.ReadLine();
-
-                try
-                {
-                    FillEnergy(licenseNumber, energyToAdd);
-                    Console.WriteLine(); // Empty line for better visualization
-                    Console.WriteLine("{0} {1} was added successfully to vehicle with license number: {2}.", energyToAdd, m_EnergyType, licenseNumber);
-                    isOperationSucceeded = true;
-                }
-                catch (FormatException)
-                {
-                    string errorMessage = string.Format("The license number or the {0} amout have invalid format.");
-                }
-                catch (VehicleNotExistsException)
-                {
-                    Console.WriteLine("Invalid input, vehicle with license number: {0} not exists in the garage", licenseNumber);
-                }
-                catch (InvalidEngineTypeException)
-                {
-                    Console.WriteLine("Invalid input, the vehicle with license number: '{0}' is not supported for operation: '{1}'", licenseNumber, m_OperationDisplayName);
-                }
-                catch (ValueOutOfRangeException ex)
-                {
-                    Console.WriteLine("Invalid input, the {0} amount must be between 0 to {1} ", m_EnergyType, ex.MaxValue);
-                }
+                FillEnergy(licenseNumber, energyToAdd);
             }
+            catch (ValueOutOfRangeException ex)
+            {
+                // Catch the server exception and throw more indicative message to the user
+                throw new ValueOutOfRangeException(ex.MinValue, ex.MaxValue, m_EnergyType);
+            }
+
+            Console.WriteLine("{0} {1} was added successfully to vehicle with license number: {2}.", energyToAdd, m_EnergyType, licenseNumber);
         }
 
 

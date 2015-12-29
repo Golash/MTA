@@ -61,11 +61,12 @@ namespace Ex03.GarageLogic.Vehicles
 
         public virtual void VehicleDetails(StringBuilder i_VehicleDetailsStr)
         {
-            i_VehicleDetailsStr.AppendLine(string.Format("License Number: {0}", m_LicenseNumber));
-            i_VehicleDetailsStr.AppendLine(string.Format("Model Name: {0}", m_ModelName));
+            i_VehicleDetailsStr.AppendLine(string.Format("License Number: {0}", LicenseNumber));
+            i_VehicleDetailsStr.AppendLine(string.Format("Model Name: {0}", ModelName));
 
             i_VehicleDetailsStr.AppendLine("Wheels Info:");
 
+            // Start the print the number from 1 (and not zero base)
             int index = 1;
             foreach (var wheel in Wheels)
             {
@@ -86,7 +87,7 @@ namespace Ex03.GarageLogic.Vehicles
                 return m_ModelName;
             }
             private set
-            {
+           { 
                 Validator.ValidateNotNullOrWhiteSpace(value, k_ModelNameFieldName);
                 m_ModelName = value;
             }

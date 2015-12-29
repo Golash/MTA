@@ -52,18 +52,12 @@ namespace Ex03.GarageLogic
 
         public void FillAirInWheelsToMax(string i_LicenseNumber)
         {
-            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, "LicenseNumber");
-
-            if (!IsExistsVehicle(i_LicenseNumber))
-            {
-                string errorMessage = string.Format("Vehicle with the license number: '{0}' not exists", i_LicenseNumber);
-                throw new ArgumentException(errorMessage);
-            }
-
-            // TODO : wrap in exception?
+            ValidateIsVehicleExists(i_LicenseNumber);
+            
+            // Run all over the vehicle wheels and fill the air to max
             foreach (Wheel wheel in m_GarageVehicles[i_LicenseNumber].Vehicle.Wheels)
             {
-                wheel.FillAir(wheel.MaxAirPressure);
+                wheel.FillToMax();
             }
         }
 
@@ -77,7 +71,7 @@ namespace Ex03.GarageLogic
                 string errorMessage = string.Format("The vehicle {0} not support gas type {1}, the gas type of the vehicle is {2}",
                     i_LicenseNumber, i_GasType, gasEngine.GasType);
 
-                throw new InvalidGasTypeException(i_GasType, gasEngine.GasType);
+                throw new InvalidGasTypeException(i_GasType);
             }
 
             fillEnergy(i_LicenseNumber, i_LiterToAdd);
@@ -125,29 +119,24 @@ namespace Ex03.GarageLogic
             vehicleInfo.AppendLine(string.Format("Owner Phone: {0}", m_GarageVehicles[i_LicenseNumber].OwnerDetails.OwnerPhone));
             
             vehicleInfo.AppendLine(); // Empty line for better visualization
-            vehicleInfo.AppendLine("Vehicle Status Info:");
+            vehicleInfo.AppendLine("Vehicle Status: Info");
             vehicleInfo.AppendLine(string.Format("Vehicle Status: {0}", m_GarageVehicles[i_LicenseNumber].Status));
 
             return vehicleInfo;
         }
 
 
-        public bool IsExistsVehicle(string licenseNumber)
+        public bool IsExistsVehicle(string i_LicenseNumber)
         {
-            return m_GarageVehicles.ContainsKey(licenseNumber);
+            return m_GarageVehicles.ContainsKey(i_LicenseNumber);
         }
 
-        public void ChangeVehicleStatus(string licenseNumber, eVehicleStatus eVehicleStatus)
+        public void ChangeVehicleStatus(string i_LicenseNumber, eVehicleStatus i_VehicleStatus)
         {
-            Validator.ValidateNotNullOrWhiteSpace(licenseNumber, "licenseNumber");
+            Validator.ValidateNotNullOrWhiteSpace(i_LicenseNumber, Vehicle.k_LicenseNumberFieldName);
+            ValidateIsVehicleExists(i_LicenseNumber);
 
-            if (!IsExistsVehicle(licenseNumber))
-            {
-                string errorMessage = string.Format("Vehicle with the license number: '{0}' not exists", licenseNumber);
-                throw new ArgumentException(errorMessage);
-            }
-
-            m_GarageVehicles[licenseNumber].Status = eVehicleStatus;
+            m_GarageVehicles[i_LicenseNumber].Status = i_VehicleStatus;
         }
 
         public void ValidateIsVehicleExists(string i_LicenseNumber)
@@ -169,14 +158,14 @@ namespace Ex03.GarageLogic
             validateEngineType(i_LicenseNumber, typeof(GasEngine));
         }
 
-        private void validateEngineType(string i_LicenseNumber, Type engineType)
+        private void validateEngineType(string i_LicenseNumber, Type i_EngineType)
         {
             ValidateIsVehicleExists(i_LicenseNumber);
             Engine engine = m_GarageVehicles[i_LicenseNumber].Vehicle.Engine;
 
-            if (engine.GetType() != engineType)
+            if (engine.GetType() != i_EngineType)
             {
-                throw new InvalidEngineTypeException();
+                throw new InvalidEngineTypeException(engine.GetType().Name, i_EngineType.Name);
             }
         }
 
@@ -187,9 +176,9 @@ namespace Ex03.GarageLogic
             return CarFactory.SupportedVehicle;
         }
 
-        public Vehicle CreateVehicle(string licenseNumber, string vehicleTypeName)
+        public Vehicle CreateVehicle(string i_LicenseNumber, string i_VehicleTypeName)
         {
-            return CarFactory.CreateVehicle(licenseNumber, vehicleTypeName);
+            return CarFactory.CreateVehicle(i_LicenseNumber, i_VehicleTypeName);
         }
     }
 }

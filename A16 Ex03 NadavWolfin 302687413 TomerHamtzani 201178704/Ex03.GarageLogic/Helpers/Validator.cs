@@ -8,7 +8,6 @@ namespace Ex03.GarageLogic.Helpers
 {
     internal static class Validator
     {
-        // TODO function with is should retur booo?
         public static void ValidateNotNullOrWhiteSpace(string i_Value, string i_FieldName)
         {
             if (string.IsNullOrWhiteSpace(i_Value))
@@ -17,11 +16,11 @@ namespace Ex03.GarageLogic.Helpers
             }
         }
 
-        public static void ValidateValueInRange(float i_Value, float i_MinValue, float i_MaxValue)
+        public static void ValidateValueInRange(string fieldName, float i_Value, float i_MinValue, float i_MaxValue)
         {
             if (!(i_Value >= i_MinValue && i_Value <= i_MaxValue))
             {
-                throw new ValueOutOfRangeException(null, i_MinValue, i_MaxValue);
+                throw new ValueOutOfRangeException(i_MinValue, i_MaxValue, fieldName);
             }
         }
         public static void ValidateIsNotNull(object i_Obj, string i_Name)

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic.Exceptions
 {
-    public class InvalidGasTypeException : Exception
+    public class InvalidGasTypeException : ArgumentException
     {
-        public InvalidGasTypeException(eGasType i_InvalidGasType, eGasType i_ValidGasType)
+        public InvalidGasTypeException(eGasType i_InvalidGasType)
+            : base(string.Format("The gas type: '{0}' is invalid", i_InvalidGasType))
         {
-            m_InvalidGasType = i_InvalidGasType;
-            m_ValidGasType = i_ValidGasType;
         }
 
         public eGasType InvalidGasType
@@ -22,13 +21,6 @@ namespace Ex03.GarageLogic.Exceptions
             }
         }
 
-        public eGasType ValidGasType
-        {
-            get
-            {
-                return m_ValidGasType;
-            }
-        }
         private eGasType m_InvalidGasType;
         private eGasType m_ValidGasType;
     }

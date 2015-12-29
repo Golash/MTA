@@ -14,11 +14,6 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-        public void FillGas(eGasType i_GasType, float i_LittersToAdd)
-        {
-            (Engine as GasEngine).FillGas(i_LittersToAdd);
-        }
-
         private const int k_MaxGasAmount = 6;
     }
 }

@@ -30,9 +30,9 @@ namespace Ex03.ConsoleUI
 
         internal string ReadUserselectedValue()
         {
-            return m_Options[ReadUserselectedNumber()];
+            return m_Options[ReadUserSelectedNumber()];
         }
-        internal int ReadUserselectedNumber()
+        internal int ReadUserSelectedNumber()
         {
             Display();
             int selectedNumber;

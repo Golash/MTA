@@ -40,6 +40,12 @@ namespace Ex03.ConsoleUI.Operations
             }
         }
 
+        public string ReadLicenseNumber()
+        {
+            Console.Write("Insert license number: ");
+            return Console.ReadLine();
+        }
+
         public abstract void Execute();
 
         protected string _Name;

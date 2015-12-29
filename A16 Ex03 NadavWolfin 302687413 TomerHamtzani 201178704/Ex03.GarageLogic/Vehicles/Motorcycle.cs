@@ -20,7 +20,7 @@ namespace Ex03.GarageLogic.Vehicles
             switch (fieldName)
             {
                 case k_LicenceTypeFieldName:
-                    SetLicenceTyper(fieldValue);
+                    SetLicenceType(fieldValue);
                     break;
                 case k_EngineVolumeFieldName:
                     SetEngineVolume(fieldValue);
@@ -35,8 +35,6 @@ namespace Ex03.GarageLogic.Vehicles
 
         private void SetEngineVolume(string fieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_EngineVolumeFieldName);
-
             int engineVolume;
             if (!int.TryParse(fieldValue, out engineVolume))
             {
@@ -46,7 +44,7 @@ namespace Ex03.GarageLogic.Vehicles
             EngineVolume = engineVolume;
         }
 
-        private void SetLicenceTyper(string fieldValue)
+        private void SetLicenceType(string fieldValue)
         {
             
             eLicenceType licenceType;
@@ -63,8 +61,8 @@ namespace Ex03.GarageLogic.Vehicles
         public override void VehicleDetails(StringBuilder i_VehicleDetailsStr)
         {
             base.VehicleDetails(i_VehicleDetailsStr);
-            i_VehicleDetailsStr.AppendLine(string.Format("Model: {0}", m_ModelName));
-            i_VehicleDetailsStr.AppendLine(string.Format("Engine Volume: {0}", m_EngineVolume));
+            i_VehicleDetailsStr.AppendLine(string.Format("License Type: {0}", LicenceType));
+            i_VehicleDetailsStr.AppendLine(string.Format("Engine Volume: {0}", EngineVolume));
         }
 
         protected override void fillAdditionalParameters()
@@ -93,7 +91,8 @@ namespace Ex03.GarageLogic.Vehicles
                 return m_EngineVolume;
             }
             set
-            {                
+            {
+                Validator.ValidateValueInRange(k_EngineVolumeFieldName, value, 0, int.MaxValue);
                 m_EngineVolume = value;
             }
         }

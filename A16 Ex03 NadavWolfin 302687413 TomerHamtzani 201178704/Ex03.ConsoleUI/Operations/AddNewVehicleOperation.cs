@@ -54,17 +54,24 @@ namespace Ex03.ConsoleUI.Operations
                             fieldValue = Console.ReadLine();
                             isValidField = vehicle.SetField(field, fieldValue);
                         }
-                        catch (ArgumentException)
-                        {
-                            Console.WriteLine("Invalid value '{0}' for field: '{1}', Please try again.'", fieldValue, field);
-                        }
                         catch (ValueOutOfRangeException ex)
                         {
-                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
+                            if (ex.MaxValue == int.MaxValue)
+                            {
+                                Console.WriteLine("The value: '{0}' is out of range. Please insert value greater or equal to {1}", fieldValue, ex.MinValue);
+                            }
+                            else
+                            {
+                                Console.WriteLine("The value: '{0}' is out of range. Please insert value between {1} to {2} ", fieldValue, ex.MinValue, ex.MaxValue);
+                            }
+                        }
+                        catch (ArgumentException)
+                        {
+                            Console.WriteLine("Invalid value '{0}', Please try again.'", fieldValue);
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
+                            Console.WriteLine("The value: '{0}' format is invlid. Please try again", fieldValue);
                         }
                     }
                 }
@@ -103,17 +110,18 @@ namespace Ex03.ConsoleUI.Operations
                             vehicleOwnerDetails.SetField(field, fieldValue);
                             isValidValue = true;
                         }
-                        catch (ArgumentException)
-                        {
-                            Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
-                        }
+                        
                         catch (FormatException)
                         {
-                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
+                            Console.WriteLine("The value: '{0}' format is invlid", fieldValue);
                         }
                         catch (ValueOutOfRangeException ex)
                         {
-                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
+                            Console.WriteLine("The value: '{0}' is out of range. Please insert value between {1}", field, ex.MinValue);
+                        }
+                        catch (ArgumentException)
+                        {
+                            Console.WriteLine("The value: '{0}' is invalid", fieldValue);
                         }
                     }
                 }
@@ -164,15 +172,15 @@ namespace Ex03.ConsoleUI.Operations
                         }
                         catch (ArgumentException)
                         {
-                            Console.WriteLine("The value: '{0}' is invalid for field: '{1}'", fieldValue, field);
+                            Console.WriteLine("The value: '{0}' is invalid", fieldValue);
                         }
                         catch (FormatException)
                         {
-                            Console.WriteLine("The value: '{0}' format is invlid for field: '{1}'", fieldValue, field);
+                            Console.WriteLine("The value: '{0}' format is invlid", fieldValue);
                         }
                         catch (ValueOutOfRangeException ex)
                         {
-                            Console.WriteLine("The value: '{0}' is out of range. The field: '{1}' required value between {2} to {3} ", fieldValue, field, ex.MinValue, ex.MaxValue);
+                            Console.WriteLine("The value: '{0}' is out of range. Please insert value between {1} to {2} ", fieldValue, ex.MinValue, ex.MaxValue);
                         }
                     }
                 }
