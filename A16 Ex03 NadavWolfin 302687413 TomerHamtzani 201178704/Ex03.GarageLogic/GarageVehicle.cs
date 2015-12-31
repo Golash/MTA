@@ -1,13 +1,13 @@
-﻿using Ex03.GarageLogic.Vehicles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Vehicles;
 
 namespace Ex03.GarageLogic
 {
-    class GarageVehicle
+    internal class GarageVehicle
     {
         public GarageVehicle(Vehicle i_Vehicle, VehicleOwnerDetails i_VehicleOwnerDetails, eVehicleStatus i_VehicleStatus)
         {
@@ -22,6 +22,7 @@ namespace Ex03.GarageLogic
             {
                 return m_Status;
             }
+
             set
             {
                 m_Status = value;
@@ -34,6 +35,7 @@ namespace Ex03.GarageLogic
             {
                 return m_OwnerDetails;
             }
+
             set
             {
                 m_OwnerDetails = value;
@@ -46,11 +48,13 @@ namespace Ex03.GarageLogic
             {
                 return m_Vehicle;
             }
+
             set
             {
                 m_Vehicle = value;
             }
         }
+
         private Vehicle m_Vehicle;
         private VehicleOwnerDetails m_OwnerDetails;
         private eVehicleStatus m_Status;

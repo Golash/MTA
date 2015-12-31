@@ -1,19 +1,22 @@
-﻿using Ex03.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class FillAirInWheelsToMaxOperation : UserOperation
+    internal class FillAirInWheelsToMaxOperation : UserOperation
     {
-        public FillAirInWheelsToMaxOperation(GarageManager manager)
-            : base(manager, "FillAirInWheelsToMaxOperation", "Fill Air In Wheels To Max")
+        public FillAirInWheelsToMaxOperation(GarageManager i_Manager)
+            : base(i_Manager, "FillAirInWheelsToMaxOperation", "Fill Air In Wheels To Max")
         {
         }
 
+        /// <summary>
+        /// Execute the operation
+        /// </summary>
         public override void Execute()
         {
             // Read the license number form the user

@@ -1,9 +1,9 @@
-﻿using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -12,46 +12,44 @@ namespace Ex03.GarageLogic.Vehicles
         public Motorcycle(string i_LicenseNumber, Engine i_Engine)
             : base(i_LicenseNumber, i_Engine, k_WheelsCount, k_MaxWheelsAirPressure)
         {
-
         }
 
-        public override bool SetField(string fieldName, string fieldValue)
+        public override bool SetField(string i_FieldName, string i_FieldValue)
         {
-            switch (fieldName)
+            switch (i_FieldName)
             {
                 case k_LicenseTypeFieldName:
-                    SetLicenseType(fieldValue);
+                    SetLicenseType(i_FieldValue);
                     break;
                 case k_EngineVolumeFieldName:
-                    SetEngineVolume(fieldValue);
+                    SetEngineVolume(i_FieldValue);
                     break;
                 default:
-                    base.SetField(fieldName, fieldValue);
+                    base.SetField(i_FieldName, i_FieldValue);
                     break;
             }
 
             return true;
         }
 
-        private void SetEngineVolume(string fieldValue)
+        private void SetEngineVolume(string i_FieldValue)
         {
             int engineVolume;
-            if (!int.TryParse(fieldValue, out engineVolume))
+            if (!int.TryParse(i_FieldValue, out engineVolume))
             {
-                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, "EngineVolume"));
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", i_FieldValue, "EngineVolume"));
             }
 
             EngineVolume = engineVolume;
         }
 
-        private void SetLicenseType(string fieldValue)
+        private void SetLicenseType(string i_FieldValue)
         {
-            
             eLicenseType licenseType;
-            if (!Enum.TryParse<eLicenseType>(fieldValue, out licenseType)  || !Enum.GetNames(typeof(eLicenseType)).Contains(fieldValue))
+            if (!Enum.TryParse<eLicenseType>(i_FieldValue, out licenseType)  || !Enum.GetNames(typeof(eLicenseType)).Contains(i_FieldValue))
             {
                 string licenseTypeOptions = string.Join(",", Enum.GetNames(typeof(eLicenseType)));
-                string errorMessage = string.Format("license type value: '{0}' is invalid, optional license Type are: {1}", fieldValue, licenseTypeOptions);
+                string errorMessage = string.Format("license type value: '{0}' is invalid, optional license Type are: {1}", i_FieldValue, licenseTypeOptions);
                 throw new ArgumentException(errorMessage, k_LicenseTypeFieldName);
             }
 
@@ -78,6 +76,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_LicenseType;
             }
+
             set
             {
                 m_LicenseType = value;
@@ -90,6 +89,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_EngineVolume;
             }
+
             set
             {
                 Validator.ValidateValueInRange(k_EngineVolumeFieldName, value, 0, int.MaxValue);

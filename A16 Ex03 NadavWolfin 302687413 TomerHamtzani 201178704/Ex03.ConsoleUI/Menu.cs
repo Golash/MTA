@@ -15,10 +15,10 @@ namespace Ex03.ConsoleUI
         /// Create a new instance of the menu class
         /// </summary>
         /// <param name="title">The menu title to display</param>
-        /// <param name="options">The menu options to display</param>
-        public Menu(string title, IEnumerable<string> options)
+        /// <param name="i_Options">The menu options to display</param>
+        public Menu(string title, IEnumerable<string> i_Options)
         {
-            m_Options = options.ToArray();
+            m_Options = i_Options.ToArray();
             m_Title = title;
         }
 
@@ -28,9 +28,9 @@ namespace Ex03.ConsoleUI
         internal void Display()
         {
             StringBuilder menuStringBuilder = new StringBuilder();
-            menuStringBuilder.AppendFormat("{0}:",m_Title);
+            menuStringBuilder.AppendFormat("{0}:", m_Title);
             menuStringBuilder.AppendLine();
-            for (int i=1; i<=m_Options.Count(); i++)
+            for (int i = 1; i <= m_Options.Count(); i++)
             {
                 menuStringBuilder.AppendFormat("{0}. {1}", i, m_Options[i - 1]);
                 menuStringBuilder.AppendLine();
@@ -62,32 +62,15 @@ namespace Ex03.ConsoleUI
                 {
                     Console.WriteLine("Invalid option, please try again");
                 }
-
             }
             while (!isValidOption);
 
-            return selectedNumber - 1 ;
+            return selectedNumber - 1;
         }
 
-        private bool inRange(int option)
+        private bool inRange(int i_Option)
         {
-            return option - 1 >= 0 && option <= m_Options.Length; 
-        }
-
-        public string[] Options
-        {
-            get
-            {
-                return m_Options;
-            }
-        }
-
-        public string Title
-        {
-            get
-            {
-                return m_Title;
-            }
+            return i_Option - 1 >= 0 && i_Option <= m_Options.Length; 
         }
 
         private string[] m_Options;

@@ -1,12 +1,12 @@
-﻿using Ex03.GarageLogic.Helpers;
-using Ex03.GarageLogic.Exceptions;
-using Ex03.GarageLogic.Vehicles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Helpers;
+using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Vehicles;
 
 namespace Ex03.GarageLogic.Factory
 {
@@ -20,7 +20,7 @@ namespace Ex03.GarageLogic.Factory
         private static void LoadSupportedVehicle()
         {
             // TODO add gas type
-            m_SupportedVehicle = new Dictionary<string,Type>();
+            m_SupportedVehicle = new Dictionary<string, Type>();
             m_SupportedVehicle.Add("Regular Motorcycle", typeof(RegularMotorcycle));
             m_SupportedVehicle.Add("Electric Motorcycle", typeof(ElectricMotorcycle));
             m_SupportedVehicle.Add("Truck", typeof(Truck));
@@ -37,40 +37,38 @@ namespace Ex03.GarageLogic.Factory
             }
         }
 
-        // TODO: Dictionary
-        private static Dictionary<string,Type> m_SupportedVehicle;
+        private static Dictionary<string, Type> m_SupportedVehicle;
 
-
-
-        public static Vehicle CreateVehicle(string licenseNumber, string vehicleTypeName)
+        public static Vehicle CreateVehicle(string i_LicenseNumber, string i_VehicleTypeName)
         {
-            if (!m_SupportedVehicle.ContainsKey(vehicleTypeName))
+            if (!m_SupportedVehicle.ContainsKey(i_VehicleTypeName))
             {
-                string errorMessage = (string.Format("There is no vehicle type: '{0}'", vehicleTypeName));
+                string errorMessage = string.Format("There is no vehicle type: '{0}'", i_VehicleTypeName);
                 throw new ArgumentException(errorMessage);
             }   
 
             Vehicle vehicle = null;
-            Type vehicleType = m_SupportedVehicle[vehicleTypeName];
+            Type vehicleType = m_SupportedVehicle[i_VehicleTypeName];
             if (vehicleType == typeof(RegularCar))
             {
-                vehicle = new RegularCar(licenseNumber);
+                vehicle = new RegularCar(i_LicenseNumber);
             }
             else if (vehicleType == typeof(ElectricCar))
             {
-                vehicle = new ElectricCar(licenseNumber);
+                vehicle = new ElectricCar(i_LicenseNumber);
             }
+
             if (vehicleType == typeof(RegularMotorcycle))
             {
-                vehicle = new RegularMotorcycle(licenseNumber);
+                vehicle = new RegularMotorcycle(i_LicenseNumber);
             }
             else if (vehicleType == typeof(ElectricMotorcycle))
             {
-                vehicle = new ElectricMotorcycle(licenseNumber);
+                vehicle = new ElectricMotorcycle(i_LicenseNumber);
             }
             else if (vehicleType == typeof(Truck))
             {
-                vehicle = new Truck(licenseNumber);
+                vehicle = new Truck(i_LicenseNumber);
             } 
             
             return vehicle;

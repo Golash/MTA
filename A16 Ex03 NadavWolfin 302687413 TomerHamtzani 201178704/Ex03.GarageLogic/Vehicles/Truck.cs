@@ -1,10 +1,10 @@
-﻿using Ex03.GarageLogic.Exceptions;
-using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -18,22 +18,22 @@ namespace Ex03.GarageLogic.Vehicles
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();
-            m_AdditionalParameters.Add(k_IsCarryDangerousMaterialsFieldName,"Does the truck carry dangerous materials (Y=Yes, N=No)");
+            m_AdditionalParameters.Add(k_IsCarryDangerousMaterialsFieldName, "Does the truck carry dangerous materials (Y=Yes, N=No)");
             m_AdditionalParameters.Add(k_MaxCarryWeightFieldName, "Please insert truck max carry weight");
         }
 
-        public override bool SetField(string fieldName, string fieldValue)
+        public override bool SetField(string i_FieldName, string i_FieldValue)
         {
-            switch (fieldName)
+            switch (i_FieldName)
             {
                 case k_IsCarryDangerousMaterialsFieldName:
-                    SetIsCarryDangerousMaterials(fieldValue);
+                    SetIsCarryDangerousMaterials(i_FieldValue);
                     break;
                 case k_MaxCarryWeightFieldName:
-                    SetMaxCarryWeight(fieldValue);
+                    SetMaxCarryWeight(i_FieldValue);
                     break;
                 default:
-                    base.SetField(fieldName, fieldValue);
+                    base.SetField(i_FieldName, i_FieldValue);
                     break;
             }
 
@@ -47,37 +47,30 @@ namespace Ex03.GarageLogic.Vehicles
             i_VehicleDetailsStr.AppendLine(string.Format("Carry Dangerous Materials: {0}", m_IsCarryDangerousMaterials));
         }
 
-        private void SetIsCarryDangerousMaterials(string fieldValue)
+        private void SetIsCarryDangerousMaterials(string i_FieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_IsCarryDangerousMaterialsFieldName);
+            Validator.ValidateNotNullOrWhiteSpace(i_FieldValue, k_IsCarryDangerousMaterialsFieldName);
 
             // fieldValue represent an answer for boolean question - It can be YES = "Y" or NOT = "N"
-            if (fieldValue != NO && fieldValue != YES)
+            if (i_FieldValue != k_No && i_FieldValue != k_Yes)
             {
-                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, k_IsCarryDangerousMaterialsFieldName));
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", i_FieldValue, k_IsCarryDangerousMaterialsFieldName));
             }
-            IsCarryDangerousMaterials = fieldValue == YES;
+
+            IsCarryDangerousMaterials = i_FieldValue == k_Yes;
         }
 
-        private void SetMaxCarryWeight(string fieldValue)
+        private void SetMaxCarryWeight(string i_FieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_MaxCarryWeightFieldName);
+            Validator.ValidateNotNullOrWhiteSpace(i_FieldValue, k_MaxCarryWeightFieldName);
 
             float maxCarryWeight;
-            if (!float.TryParse(fieldValue, out maxCarryWeight))
+            if (!float.TryParse(i_FieldValue, out maxCarryWeight))
             {
-                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", fieldValue, k_MaxCarryWeightFieldName));
+                throw new FormatException(string.Format("Failed to parse value {0}, for field {1}", i_FieldValue, k_MaxCarryWeightFieldName));
             }
 
             MaxCarryWeight = maxCarryWeight;
-        }
-
-        public ElectricEngine Engine
-        {
-            get
-            {
-                return (ElectricEngine)m_Engine;
-            }
         }
 
         public bool IsCarryDangerousMaterials
@@ -86,6 +79,7 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_IsCarryDangerousMaterials;
             }
+
             set
             {
                 m_IsCarryDangerousMaterials = value;
@@ -98,13 +92,16 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_MaxCarryWeight;
             }
+
             set
             {
+                Validator.ValidateValueInRange(k_MaxCarryWeightFieldName, value, 0, float.MaxValue);
                 m_MaxCarryWeight = value;
             }
         }
-        private const string YES = "Y";
-        private const string NO = "N";
+
+        private const string k_Yes = "Y";
+        private const string k_No = "N";
         private const string k_IsCarryDangerousMaterialsFieldName = "IsCarryDangerousMaterials";
         private const string k_MaxCarryWeightFieldName = "MaxCarryWeight";
         private bool m_IsCarryDangerousMaterials;

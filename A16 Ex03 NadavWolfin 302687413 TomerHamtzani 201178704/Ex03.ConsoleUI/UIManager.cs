@@ -1,12 +1,12 @@
-﻿using Ex03.ConsoleUI.Operations;
-using Ex03.GarageLogic;
-using Ex03.GarageLogic.Exceptions;
-using Ex03.GarageLogic.Vehicles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.ConsoleUI.Operations;
+using Ex03.GarageLogic;
+using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Vehicles;
 
 namespace Ex03.ConsoleUI
 {
@@ -24,8 +24,9 @@ namespace Ex03.ConsoleUI
             GarageManager garageManager = new GarageManager();
             
             // Don't stop the running 
-            const bool k_Running = true;
-            while (k_Running)
+            bool running = true;
+
+            while (running)
             {
                 // Get all the available user operations
                 UserOperation[] operations = loadUserOperations(garageManager);
@@ -75,20 +76,21 @@ namespace Ex03.ConsoleUI
         /// <summary>
         /// Get the user main menu
         /// </summary>
-        private static Menu GetMainMenu(UserOperation[] operations)
+        private static Menu GetMainMenu(UserOperation[] i_Operations)
         {
             IList<string> list = new List<string>();
-            foreach (UserOperation operation in operations)
+            foreach (UserOperation operation in i_Operations)
             {
                 list.Add(operation.DisplayName);
             }
+
             return new Menu("Main Menu - Please Choose operation", list);
         }
 
         /// <summary>
         /// Get all the user available operations
         /// </summary>
-        private static  UserOperation[] loadUserOperations(GarageManager i_GarageManager)
+        private static UserOperation[] loadUserOperations(GarageManager i_GarageManager)
         {
             List<UserOperation> userOperations = new List<UserOperation>();
             userOperations.Add(new AddNewVehicleOperation(i_GarageManager));

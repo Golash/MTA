@@ -1,12 +1,12 @@
-﻿using Ex03.GarageLogic.Exceptions;
-using Ex03.GarageLogic.Factory;
-using Ex03.GarageLogic.Helpers;
-using Ex03.GarageLogic.Vehicles;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Factory;
+using Ex03.GarageLogic.Helpers;
+using Ex03.GarageLogic.Vehicles;
 
 namespace Ex03.GarageLogic
 {
@@ -68,22 +68,25 @@ namespace Ex03.GarageLogic
             GasEngine gasEngine = (GasEngine)m_GarageVehicles[i_LicenseNumber].Vehicle.Engine;
             if (gasEngine.GasType != i_GasType)
             {
-                string errorMessage = string.Format("The vehicle {0} not support gas type {1}, the gas type of the vehicle is {2}",
-                    i_LicenseNumber, i_GasType, gasEngine.GasType);
+                string errorMessage = string.Format(
+                    "The vehicle {0} not support gas type {1}, the gas type of the vehicle is {2}",
+                    i_LicenseNumber,
+                    i_GasType,
+                    gasEngine.GasType);
 
                 throw new RequiredValueException(gasEngine.GasType.ToString(), i_GasType.ToString(), GasEngine.k_GasTypeFieldName);
             }
 
-            fillEnergy(i_LicenseNumber, i_LiterToAdd);
+            FillEnergy(i_LicenseNumber, i_LiterToAdd);
         }
 
-        public void ChargeBattery(string i_LicenseNumber, string i_HoursToAdd)
+        public void ChargeBattery(string i_LicenseNumber, float i_HoursToAdd)
         {
             ValidateVehicleIsElectric(i_LicenseNumber);
-            fillEnergy(i_LicenseNumber, i_HoursToAdd);
+            FillEnergy(i_LicenseNumber, i_HoursToAdd);
         }
 
-        public void fillEnergy(string i_LicenseNumber, string i_EnergyToTadd)
+        public void FillEnergy(string i_LicenseNumber, string i_EnergyToTadd)
         {
             ValidateIsVehicleExists(i_LicenseNumber);
             
@@ -93,11 +96,15 @@ namespace Ex03.GarageLogic
                 throw new FormatException(string.Format("Invalid format. the value to add must be a float", energyToAdd));
             }
 
-            Vehicle vehicle = m_GarageVehicles[i_LicenseNumber].Vehicle;
-            GasEngine engine = vehicle.Engine as GasEngine;
-            vehicle.Engine.FillEnergy(energyToAdd);
+            FillEnergy(i_LicenseNumber, energyToAdd);
         }
 
+        public void FillEnergy(string i_LicenseNumber, float i_EnergyToAdd)
+        {
+            Vehicle vehicle = m_GarageVehicles[i_LicenseNumber].Vehicle;
+            GasEngine engine = vehicle.Engine as GasEngine;
+            vehicle.Engine.FillEnergy(i_EnergyToAdd);
+        }
 
         public StringBuilder GetVehicleInfo(string i_LicenseNumber)
         {
@@ -106,10 +113,8 @@ namespace Ex03.GarageLogic
                 string errorMessage = string.Format("Vehicle with the license number: '{0}' not exists", i_LicenseNumber);
                 throw new ArgumentException(errorMessage);
             }
-
             
             StringBuilder vehicleInfo = new StringBuilder();
-
             vehicleInfo.AppendLine("Vehicle Info:");
             m_GarageVehicles[i_LicenseNumber].Vehicle.VehicleDetails(vehicleInfo);
 
@@ -124,7 +129,6 @@ namespace Ex03.GarageLogic
 
             return vehicleInfo;
         }
-
 
         public bool IsExistsVehicle(string i_LicenseNumber)
         {
@@ -148,6 +152,7 @@ namespace Ex03.GarageLogic
                 throw new VehicleNotExistsException(i_LicenseNumber);
             }
         }
+
         public void ValidateVehicleIsElectric(string i_LicenseNumber)
         {
             validateEngineType(i_LicenseNumber, typeof(ElectricEngine));

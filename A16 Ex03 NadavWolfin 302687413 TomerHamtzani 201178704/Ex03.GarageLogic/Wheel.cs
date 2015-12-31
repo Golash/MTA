@@ -1,38 +1,38 @@
-﻿using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.GarageLogic
 {
     public class Wheel
     {
-        public Wheel(float maxWheelAirPressure)
+        public Wheel(float i_MaxWheelAirPressure)
         {
-            m_MaxAirPressure = maxWheelAirPressure;
+            m_MaxAirPressure = i_MaxWheelAirPressure;
 
             // For now the min air pressure is zero, if it will changed one day we can change it in one place
-            m_MinAirPressure = 0;
+            r_MinAirPressure = 0;
 
-            m_AdditionalParameters = new Dictionary<string, string>();
-            m_AdditionalParameters.Add("Manufacture", "Wheel Manufacturer");
-            m_AdditionalParameters.Add("CurrentAirPressure", "Wheel current air pressure");
+            r_AdditionalParameter = new Dictionary<string, string>();
+            r_AdditionalParameter.Add("Manufacture", "Wheel Manufacturer");
+            r_AdditionalParameter.Add("CurrentAirPressure", "Wheel current air pressure");
         }
 
-        public bool SetField(string fieldName, string fieldValue)
+        public bool SetField(string i_FieldName, string i_FieldValue)
         {
-            switch (fieldName)
+            switch (i_FieldName)
             {
                 case k_ManufactureFieldName:
-                    Manufacturer = fieldValue;
+                    Manufacturer = i_FieldValue;
                     break;
                 case k_CurrentAirPressureFieldName:
-                    setCurrentAirPressure(fieldValue);
+                    setCurrentAirPressure(i_FieldValue);
                     break;
                 default:
-                    throw new ArgumentException(string.Format("The field: '{0}' not exists", fieldName), fieldName);
+                    throw new ArgumentException(string.Format("The field: '{0}' not exists", i_FieldName), i_FieldName);
             }
 
             return true;
@@ -40,13 +40,13 @@ namespace Ex03.GarageLogic
 
         public virtual IDictionary<string, string> GetAdditionalParameters()
         {
-            return m_AdditionalParameters;
+            return r_AdditionalParameter;
         }
 
-        private void setCurrentAirPressure(string currentAirPressureStrValue)
+        private void setCurrentAirPressure(string i_CurrentAirPressureStrValue)
         {
             float currentAirPressure;
-            if(!float.TryParse(currentAirPressureStrValue, out currentAirPressure))
+            if(!float.TryParse(i_CurrentAirPressureStrValue, out currentAirPressure))
             {
                 string errorMessage = string.Format("The field '{0}' must be float", k_CurrentAirPressureFieldName);
                 throw new ArgumentException(errorMessage);
@@ -63,12 +63,18 @@ namespace Ex03.GarageLogic
             this.CurrentAirPressure = MaxAirPressure;
         }
 
+        public IDictionary<string, string> GetAdditionalParametersForWheel(int i_WheelNumber)
+        {
+            return r_AdditionalParameter;
+        }
+
         public string Manufacturer
         {
             get
             {
                 return m_Manufacturer;
             }
+
             set
             {
                 Validator.ValidateNotNullOrWhiteSpace(value, k_ManufactureFieldName);
@@ -82,6 +88,7 @@ namespace Ex03.GarageLogic
             {
                 return m_CurrentAirPressure;
             }
+
             set
             {
                 Validator.ValidateValueInRange(k_CurrentAirPressureFieldName, value, MinAirPressure, MaxAirPressure);
@@ -101,17 +108,17 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_MinAirPressure;
+                return r_MinAirPressure;
             }
         }
 
-        private const string k_ManufactureFieldName = "Manufacture";
-        private const string k_CurrentAirPressureFieldName = "CurrentAirPressure";
+        internal const string k_ManufactureFieldName = "Manufacture";
+        internal const string k_CurrentAirPressureFieldName = "CurrentAirPressure";
 
         private string m_Manufacturer;
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
-        private readonly float m_MinAirPressure;
-        private readonly IDictionary<string, string> m_AdditionalParameters;
+        private readonly float r_MinAirPressure;
+        private readonly IDictionary<string, string> r_AdditionalParameter;
     }
 }

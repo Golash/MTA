@@ -1,9 +1,9 @@
-﻿using Ex03.GarageLogic.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.GarageLogic.Helpers
 {
@@ -22,13 +22,6 @@ namespace Ex03.GarageLogic.Helpers
             if (!(i_Value >= i_MinValue && i_Value <= i_MaxValue))
             {
                 throw new ValueOutOfRangeException(i_MinValue, i_MaxValue, fieldName);
-            }
-        }
-        public static void ValidateIsNotNull(object i_Obj, string i_Name)
-        {
-            if (i_Obj == null)
-            {
-                throw new NullReferenceException(string.Format("The {0} can't be null", i_Name));
             }
         }
     }

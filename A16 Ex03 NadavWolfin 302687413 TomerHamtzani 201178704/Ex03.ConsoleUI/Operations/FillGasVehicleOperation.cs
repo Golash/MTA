@@ -1,14 +1,14 @@
-﻿using Ex03.GarageLogic;
-using Ex03.GarageLogic.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
+using Ex03.GarageLogic.Exceptions;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class FillRegularVehicleOperation : FillVehicleOperation
+    internal class FillRegularVehicleOperation : FillVehicleOperation
     {
         public FillRegularVehicleOperation(GarageManager i_GarageManager)
             : base(i_GarageManager, "Gas Litters", "Fill Gas To Regular Vehicle")

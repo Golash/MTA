@@ -19,7 +19,6 @@ namespace Ex03.GarageLogic.Exceptions
         public ValueOutOfRangeException(float i_MivValue, string i_FieldName)
             : base(string.Format("Value out of range, the value should be greater than {0}", i_MivValue))
         {
-
         }
 
         public float MaxValue

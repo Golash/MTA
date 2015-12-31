@@ -1,21 +1,21 @@
-﻿using Ex03.GarageLogic;
-using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class ChangeVehicleStatusOperation : UserOperation
+    internal class ChangeVehicleStatusOperation : UserOperation
     {
         /// <summary>
         /// Create a new instance of the operation: Change Vehicle Status
         /// </summary>
-        /// <param name="manager">The instance of the garage manger to make the operation on</param>
-        public ChangeVehicleStatusOperation(GarageManager manager)
-            : base(manager, "ChangeVehicleStatusOperation", "Change Vehicle Status")
+        /// <param name="i_Manager">The instance of the garage manger to make the operation on</param>
+        public ChangeVehicleStatusOperation(GarageManager i_Manager)
+            : base(i_Manager, "ChangeVehicleStatusOperation", "Change Vehicle Status")
         {
         }
 

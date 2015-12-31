@@ -8,15 +8,9 @@ namespace Ex03.GarageLogic
 {
     internal class GasEngine : Engine
     {
-
-        public GasEngine(float i_MaxGasAmount, eGasType i_GasType): base(i_MaxGasAmount)
+        public GasEngine(float i_MaxGasAmount, eGasType i_GasType) : base(i_MaxGasAmount)
         {
             m_GasType = i_GasType;
-        }
-
-        public void FillGas(float i_LittersToAdd)
-        {
-            base.FillEnergy(i_LittersToAdd);
         }
         
         public override void EngineDetails(StringBuilder i_EngineDetails)
@@ -48,8 +42,9 @@ namespace Ex03.GarageLogic
             {
                 return m_GasType;
             }
+
             set
-           { 
+            { 
                 m_GasType = value;
             }
         }

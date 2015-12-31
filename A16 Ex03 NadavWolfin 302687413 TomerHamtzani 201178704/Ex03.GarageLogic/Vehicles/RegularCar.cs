@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic.Vehicles
     internal class RegularCar : Car
     {
         public RegularCar(string i_LicenseNumber)
-            : base(i_LicenseNumber,new GasEngine(k_MaxGasAmount, eGasType.Octan98))
+            : base(i_LicenseNumber, new GasEngine(k_MaxGasAmount, eGasType.Octan98))
         {
         }
 

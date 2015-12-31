@@ -1,19 +1,18 @@
-﻿using Ex03.GarageLogic;
-using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.ConsoleUI.Operations
 {
-    class ShowLicensesNumbersOperation : UserOperation
+    internal class ShowLicensesNumbersOperation : UserOperation
     {
-        public ShowLicensesNumbersOperation(GarageManager manager)
-            : base(manager, "ShowLicensesNumbersOperation", "Show License Numbers")
+        public ShowLicensesNumbersOperation(GarageManager i_Manager)
+            : base(i_Manager, "ShowLicensesNumbersOperation", "Show License Numbers")
         {
-
         }
 
         public override void Execute() 
@@ -55,4 +54,3 @@ namespace Ex03.ConsoleUI.Operations
         private const string k_AllVehicleKey = "All";
     }
 }
-

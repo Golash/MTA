@@ -14,6 +14,5 @@ namespace Ex03.GarageLogic.Vehicles
         }
 
         private const float k_MaxBatteryTime = 2.8f;
-        
     }
 }

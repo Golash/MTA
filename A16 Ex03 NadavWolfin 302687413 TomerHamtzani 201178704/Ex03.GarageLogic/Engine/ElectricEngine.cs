@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     internal class ElectricEngine : Engine
     {
-        public ElectricEngine(float i_MaxBatteryTime): base (i_MaxBatteryTime)
+        public ElectricEngine(float i_MaxBatteryTime) : base(i_MaxBatteryTime)
         {
         }
 
@@ -27,6 +27,5 @@ namespace Ex03.GarageLogic
                 return "Battery Remaining Time (in hours)";
             }
         }
-
     }
 }

@@ -1,19 +1,19 @@
-﻿using Ex03.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI.Operations
 {
     internal abstract class UserOperation
     {
-        public UserOperation(GarageManager manager, string name, string displayName)
+        public UserOperation(GarageManager i_Manager, string i_Name, string i_DisplayName)
         {
-            m_GarageManager = manager;
-            m_Name = name;
-            m_DisplayName = displayName;
+            m_GarageManager = i_Manager;
+            m_Name = i_Name;
+            m_DisplayName = i_DisplayName;
         }
 
         public string DisplayName
@@ -22,21 +22,10 @@ namespace Ex03.ConsoleUI.Operations
             {
                 return m_DisplayName;
             }
+
             set
             {
                 m_DisplayName = value;
-            }
-        }
-
-        public string Name 
-        {
-            get
-            {
-                return m_Name;
-            }
-            protected set
-            {
-                m_Name = value;
             }
         }
 

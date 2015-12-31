@@ -1,10 +1,10 @@
-﻿using Ex03.GarageLogic.Exceptions;
-using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Exceptions;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -15,18 +15,18 @@ namespace Ex03.GarageLogic.Vehicles
         {
         }
 
-        public override bool SetField(string fieldName, string fieldValue)
+        public override bool SetField(string i_FieldName, string i_FieldValue)
         {
-            switch (fieldName)
+            switch (i_FieldName)
             {
                 case k_ColorFieldName:
-                    SetColor(fieldValue);
+                    SetColor(i_FieldValue);
                     break;
                 case k_DoorsFieldName:
-                    SetDoorsNumber(fieldValue);
+                    SetDoorsNumber(i_FieldValue);
                     break;
                 default:
-                    base.SetField(fieldName, fieldValue);
+                    base.SetField(i_FieldName, i_FieldValue);
                     break;
             }
 
@@ -40,53 +40,48 @@ namespace Ex03.GarageLogic.Vehicles
             i_VehicleDetailsStr.AppendLine(string.Format("Doors: {0}", m_Doors));
         }
 
-        private void SetDoorsNumber(string fieldValue)
+        private void SetDoorsNumber(string i_FieldValue)
         {
-            Validator.ValidateNotNullOrWhiteSpace(fieldValue, k_DoorsFieldName);
+            Validator.ValidateNotNullOrWhiteSpace(i_FieldValue, k_DoorsFieldName);
 
             IEnumerable<int> enumValues = Enum.GetValues(typeof(eDoors)).Cast<int>();
             
             int doorsNumber;
-            if(!(int.TryParse(fieldValue, out doorsNumber) && enumValues.Contains(doorsNumber)))
+            if(!(int.TryParse(i_FieldValue, out doorsNumber) && enumValues.Contains(doorsNumber)))
             {
-                string doorsOptionString = getEnumsOptionsString(Enum.GetValues(typeof(eDoors)));
-                string errorMessage = string.Format("Doors number value: '{0}' is invalid. optional values are: {1}",fieldValue, doorsOptionString);
+                string doorsOptionString = string.Join(",", (Enum.GetValues(typeof(eDoors))));
+                string errorMessage = string.Format("Doors number value: '{0}' is invalid. optional values are: {1}", i_FieldValue, doorsOptionString);
                 throw new ArgumentException(errorMessage, k_DoorsFieldName);
             }
             
-            Doors = (eDoors)Enum.Parse(typeof(eDoors), fieldValue);
+            Doors = (eDoors)Enum.Parse(typeof(eDoors), i_FieldValue);
         }
 
-        private string getEnumsOptionsString(Array enumOptions)
+        private void SetColor(string i_FieldValue)
         {
-            return string.Join(",", enumOptions);
-        }
-
-        private void SetColor(string fieldValue)
-        {
-            Color = EnumHelper.ParseByName<eColor>(fieldValue);
+            Color = EnumHelper.ParseByName<eColor>(i_FieldValue);
         }
 
         protected override void fillAdditionalParameters()
         {
             base.fillAdditionalParameters();
-            m_AdditionalParameters.Add(k_ColorFieldName, "Please insert the car color");
+            string colorInputMessage = string.Format("Please insert the car color ({0})", r_OptionalColores);
+            m_AdditionalParameters.Add(k_ColorFieldName, colorInputMessage);
             m_AdditionalParameters.Add(k_DoorsFieldName, "Please insert the doors number");
         }
 
-        
         public eColor Color
         {
             get
             {
                 return m_Color;
             }
+
             private set
             {
                 m_Color = value;
             }
         }
-
 
         public eDoors Doors
         {
@@ -94,12 +89,14 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_Doors;
             }
+
             private set
             {
                 m_Doors = value;
             }
         }
 
+        private readonly string r_OptionalColores = string.Join(",", Enum.GetNames(typeof(eColor)));
         private const string k_DoorsFieldName = "DoorsNumber";
         private const string k_ColorFieldName = "Color";
         private eDoors m_Doors;

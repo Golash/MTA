@@ -1,9 +1,10 @@
-﻿using Ex03.GarageLogic.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic.Helpers;
 
 namespace Ex03.GarageLogic.Vehicles
 {
@@ -11,7 +12,7 @@ namespace Ex03.GarageLogic.Vehicles
     {
         public Vehicle(string i_LicenseNumber, Engine i_Engine, int i_WheelsCount, float i_MaxWheelAirPressure)
         {
-            m_LicenseNumber = i_LicenseNumber;
+            r_LicenseNumber = i_LicenseNumber;
             m_Engine = i_Engine;
             List<Wheel> wheels = new List<Wheel>(i_WheelsCount);
             for (int i = 0; i < i_WheelsCount; i++)
@@ -23,9 +24,9 @@ namespace Ex03.GarageLogic.Vehicles
             fillAdditionalParameters();
         }
 
-        public static bool IsValidLicenseNumber(string licenseNumber)
+        public static bool IsValidLicenseNumber(string i_LicenseNumber)
         {
-            return !string.IsNullOrWhiteSpace(licenseNumber);
+            return !string.IsNullOrWhiteSpace(i_LicenseNumber);
         }
 
         protected virtual void fillAdditionalParameters()
@@ -39,15 +40,15 @@ namespace Ex03.GarageLogic.Vehicles
             }
         }
 
-        public virtual bool SetField(string fieldName, string fieldValue)
+        public virtual bool SetField(string i_FieldName, string i_FieldValue)
         {
-            switch (fieldName)
+            switch (i_FieldName)
             {
                 case k_ModelNameFieldName:
-                    ModelName = fieldValue;
+                    ModelName = i_FieldValue;
                     break;
                 default:
-                    m_Engine.SetField(fieldName, fieldValue);
+                    m_Engine.SetField(i_FieldName, i_FieldValue);
                     break;
             }
 
@@ -70,8 +71,11 @@ namespace Ex03.GarageLogic.Vehicles
             int index = 1;
             foreach (var wheel in Wheels)
             {
-                string msg = string.Format("wheel number: {0}, manufacturer: {1}, current air pressure: {2}",
-                    index, wheel.Manufacturer, wheel.CurrentAirPressure);
+                string msg = string.Format(
+                    "wheel number: {0}, manufacturer: {1}, current air pressure: {2}",
+                    index,
+                    wheel.Manufacturer,
+                    wheel.CurrentAirPressure);
 
                 i_VehicleDetailsStr.AppendLine(msg);
                 index++;
@@ -86,8 +90,9 @@ namespace Ex03.GarageLogic.Vehicles
             {
                 return m_ModelName;
             }
+
             private set
-           { 
+            { 
                 Validator.ValidateNotNullOrWhiteSpace(value, k_ModelNameFieldName);
                 m_ModelName = value;
             }
@@ -97,7 +102,7 @@ namespace Ex03.GarageLogic.Vehicles
         {
             get
             {
-                return m_LicenseNumber;
+                return r_LicenseNumber;
             }
         }
 
@@ -116,13 +121,13 @@ namespace Ex03.GarageLogic.Vehicles
                 return m_Engine;
             }
         }
-
+        
         internal const string k_LicenseNumberFieldName = "LicenseNumber";
         private const string k_WheelsFieldName = "Wheels";
         private const string k_ModelNameFieldName = "ModelName";
         protected string m_ModelName;
-        protected readonly string m_LicenseNumber;
-        private IEnumerable<Wheel> m_Wheels;
+        protected readonly string r_LicenseNumber;
+        private List<Wheel> m_Wheels;
         protected Engine m_Engine;
         protected IDictionary<string, string> m_AdditionalParameters;
     }
