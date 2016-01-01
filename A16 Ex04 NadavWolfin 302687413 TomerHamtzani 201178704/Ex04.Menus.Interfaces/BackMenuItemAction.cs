@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ex04.Menus.Interfaces
+{
+    class BackMenuItemItem : MenuItem
+    {
+        public BackMenuItemItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back", i_Parent)
+        {
+            m_MenuToBack = i_MenuToBack;
+        }
+
+        internal override MenuItem GetSelectedMenuItem()
+        {
+            return m_MenuToBack;
+        }
+
+        public override bool IsAction
+        {
+            get
+            {
+                return false;
+            }
+        }
+
+        private MenuItem m_MenuToBack;
+    }
+
+}
