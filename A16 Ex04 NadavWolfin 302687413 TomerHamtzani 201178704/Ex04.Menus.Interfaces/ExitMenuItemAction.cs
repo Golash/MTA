@@ -8,7 +8,7 @@ namespace Ex04.Menus.Interfaces
 {
     class ExitMenuItem : MenuItem
     {
-        public ExitMenuItem() : base("Exit", null)
+        public ExitMenuItem() : base("Exit")
         {
         }
 

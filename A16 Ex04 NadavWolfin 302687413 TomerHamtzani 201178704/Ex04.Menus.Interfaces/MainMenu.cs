@@ -8,10 +8,15 @@ namespace Ex04.Menus.Interfaces
 {
     public class MainMenu
     {
-        public MainMenu(List<MenuItem> i_MenuItems = null, List<IMenuItemAction> i_MenuItemActions = null)
+        public MainMenu()
         {
-            i_MenuItems.Insert(0, new ExitMenuItem());
-            m_RootMenuItems = new MenuItem("Main Menu", i_MenuItems, i_MenuItemActions);
+            m_RootMenuItems = new MenuItem("Main Menu");
+            m_RootMenuItems.AddMenuItem(new ExitMenuItem());
+        }
+
+        public void AddMenuItems(MenuItem i_MenuItem)
+        {
+            m_RootMenuItems.AddMenuItem(i_MenuItem);
         }
 
         public void Show()

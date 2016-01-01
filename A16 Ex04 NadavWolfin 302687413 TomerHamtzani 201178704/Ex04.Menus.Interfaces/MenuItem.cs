@@ -8,10 +8,10 @@ namespace Ex04.Menus.Interfaces
 {
     public class MenuItem
     {
-        public MenuItem(string i_MenuItemTitle, List<MenuItem> i_MenuItems = null, List<IMenuItemAction> i_MenuItemActions = null)
+        public MenuItem(string i_MenuItemTitle)
         {
-            m_MenuItems = i_MenuItems ?? new List<MenuItem>();
-            m_MenuItemActions = i_MenuItemActions ?? new List<IMenuItemAction>();
+            m_MenuItems = new List<MenuItem>();
+            m_MenuItemActions = new List<IMenuItemAction>();
             m_Title = i_MenuItemTitle;
 
             // Add current menu item as parent for all sub menus
@@ -21,6 +21,17 @@ namespace Ex04.Menus.Interfaces
             }
 
             addBackMenuItemIfNeeded();
+        }
+
+        public void AddMenuItemAction(IMenuItemAction i_MenuItemAction)
+        {
+            m_MenuItemActions.Add(i_MenuItemAction);
+        }
+
+        public void AddMenuItem(MenuItem i_MenuItem)
+        {
+            i_MenuItem.Parent = this;
+            m_MenuItems.Add(i_MenuItem);
         }
 
         private void addBackMenuItemIfNeeded()
