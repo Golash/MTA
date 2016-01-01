@@ -8,7 +8,7 @@ namespace Ex04.Menus.Interfaces
 {
     class BackMenuItemItem : MenuItem
     {
-        public BackMenuItemItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back", i_Parent)
+        public BackMenuItemItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back")
         {
             m_MenuToBack = i_MenuToBack;
         }

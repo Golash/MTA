@@ -8,43 +8,44 @@ namespace Ex04.Menus.Interfaces
 {
     public class MenuItem
     {
-        public MenuItem(string i_MenuItemTitle, MenuItem i_Parent = null)
+        public MenuItem(string i_MenuItemTitle, List<MenuItem> i_MenuItems = null, List<IMenuItemAction> i_MenuItemActions = null)
         {
-            m_MenuItemActions = new List<IMenuItemAction>();
-            m_MenuItems = new List<MenuItem>();
+            m_MenuItems = i_MenuItems ?? new List<MenuItem>();
+            m_MenuItemActions = i_MenuItemActions ?? new List<IMenuItemAction>();
             m_Title = i_MenuItemTitle;
-            m_Parent = i_Parent;
-        }
-        
-        public void AddMenuItemAction(IMenuItemAction i_MenuItemAction)
-        {
-            m_MenuItemActions.Add(i_MenuItemAction);
-        }
 
-        public void AddMenuItem(MenuItem i_MenuItem)
-        {
-            // Add back to the top of the menu.
-            if (m_MenuItems.Count == 0)
+            // Add current menu item as parent for all sub menus
+            foreach (MenuItem menuItem in m_MenuItems)
             {
-                m_MenuItems.Add(new BackMenuItemItem(m_Parent, this));
+                menuItem.Parent = this;
             }
 
-            m_MenuItems.Add(i_MenuItem);
+            addBackMenuItemIfNeeded();
+        }
+
+        private void addBackMenuItemIfNeeded()
+        {
+            // Add back to the top of the menu.
+            if (m_MenuItems.Count != 0 && m_Parent != null && !(m_MenuItems[0] is BackMenuItemItem))
+            {
+                m_MenuItems.Insert(0, new BackMenuItemItem(m_Parent, this));
+            }
         }
 
         internal virtual MenuItem GetSelectedMenuItem()
         {
             bool isValidValue = false;
             MenuItem selectedMenuItem = null;
+            Console.Clear();
+            Console.Write(this.ToString());
 
             while (!isValidValue)
             {
-                Console.WriteLine(this.ToString());
                 string selectNumberStr = Console.ReadLine();
                 isValidValue = tryParseSelectedNumber(selectNumberStr, out selectedMenuItem);
                 if (!isValidValue)
                 {
-                    Console.WriteLine("Invalid input, Please try again");
+                    Console.Write("Invalid input, Please try again: ");
                 }
             }
 
@@ -71,26 +72,25 @@ namespace Ex04.Menus.Interfaces
         {
             StringBuilder menuItemsStr = new StringBuilder();
 
-            string parentMenuItemFormat = string.Format("{0}:", m_Parent);
-            menuItemsStr.AppendLine(parentMenuItemFormat);
-            menuItemsStr.AppendLine();
+            menuItemsStr.AppendLine(string.Format("{0}:", m_Title));
 
             int index = 0;
             foreach (MenuItem menuItem in m_MenuItems)
             {
-                string menuItemForamt = string.Format("\t{0}. {1}", index, m_Title);
+                string menuItemForamt = string.Format("{0}. {1}", index, menuItem.m_Title);
                 menuItemsStr.AppendLine(menuItemForamt);
+                index++;
             }
 
             menuItemsStr.AppendLine();
-            menuItemsStr.AppendLine("Please choose option number:   ");
+            menuItemsStr.Append("Please choose option number: ");
 
             return menuItemsStr.ToString();
         }
 
-        public void ExecuteActions()
+        internal void ExecuteActions()
         {
-            foreach (var action in m_MenuItemActions)
+            foreach (IMenuItemAction action in m_MenuItemActions)
             {
                 action.Execute();
             }
@@ -107,9 +107,6 @@ namespace Ex04.Menus.Interfaces
             }
         }
 
-        /// <summary>
-        /// When there is no sub menu item, the current menu item is an action.
-        /// </summary>
         internal virtual MenuItem Parent
         {
             get
@@ -120,6 +117,7 @@ namespace Ex04.Menus.Interfaces
             set
             {
                 m_Parent = value;
+                addBackMenuItemIfNeeded();
             }
         }
 

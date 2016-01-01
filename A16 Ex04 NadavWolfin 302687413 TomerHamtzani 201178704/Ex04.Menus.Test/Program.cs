@@ -12,22 +12,16 @@ namespace Ex04.Menus.Test
     {
         static void Main(string[] args)
         {
-            MainMenu interfacesMainMenu = new MainMenu();
+            MenuItem showDateMenuItem = new MenuItem("Show Date", i_MenuItemActions: new List<IMenuItemAction>() { new ShowDateAction() });
+            MenuItem showTimeMenuItem = new MenuItem("Show Time", i_MenuItemActions: new List<IMenuItemAction>() { new ShowTimeAction() });
+            MenuItem showDateTimeMenuItem = new MenuItem("Show Date/Time", i_MenuItems: new List<MenuItem>(){ showDateMenuItem, showTimeMenuItem });
 
-            MenuItem showDateTimeMenuItem = new MenuItem("Show Date/Time");
+            MenuItem countSpacesMenuItem = new MenuItem("Count Spaces", i_MenuItemActions: new List<IMenuItemAction>(){new CountSpacesAction()});
+            MenuItem countWordsMenuItem = new MenuItem("Count Words", i_MenuItemActions: new List<IMenuItemAction>(){new CountWordsItemAction()});
+            MenuItem versionAndActionsMenuItem = new MenuItem("Version and Actions", i_MenuItems: new List<MenuItem>() { countSpacesMenuItem , countWordsMenuItem});
 
-            MenuItem showDateMenuItem = new MenuItem("Show Date", showDateTimeMenuItem);
-            showDateMenuItem.AddMenuItemAction(new ShowDateAction());
-
-            MenuItem showTimeMenuItem = new MenuItem("Show Time", showDateTimeMenuItem);
-            showTimeMenuItem.AddMenuItemAction(new ShowTimeAction());
-
-            showDateTimeMenuItem.AddMenuItem(showDateMenuItem);
-            showDateTimeMenuItem.AddMenuItem(showTimeMenuItem);
-
-
-            //interfacesMainMenu.AddMenuItem()
-
+            MainMenu interfacesMainMenu = new MainMenu(i_MenuItems: new List<MenuItem>() { showDateTimeMenuItem, versionAndActionsMenuItem });
+            interfacesMainMenu.Show();
         }
     }
 }

@@ -10,7 +10,10 @@ namespace Ex04.Menus.Interfaces.Actions
     {
         public void Execute()
         {
-            Console.WriteLine(DateTime.Now.ToShortDateString());
+            Console.WriteLine("The current data is: {0}", DateTime.Now.ToShortDateString());
+
+            Console.WriteLine("Press enter to return to menu");
+            Console.ReadLine();
         }
     }
 }

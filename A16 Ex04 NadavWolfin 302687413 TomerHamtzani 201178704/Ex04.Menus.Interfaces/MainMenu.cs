@@ -8,47 +8,35 @@ namespace Ex04.Menus.Interfaces
 {
     public class MainMenu
     {
-        public MainMenu()
+        public MainMenu(List<MenuItem> i_MenuItems = null, List<IMenuItemAction> i_MenuItemActions = null)
         {
-            m_RootMenuItems = new MenuItem("Main Menu", null);
-            addExitOperation();
-        }
-
-        private void addExitOperation()
-        {
-            m_RootMenuItems.AddMenuItem(new ExitMenuItem());
+            i_MenuItems.Insert(0, new ExitMenuItem());
+            m_RootMenuItems = new MenuItem("Main Menu", i_MenuItems, i_MenuItemActions);
         }
 
         public void Show()
         {
-            MenuItem currenMenuItem = m_RootMenuItems;
-            bool isUserRequestToExit = false;
+            MenuItem currenMenuItem = m_RootMenuItems.GetSelectedMenuItem();
 
-            while (!isUserRequestToExit)
+            while (k_DisplyMenu)
             {
-                Console.Clear();
-                MenuItem menuItem = m_RootMenuItems.GetSelectedMenuItem();
-
-                if (menuItem.IsAction)
+                if (currenMenuItem is ExitMenuItem)
                 {
-                    menuItem.ExecuteActions();
+                    break;
+                }
+
+                if (currenMenuItem.IsAction)
+                {
+                    currenMenuItem.ExecuteActions();
                 }
                 else
                 {
-                    menuItem = menuItem.GetSelectedMenuItem();
+                    currenMenuItem = currenMenuItem.GetSelectedMenuItem();
                 }
-
-                isUserRequestToExit = menuItem is ExitMenuItem;
-                currenMenuItem = menuItem;
             }
         }
 
-        public void AddMenuItem(MenuItem i_MenuItem)
-        {
-            i_MenuItem.Parent = m_RootMenuItems;
-            m_RootMenuItems.AddMenuItem(i_MenuItem);
-        }
-
+        private const bool k_DisplyMenu = true;
         private MenuItem m_RootMenuItems;
     }
 }
