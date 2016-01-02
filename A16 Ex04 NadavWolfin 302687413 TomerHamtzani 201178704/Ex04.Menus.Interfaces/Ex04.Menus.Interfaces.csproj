@@ -44,8 +44,8 @@
     <Compile Include="Actions\CountWordsItemAction.cs" />
     <Compile Include="Actions\ShowDateAction.cs" />
     <Compile Include="Actions\ShowTimeAction.cs" />
-    <Compile Include="BackMenuItemAction.cs" />
-    <Compile Include="ExitMenuItemAction.cs" />
+    <Compile Include="BackMenuItem.cs" />
+    <Compile Include="ExitMenuItem.cs" />
     <Compile Include="IMenuItemAction.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="MenuItem.cs" />

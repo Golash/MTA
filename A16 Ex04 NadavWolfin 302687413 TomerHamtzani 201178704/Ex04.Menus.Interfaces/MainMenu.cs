@@ -21,10 +21,12 @@ namespace Ex04.Menus.Interfaces
 
         public void Show()
         {
-            MenuItem currenMenuItem = m_RootMenuItems.GetSelectedMenuItem();
+            MenuItem currenMenuItem = m_RootMenuItems;
 
             while (k_DisplyMenu)
             {
+                currenMenuItem = currenMenuItem.GetSelectedMenuItem();
+
                 if (currenMenuItem is ExitMenuItem)
                 {
                     break;
@@ -32,11 +34,9 @@ namespace Ex04.Menus.Interfaces
 
                 if (currenMenuItem.IsAction)
                 {
+                    Console.Clear();
                     currenMenuItem.ExecuteActions();
-                }
-                else
-                {
-                    currenMenuItem = currenMenuItem.GetSelectedMenuItem();
+                    currenMenuItem = currenMenuItem.Parent;
                 }
             }
         }

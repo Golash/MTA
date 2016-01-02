@@ -24,6 +24,7 @@ namespace Ex04.Menus.Interfaces.Actions
 
             Console.WriteLine("The number of spaces in the given sentance is: {0}", spaceCount);
 
+            Console.WriteLine();
             Console.WriteLine("Press enter to return to menu");
             Console.ReadLine();
         }

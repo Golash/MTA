@@ -14,10 +14,10 @@ namespace Ex04.Menus.Interfaces.Actions
             string sentance = Console.ReadLine();
 
             int wordsCount = sentance.Split(r_SpaceSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
-            Console.WriteLine(wordsCount);
 
             Console.WriteLine("The number of words in the given sentance is: {0}", wordsCount);
 
+            Console.WriteLine();
             Console.WriteLine("Press enter to return to menu");
             Console.ReadLine();
         }

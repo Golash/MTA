@@ -13,14 +13,6 @@ namespace Ex04.Menus.Interfaces
             m_MenuItems = new List<MenuItem>();
             m_MenuItemActions = new List<IMenuItemAction>();
             m_Title = i_MenuItemTitle;
-
-            // Add current menu item as parent for all sub menus
-            foreach (MenuItem menuItem in m_MenuItems)
-            {
-                menuItem.Parent = this;
-            }
-
-            addBackMenuItemIfNeeded();
         }
 
         public void AddMenuItemAction(IMenuItemAction i_MenuItemAction)
@@ -37,9 +29,9 @@ namespace Ex04.Menus.Interfaces
         private void addBackMenuItemIfNeeded()
         {
             // Add back to the top of the menu.
-            if (m_MenuItems.Count != 0 && m_Parent != null && !(m_MenuItems[0] is BackMenuItemItem))
+            if (m_MenuItems.Count > 0 && Parent != null && !(m_MenuItems[0] is BackMenuItem))
             {
-                m_MenuItems.Insert(0, new BackMenuItemItem(m_Parent, this));
+                m_MenuItems.Insert(0, new BackMenuItem(Parent, this));
             }
         }
 

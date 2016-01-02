@@ -10,19 +10,18 @@ namespace Ex04.Menus.Test
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            MenuItem showDateTimeMenuItem = new MenuItem("Show Date/Time");
-
             MenuItem showDateMenuItem = new MenuItem("Show Date");
             showDateMenuItem.AddMenuItemAction(new ShowTimeAction());
 
             MenuItem showTimeMenuItem = new MenuItem("Show Time");
             showTimeMenuItem.AddMenuItemAction(new ShowDateAction());
 
+            MenuItem showDateTimeMenuItem = new MenuItem("Show Date/Time");
             showDateTimeMenuItem.AddMenuItem(showDateMenuItem);
             showDateTimeMenuItem.AddMenuItem(showTimeMenuItem);
-            
+
             MenuItem countSpacesMenuItem = new MenuItem("Count Spaces");
             countSpacesMenuItem.AddMenuItemAction(new CountSpacesAction());
 

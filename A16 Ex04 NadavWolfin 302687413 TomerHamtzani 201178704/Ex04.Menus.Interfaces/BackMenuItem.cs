@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Interfaces
 {
-    class BackMenuItemItem : MenuItem
+    class BackMenuItem : MenuItem
     {
-        public BackMenuItemItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back")
+        public BackMenuItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back")
         {
             m_MenuToBack = i_MenuToBack;
         }

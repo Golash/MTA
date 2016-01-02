@@ -12,6 +12,7 @@ namespace Ex04.Menus.Interfaces.Actions
         {
             Console.WriteLine("The current time is: {0}", DateTime.Now.ToShortTimeString());
 
+            Console.WriteLine();
             Console.WriteLine("Press enter to return to menu");
             Console.ReadLine();
         }
