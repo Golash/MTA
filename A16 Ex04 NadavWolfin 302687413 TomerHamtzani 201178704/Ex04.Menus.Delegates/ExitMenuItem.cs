@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Delegates
 {
-    internal class BackMenuItem : MenuItem
+    internal class ExitMenuItem : MenuItem
     {
-        public BackMenuItem(MenuItem i_MenuToBack, MenuItem i_Parent) : base("Back")
+        public ExitMenuItem() : base("Exit")
         {
-            m_MenuToBack = i_MenuToBack;
         }
 
         internal override MenuItem GetSelectedMenuItem()
         {
-            return m_MenuToBack;
+            throw new InvalidOperationException("Exit menu item hasn't sub menu");
         }
 
         public override bool IsAction
@@ -25,7 +24,5 @@ namespace Ex04.Menus.Interfaces
                 return false;
             }
         }
-
-        private MenuItem m_MenuToBack;
     }
 }

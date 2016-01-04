@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Interfaces
 {
-    class ExitMenuItem : MenuItem
+    internal class ExitMenuItem : MenuItem
     {
         public ExitMenuItem() : base("Exit")
         {

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Interfaces
 {
-    public interface IMenuItemAction
+    public interface IMenuItemSelectedObserver
     {
-        void Execute();
+        void ReportSelect(MenuItem i_MenuItem);
     }
 }

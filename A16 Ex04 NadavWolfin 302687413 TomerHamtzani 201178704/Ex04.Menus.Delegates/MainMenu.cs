@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Delegates
 {
     public class MainMenu
     {
@@ -35,7 +35,7 @@ namespace Ex04.Menus.Interfaces
                 if (currenMenuItem.IsAction)
                 {
                     Console.Clear();
-                    currenMenuItem.Select();
+                    currenMenuItem.Execute();
                     Console.WriteLine();
                     Console.WriteLine("Press enter to return to menu");
                     Console.ReadLine();

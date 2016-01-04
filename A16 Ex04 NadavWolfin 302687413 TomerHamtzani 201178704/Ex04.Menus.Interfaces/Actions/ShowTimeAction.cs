@@ -6,15 +6,33 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Interfaces.Actions
 {
-    public class ShowTimeAction : IMenuItemAction
+    public class ShowTimeAction : IMenuItemSelectedObserver
     {
-        public void Execute()
+        public ShowTimeAction()
+        {
+            MenuItem menuItem = new MenuItem("Show Time");
+            menuItem.AttachObserver(this);
+            m_MenuItems.Add(menuItem);
+        }
+
+        public void ReportSelect(MenuItem i_MenuItem)
+        {
+            Execute();
+        }
+
+        private void Execute()
         {
             Console.WriteLine("The current time is: {0}", DateTime.Now.ToShortTimeString());
-
-            Console.WriteLine();
-            Console.WriteLine("Press enter to return to menu");
-            Console.ReadLine();
         }
+
+        public List<MenuItem> MenuItems 
+        {
+            get
+            {
+                return m_MenuItems;
+            }
+        }
+
+        private readonly List<MenuItem> m_MenuItems = new List<MenuItem>();
     }
 }

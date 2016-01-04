@@ -1,42 +1,24 @@
-﻿using Ex04.Menus.Interfaces;
-using Ex04.Menus.Interfaces.Actions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex04.Menus.Interfaces;
+using Ex04.Menus.Interfaces.Actions;
 
 namespace Ex04.Menus.Test
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        public static void Main()
         {
-            MenuItem showDateMenuItem = new MenuItem("Show Date");
-            showDateMenuItem.AddMenuItemAction(new ShowTimeAction());
+            DelegateMenuRunner.Run();
 
-            MenuItem showTimeMenuItem = new MenuItem("Show Time");
-            showTimeMenuItem.AddMenuItemAction(new ShowDateAction());
+            Console.Clear();
+            Console.WriteLine("Exit Successfully, Press Enter to move to the next menu");
+            Console.ReadLine();
 
-            MenuItem showDateTimeMenuItem = new MenuItem("Show Date/Time");
-            showDateTimeMenuItem.AddMenuItem(showDateMenuItem);
-            showDateTimeMenuItem.AddMenuItem(showTimeMenuItem);
-
-            MenuItem countSpacesMenuItem = new MenuItem("Count Spaces");
-            countSpacesMenuItem.AddMenuItemAction(new CountSpacesAction());
-
-            MenuItem countWordsMenuItem = new MenuItem("Count Words");
-            countWordsMenuItem.AddMenuItemAction(new CountWordsItemAction());
-
-            MenuItem versionAndActionsMenuItem = new MenuItem("Version and Actions");
-            versionAndActionsMenuItem.AddMenuItem(countSpacesMenuItem);
-            versionAndActionsMenuItem.AddMenuItem(countWordsMenuItem);
-
-            MainMenu interfacesMainMenu = new MainMenu();
-            interfacesMainMenu.AddMenuItems(showDateTimeMenuItem);
-            interfacesMainMenu.AddMenuItems(versionAndActionsMenuItem);
-
-            interfacesMainMenu.Show();
+            InterfaceMenuRunner.Run();
         }
     }
 }

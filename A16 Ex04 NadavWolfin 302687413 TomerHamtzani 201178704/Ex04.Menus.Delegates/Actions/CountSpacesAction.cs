@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex04.Menus.Delegates;
 
-namespace Ex04.Menus.Interfaces.Actions
+namespace Ex04.Menus.Delegates.Actions
 {
-    public class CountSpacesAction : IMenuItemSelectedObserver
+    public class CountSpacesAction : MenuItemActionBase
     {
         public CountSpacesAction()
+            : base(new List<MenuItem>() { new MenuItem("Count Spaces") })
         {
-            MenuItem menuItem = new MenuItem("Count Spaces");
-            menuItem.AttachObserver(this);
-            m_MenuItems.Add(menuItem);
         }
 
-        public void ReportSelect(MenuItem i_MenuItem)
-        {
-            Execute();
-        }
-
-        private void Execute()
+        public override void Execute()
         {
             Console.WriteLine("Please write a sentance:");
             string sentance = Console.ReadLine();
@@ -36,16 +30,6 @@ namespace Ex04.Menus.Interfaces.Actions
 
             Console.WriteLine("The number of spaces in the given sentance is: {0}", spaceCount);
         }
-
-        public List<MenuItem> MenuItems
-        {
-            get
-            {
-                return m_MenuItems;
-            }
-        }
-
-        private readonly List<MenuItem> m_MenuItems = new List<MenuItem>();
 
         private const char k_Space = ' ';
     }

@@ -4,20 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Delegates
 {
+    public delegate void MenuSelectedEventHandler(object sender, EventArgs e);
+
     public class MenuItem
     {
         public MenuItem(string i_MenuItemTitle)
         {
             m_SubMenuItems = new List<MenuItem>();
-            m_MenuItemSelectedObservers = new List<IMenuItemSelectedObserver>();
             m_Title = i_MenuItemTitle;
-        }
-
-        public void AttachObserver(IMenuItemSelectedObserver i_MenuItemSelectedObserver)
-        {
-            m_MenuItemSelectedObservers.Add(i_MenuItemSelectedObserver);
         }
 
         public void AddMenuItems(List<MenuItem> i_MenuItems)
@@ -79,6 +75,14 @@ namespace Ex04.Menus.Interfaces
             return isValidValue;
         }
 
+        public void Execute()
+        {
+            if (Selected != null)
+            {
+                Selected.Invoke(this, new EventArgs());
+            }
+        }
+
         public override string ToString()
         {
             StringBuilder menuItemsStr = new StringBuilder();
@@ -97,14 +101,6 @@ namespace Ex04.Menus.Interfaces
             menuItemsStr.Append("Please choose option number: ");
 
             return menuItemsStr.ToString();
-        }
-
-        public void Select()
-        {
-            foreach (IMenuItemSelectedObserver action in m_MenuItemSelectedObservers)
-            {
-                action.ReportSelect(this);
-            }
         }
 
         /// <summary>
@@ -132,7 +128,8 @@ namespace Ex04.Menus.Interfaces
             }
         }
 
-        private List<IMenuItemSelectedObserver> m_MenuItemSelectedObservers;
+        public event MenuSelectedEventHandler Selected; // The menu item was selcted
+
         private List<MenuItem> m_SubMenuItems;
         private string m_Title;
         private MenuItem m_Parent;
