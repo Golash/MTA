@@ -20,15 +20,15 @@ namespace Ex04.Menus.Test
             showDateTimeMenuItem.AddMenuItems(showTimeMenuItemAction.MenuItems);
 
             CountSpacesAction countSpacesMenuItemAction = new CountSpacesAction();
-            CountWordsItemAction countWordsMenuItemAction = new CountWordsItemAction();
+            CountWordsAction countWordsMenuItemAction = new CountWordsAction();
 
             MenuItem versionAndActionsMenuItem = new MenuItem("Version and Actions");
             versionAndActionsMenuItem.AddMenuItems(countSpacesMenuItemAction.MenuItems);
             versionAndActionsMenuItem.AddMenuItems(countWordsMenuItemAction.MenuItems);
 
             MainMenu mainMenu = new MainMenu();
-            mainMenu.AddMenuItems(showDateTimeMenuItem);
-            mainMenu.AddMenuItems(versionAndActionsMenuItem);
+            mainMenu.AddMenuItem(showDateTimeMenuItem);
+            mainMenu.AddMenuItem(versionAndActionsMenuItem);
 
             mainMenu.Show();
         }

@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\CountSpacesAction.cs" />
-    <Compile Include="Actions\CountWordsItemAction.cs" />
+    <Compile Include="Actions\CountWordsAction.cs" />
     <Compile Include="Actions\ShowDateAction.cs" />
     <Compile Include="Actions\ShowTimeAction.cs" />
     <Compile Include="BackMenuItem.cs" />

@@ -6,16 +6,32 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Delegates
 {
+    /// <summary>
+    /// Delegate for function that need to be called when menu is selected
+    /// </summary>
+    /// <param name="sender">The <see cref="MenuItem"/> that was selected</param>
+    /// <param name="e">arguments</param>
     public delegate void MenuSelectedEventHandler(object sender, EventArgs e);
 
+    /// <summary>
+    /// Represent a menu item under the main menu
+    /// </summary>
     public class MenuItem
     {
+        /// <summary>
+        /// Create a new instance of <see cref="MenuItem"/>
+        /// </summary>
+        /// <param name="i_MenuItemTitle">The title of the menu</param>
         public MenuItem(string i_MenuItemTitle)
         {
             m_SubMenuItems = new List<MenuItem>();
             m_Title = i_MenuItemTitle;
         }
 
+        /// <summary>
+        /// Add menu items as a sub menus of the current menu
+        /// </summary>
+        /// <param name="i_MenuItems">The menus to add</param>
         public void AddMenuItems(List<MenuItem> i_MenuItems)
         {
             foreach (MenuItem menuItem in i_MenuItems)
@@ -24,21 +40,36 @@ namespace Ex04.Menus.Delegates
             }
         }
 
+        /// <summary>
+        /// Add a <see cref="MenuItem"/> as a sub menu.
+        /// </summary>
+        /// <param name="i_MenuItem">The menu to add</param>
         public void AddMenuItem(MenuItem i_MenuItems)
         {
             i_MenuItems.Parent = this;
             m_SubMenuItems.Add(i_MenuItems);
         }
 
+        /// <summary>
+        /// Check if need to add back menu, and if so, add it
+        /// Back menu need to be added when all following cases holds:
+        /// 1. There is at least one sum menu
+        /// 2. There is a parent to back to
+        /// 3. There is no a <see cref="BackMenuItem"/> that already exists
+        /// </summary>
         private void addBackMenuItemIfNeeded()
         {
             // Add back to the top of the menu.
             if (m_SubMenuItems.Count > 0 && Parent != null && !(m_SubMenuItems[0] is BackMenuItem))
             {
-                m_SubMenuItems.Insert(0, new BackMenuItem(Parent, this));
+                m_SubMenuItems.Insert(0, new BackMenuItem(Parent));
             }
         }
 
+        /// <summary>
+        /// Let the user to select a menu from the sub menus and return the user selected
+        /// </summary>
+        /// <returns>The menu item that was selected by the user</returns>
         internal virtual MenuItem GetSelectedMenuItem()
         {
             bool isValidValue = false;
@@ -59,6 +90,12 @@ namespace Ex04.Menus.Delegates
             return selectedMenuItem;
         }
 
+        /// <summary>
+        /// Helper function that convert the user selected number into a <see cref="MenuItem"/>
+        /// </summary>
+        /// <param name="i_SelectNumberStr">The number that represent the selected menu</param>
+        /// <param name="o_SelectedMenuItem">The menu that related to the selected number</param>
+        /// <returns>true is the given <paramref name="i_SelectNumberStr"/> is a number that represent a sub menu, otherwise false</returns>
         private bool tryParseSelectedNumber(string i_SelectNumberStr, out MenuItem o_SelectedMenuItem)
         {
             int selectedNumber;
@@ -75,6 +112,9 @@ namespace Ex04.Menus.Delegates
             return isValidValue;
         }
 
+        /// <summary>
+        /// Publish the selected event to all the subscribers
+        /// </summary>
         public void Execute()
         {
             if (Selected != null)
@@ -83,6 +123,10 @@ namespace Ex04.Menus.Delegates
             }
         }
 
+        /// <summary>
+        /// Create a string that represent the current menu
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder menuItemsStr = new StringBuilder();
@@ -104,7 +148,7 @@ namespace Ex04.Menus.Delegates
         }
 
         /// <summary>
-        /// When there is no sub menu item, the current menu item is an action.
+        /// Indicate if the current menu is an action menu, Action menu is an action that response to action and dosen't contain sub menus
         /// </summary>
         public virtual bool IsAction
         {
@@ -114,6 +158,9 @@ namespace Ex04.Menus.Delegates
             }
         }
 
+        /// <summary>
+        /// Represent the parent of the current <see cref="MenuItem"/>
+        /// </summary>
         internal virtual MenuItem Parent
         {
             get
@@ -129,7 +176,6 @@ namespace Ex04.Menus.Delegates
         }
 
         public event MenuSelectedEventHandler Selected; // The menu item was selcted
-
         private List<MenuItem> m_SubMenuItems;
         private string m_Title;
         private MenuItem m_Parent;

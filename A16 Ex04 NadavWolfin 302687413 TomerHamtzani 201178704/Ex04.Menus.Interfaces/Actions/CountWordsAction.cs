@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Ex04.Menus.Interfaces.Actions
 {
-    public class ShowDateAction : IMenuItemSelectedObserver
+    public class CountWordsAction : IMenuItemSelectedObserver
     {
         /// <summary>
-        /// Create a new instance of <see cref="ShowDateAction"/>
+        /// Create a new instance of <see cref="CountWordsAction"/>
         /// </summary>
-        public ShowDateAction()
+        public CountWordsAction()
         {
-            MenuItem menuItem = new MenuItem("Show Date");
+            MenuItem menuItem = new MenuItem("Count Words");
             menuItem.AttachObserver(this);
             m_MenuItems.Add(menuItem);
         }
@@ -28,12 +28,18 @@ namespace Ex04.Menus.Interfaces.Actions
         }
 
         /// <summary>
-        /// Execute the <see cref="ShowDateAction"/> action.
-        /// The actions will display the current date
+        /// Execute the <see cref="CountWordsAction"/> action.
+        /// The actions will:
+        /// 1. Read a sentance from the user.
+        /// 2. Display the user the number of words in the sentance
         /// </summary>
         private void Execute()
         {
-            Console.WriteLine("The current data is: {0}", DateTime.Now.ToShortDateString());
+            Console.WriteLine("Please write a sentance:");
+            string sentance = Console.ReadLine();
+            int wordsCount = sentance.Split(r_SpaceSeparators, StringSplitOptions.RemoveEmptyEntries).Length;
+
+            Console.WriteLine("The number of words in the given sentance is: {0}", wordsCount);
         }
 
         /// <summary>
@@ -48,5 +54,8 @@ namespace Ex04.Menus.Interfaces.Actions
         }
 
         private readonly List<MenuItem> m_MenuItems = new List<MenuItem>();
+
+        // We consider the following characters as a word separator in a sentence
+        private readonly string[] r_SpaceSeparators = new string[] { " ", "\t" };
     }
 }
