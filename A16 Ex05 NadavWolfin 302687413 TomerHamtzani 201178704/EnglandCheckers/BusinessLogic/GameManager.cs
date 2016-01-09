@@ -30,7 +30,7 @@ namespace EnglandCheckers.BusinessLogic
             // Set the strategy only if the second player is computer
             if (m_GameDetails.Player2.Mode == ePlayerMode.Computer)
             {
-                m_GameStrategy = new RandomGameStrategy(m_Board);
+                m_GameStrategy = new AIGameStrategy(m_Board);
             }
         }
 
