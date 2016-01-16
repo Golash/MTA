@@ -152,7 +152,7 @@ namespace EnglandCheckers.UI
             }
             else
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -160,14 +160,14 @@ namespace EnglandCheckers.UI
         {
             int cellsPanelSize = i_BoardSize * UIBoardCell.k_CellSideSize;
 
-            // todo check the buffer
+            // Added buffer for better visualization
             int width = cellsPanelSize + k_GamePanelWidthBuffer;
             int height = cellsPanelSize + panelHeaderPlayersInfo.Height + k_GamePanelHeightBuffer;
 
             return new Size(width, height);
         }
 
-        private void CheckersBoardForm_KeyPress(object sender, KeyPressEventArgs e)
+        private void CheckersBoardFor_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar.ToString().ToUpper() == k_QuitLetter)
             {

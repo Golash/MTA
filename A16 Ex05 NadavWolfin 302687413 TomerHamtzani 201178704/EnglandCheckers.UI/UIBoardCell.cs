@@ -9,30 +9,30 @@ namespace EnglandCheckers.UI
     {
         public UIBoardCell(BoardCell i_BoardCell)
         {
-            this.Enabled = i_BoardCell.Enabled;
-            this.BackColor = this.Enabled ? r_DefaultColor : r_DisableColor;
+            Enabled = i_BoardCell.Enabled;
+            BackColor = Enabled ? r_DefaultColor : r_DisableColor;
 
-            m_BoardCell = i_BoardCell;
-            m_BoardCell.BoardCellChanged += m_BoardCell_BoardCellChanged;
+            r_BoardCell = i_BoardCell;
+            r_BoardCell.BoardCellChanged += m_BoardCell_BoardCellChanged;
 
-            this.Size = new Size(k_CellSideSize, k_CellSideSize);
-            this.Margin = new Padding(0);
+            Size = new Size(k_CellSideSize, k_CellSideSize);
+            Margin = new Padding(0);
 
-            if (this.Enabled)
+            if (Enabled)
             {
                 updateText();
-                this.TextAlign = ContentAlignment.MiddleCenter;
-                this.Click += boardButton_Click;
+                TextAlign = ContentAlignment.MiddleCenter;
+                Click += boardButton_Click;
                 IsSelected = false;
             }
         }
 
         private void m_BoardCell_BoardCellChanged(object obj, EventArgs e)
         {
-            UpdateCell();
+            updateCell();
         }
 
-        public void UpdateCell()
+        private void updateCell()
         {
             updateText();
             updateColor();
@@ -40,19 +40,19 @@ namespace EnglandCheckers.UI
 
         private void updateColor()
         {
-            this.BackColor = IsSelected ? r_SelectedColor : r_DefaultColor;
+            BackColor = IsSelected ? r_SelectedColor : r_DefaultColor;
         }
 
         private void updateText()
         {
-            this.Text = m_BoardCell.Coin != null ? m_BoardCell.Coin.ToString() : string.Empty;
+            Text = r_BoardCell.Coin != null ? r_BoardCell.Coin.ToString() : string.Empty;
         }
 
         public BoardPoint BoardPoint
         {
             get
             {
-                return m_BoardCell.BoardPoint;
+                return r_BoardCell.BoardPoint;
             }
         }
 
@@ -79,7 +79,7 @@ namespace EnglandCheckers.UI
         private readonly Color r_SelectedColor = Color.LightBlue;
         private readonly Color r_DefaultColor = Color.Transparent;
         private readonly Color r_DisableColor = Color.LightGray;
-        private BoardCell m_BoardCell;
+        private readonly BoardCell r_BoardCell;
         internal const int k_CellSideSize = 50;
     }
 }

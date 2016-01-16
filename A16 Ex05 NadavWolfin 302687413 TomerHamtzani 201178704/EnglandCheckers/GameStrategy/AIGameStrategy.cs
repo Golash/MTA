@@ -10,7 +10,7 @@ namespace EnglandCheckers.GameStrategy
     {
         public AIGameStrategy(Board i_Board) : base(i_Board)
         {
-            rm_RandomGameStrategy = new RandomGameStrategy(i_Board);
+            r_RandomGameStrategy = new RandomGameStrategy(i_Board);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace EnglandCheckers.GameStrategy
             // if there is no recommended step, tandom from the valid movs
             if (nextMove == null)
             {
-                nextMove = rm_RandomGameStrategy.GetNextMove(k_ComputerSign);
+                nextMove = r_RandomGameStrategy.GetNextMove(k_ComputerSign);
             }
 
             return nextMove;
@@ -183,7 +183,7 @@ namespace EnglandCheckers.GameStrategy
             return isSageCoin;
         }
 
-        private readonly RandomGameStrategy rm_RandomGameStrategy;
+        private readonly RandomGameStrategy r_RandomGameStrategy;
         private const eCoinSign k_ComputerSign = eCoinSign.O; 
     }
 }

@@ -17,11 +17,11 @@
         /// </summary>
         public GameDetails(Player i_Player1, Player i_Player2, int i_BoardSize)
         {
-            rm_Player1 = i_Player1;
-            rm_Player2 = i_Player2;
+            r_Player1 = i_Player1;
+            r_Player2 = i_Player2;
             Player1.Sign = eCoinSign.X;
             Player2.Sign = eCoinSign.O;
-            rm_BoardSize = i_BoardSize;
+            r_BoardSize = i_BoardSize;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@
         {
             get
             {
-                return rm_BoardSize;
+                return r_BoardSize;
             }
         }
         
@@ -63,7 +63,7 @@
         {
             get
             {
-                return rm_Player1;
+                return r_Player1;
             }
         }
 
@@ -74,7 +74,7 @@
         {
             get
             {
-                return rm_Player2;
+                return r_Player2;
             }
         }
 
@@ -85,11 +85,11 @@
         /// <returns></returns>
         internal Player GetPlayerBySign(eCoinSign i_PlayerSign)
         {
-            return rm_Player1.Sign == i_PlayerSign ? rm_Player1 : rm_Player2;
+            return r_Player1.Sign == i_PlayerSign ? r_Player1 : r_Player2;
         }
 
-        private readonly int rm_BoardSize;
-        private readonly Player rm_Player1;
-        private readonly Player rm_Player2;
+        private readonly int r_BoardSize;
+        private readonly Player r_Player1;
+        private readonly Player r_Player2;
     }
 }

@@ -69,7 +69,7 @@ namespace EnglandCheckers.UI
                 Player player1 = new Player(textBoxPlayerOne.Text, ePlayerMode.Human);
 
                 ePlayerMode player2Mode = checkBoxPlayerTwo.Checked ? ePlayerMode.Human : ePlayerMode.Computer;
-                Player player2 = new Player(this.textBoxPlayerTwo.Text, player2Mode);
+                Player player2 = new Player(textBoxPlayerTwo.Text, player2Mode);
 
                 gameDetails = new GameDetails(player1, player2, borderSize);
             }

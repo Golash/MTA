@@ -11,7 +11,7 @@
         /// <param name="i_Sign"></param>
         public Coin(eCoinSign i_Sign)
         {
-            rm_Sign = i_Sign;
+            r_Sign = i_Sign;
             m_IsKing = false;
         }
 
@@ -22,7 +22,7 @@
         {
             get
             {
-                return rm_Sign;
+                return r_Sign;
             }
         }
 
@@ -64,16 +64,16 @@
         /// <returns></returns>
         public override string ToString()
         {
-            string coinStrValue = rm_Sign.ToString();
+            string coinStrValue = r_Sign.ToString();
             if (IsKing)
             {
-                coinStrValue = getKingSignByCoinSign(rm_Sign).ToString();
+                coinStrValue = getKingSignByCoinSign(r_Sign).ToString();
             }
 
             return coinStrValue;
         }
 
-        private readonly eCoinSign rm_Sign;
+        private readonly eCoinSign r_Sign;
         private bool m_IsKing;
     }
 }

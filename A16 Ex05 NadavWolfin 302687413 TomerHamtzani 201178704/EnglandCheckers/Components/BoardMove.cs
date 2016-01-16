@@ -10,9 +10,9 @@
         /// </summary>
         public BoardMove(BoardPoint i_From, BoardPoint i_To)
         {
-            rm_From = i_From;
-            rm_To = i_To;
-            rm_MoveStr = calcMoveStr();
+            r_From = i_From;
+            r_To = i_To;
+            r_MoveStr = calcMoveStr();
         }
 
         /// <summary>
@@ -21,10 +21,10 @@
         /// <returns></returns>
         private string calcMoveStr()
         {
-            char fromColumnLetter = (char)(Board.ColumnStartLetter + rm_From.Column);
-            char fromRowLetter = (char)(Board.RowStartLetter + rm_From.Row);
-            char toColumnLetter = (char)(Board.ColumnStartLetter + rm_To.Column);
-            char toRowLetter = (char)(Board.RowStartLetter + rm_To.Row);
+            char fromColumnLetter = (char)(Board.ColumnStartLetter + r_From.Column);
+            char fromRowLetter = (char)(Board.RowStartLetter + r_From.Row);
+            char toColumnLetter = (char)(Board.ColumnStartLetter + r_To.Column);
+            char toRowLetter = (char)(Board.RowStartLetter + r_To.Row);
 
             return string.Format("{0}{1}>{2}{3}", fromColumnLetter, fromRowLetter, toColumnLetter, toRowLetter);
         }
@@ -35,7 +35,7 @@
         /// <returns></returns>
         public override string ToString()
         {
-            return rm_MoveStr;
+            return r_MoveStr;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@
         {
             BoardMove bordMove = i_Obj as BoardMove;
 
-            return bordMove != null && rm_From.Column == bordMove.From.Column && rm_From.Row == bordMove.From.Row &&
-                    rm_To.Column == bordMove.To.Column && rm_To.Row == bordMove.To.Row;
+            return bordMove != null && r_From.Column == bordMove.From.Column && r_From.Row == bordMove.From.Row &&
+                    r_To.Column == bordMove.To.Column && r_To.Row == bordMove.To.Row;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@
         /// </remarks>
         public override int GetHashCode()
         {
-            return (rm_From.Row * 1000) + (rm_From.Column * 100) + (rm_To.Row * 10) + rm_To.Column;
+            return (r_From.Row * 1000) + (r_From.Column * 100) + (r_To.Row * 10) + r_To.Column;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@
         {
             get
             {
-                return rm_From;
+                return r_From;
             }
         }
 
@@ -78,12 +78,12 @@
         {
             get
             {
-                return rm_To;
+                return r_To;
             }
         }
 
-        private readonly BoardPoint rm_From;
-        private readonly BoardPoint rm_To;
-        private readonly string rm_MoveStr;
+        private readonly BoardPoint r_From;
+        private readonly BoardPoint r_To;
+        private readonly string r_MoveStr;
     }
 }

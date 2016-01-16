@@ -11,8 +11,8 @@
         /// </summary>
         public Player(string i_Name, ePlayerMode i_PlayrMode)
         {
-            rm_Name = i_Name;
-            rm_Mode = i_PlayrMode;
+            r_Name = i_Name;
+            r_Mode = i_PlayrMode;
         }
 
         /// <summary>
@@ -22,7 +22,7 @@
         {
             get
             {
-                return rm_Name;
+                return r_Name;
             }
         }
 
@@ -33,7 +33,7 @@
         {
             get
             {
-                return rm_Mode;
+                return r_Mode;
             }
         }
 
@@ -117,8 +117,8 @@
             }
         }
 
-        private readonly string rm_Name;
-        private readonly ePlayerMode rm_Mode;
+        private readonly string r_Name;
+        private readonly ePlayerMode r_Mode;
         private eCoinSign m_CoinSing;
         private int m_Points;
         private BoardMove m_LastMove;

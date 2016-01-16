@@ -132,7 +132,7 @@
             this.Name = "CheckersBoardForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Damka";
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckersBoardForm_KeyPress);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckersBoardFor_KeyPress);
             this.panelHeaderPlayersInfo.ResumeLayout(false);
             this.panelHeaderPlayersInfo.PerformLayout();
             this.ResumeLayout(false);
