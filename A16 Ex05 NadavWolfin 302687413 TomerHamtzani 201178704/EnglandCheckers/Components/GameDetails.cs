@@ -100,11 +100,11 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Get player instance by it's sign
         /// </summary>
-        /// <param name="playerSign"></param>
+        /// <param name="i_PlayerSign"></param>
         /// <returns></returns>
-        internal Player GetPlayerBySign(eCoinSign playerSign)
+        internal Player GetPlayerBySign(eCoinSign i_PlayerSign)
         {
-            return m_Player1.Sign == playerSign ? m_Player1 : m_Player2;
+            return m_Player1.Sign == i_PlayerSign ? m_Player1 : m_Player2;
         }
 
         private int m_BoardSize;

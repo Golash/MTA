@@ -1,6 +1,6 @@
 ﻿namespace EnglandCheckers.UI
 {
-    partial class checkersBoardForm
+    partial class CheckersBoardForm
     {
         /// <summary>
         /// Required designer variable.

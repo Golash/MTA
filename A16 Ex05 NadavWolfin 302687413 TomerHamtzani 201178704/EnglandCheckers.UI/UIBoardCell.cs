@@ -14,7 +14,7 @@ namespace EnglandCheckers.UI
         public UIBoardCell(BoardCell i_BoardCell)
         {
             this.Enabled = i_BoardCell.Enabled;
-            this.BackColor = this.Enabled ? k_DefaultColor : k_DisableColor;
+            this.BackColor = this.Enabled ? r_DefaultColor : r_DisableColor;
 
             m_BoardCell = i_BoardCell;
             m_BoardCell.BoardCellChanged += m_BoardCell_BoardCellChanged;
@@ -26,7 +26,7 @@ namespace EnglandCheckers.UI
             {
                 updateText();
                 this.TextAlign = ContentAlignment.MiddleCenter;
-                this.Click += BoardButton_Click;
+                this.Click += boardButton_Click;
                 IsSelected = false;
             }
         }
@@ -44,7 +44,7 @@ namespace EnglandCheckers.UI
 
         private void updateColor()
         {
-            this.BackColor = IsSelected ? k_SelectedColor : k_DefaultColor;
+            this.BackColor = IsSelected ? r_SelectedColor : r_DefaultColor;
         }
 
         private void updateText()
@@ -73,16 +73,16 @@ namespace EnglandCheckers.UI
             }
         }
 
-        private void BoardButton_Click(object sender, EventArgs e)
+        private void boardButton_Click(object sender, EventArgs e)
         {
             IsSelected = !IsSelected;
         }
 
         private bool m_IsSelected;
-        private readonly Color k_SelectedColor = Color.LightBlue;
-        private readonly Color k_DefaultColor = Color.Transparent;
-        private readonly Color k_DisableColor = Color.LightGray;
-        internal const int k_CellSideSize = 55;
+        private readonly Color r_SelectedColor = Color.LightBlue;
+        private readonly Color r_DefaultColor = Color.Transparent;
+        private readonly Color r_DisableColor = Color.LightGray;
         private BoardCell m_BoardCell;
+        internal const int k_CellSideSize = 55;
     }
 }

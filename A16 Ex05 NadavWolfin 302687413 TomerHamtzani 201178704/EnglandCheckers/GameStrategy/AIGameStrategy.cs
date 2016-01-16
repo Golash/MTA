@@ -17,7 +17,7 @@ namespace EnglandCheckers.Strategy
         /// <summary>
         /// Get next move by AI logic
         /// </summary>
-        protected override BoardMove getNextMove(List<BoardMove> i_ValidMoves)
+        protected override BoardMove GetNextMove(List<BoardMove> i_ValidMoves)
         {
             BoardMove nextMove = null;
             foreach (BoardMove move in i_ValidMoves)

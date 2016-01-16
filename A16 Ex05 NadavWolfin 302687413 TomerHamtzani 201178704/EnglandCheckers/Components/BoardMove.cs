@@ -32,18 +32,18 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Try to convert the column character into column index
         /// </summary>
-        private static bool TryParseColumn(char i_Column, out int o_ColumnIndex)
+        private static bool tryParseColumn(char i_Column, out int o_ColumnIndex)
         {
-            return TryGetIndex(i_Column, Board.ColumnStartLetter, Board.ColumnEndLetter, out o_ColumnIndex);
+            return tryGetIndex(i_Column, Board.ColumnStartLetter, Board.ColumnEndLetter, out o_ColumnIndex);
         }
 
         /// <summary>
-        /// Try to create a BoardMove by the given <paramref name="moveStr"/> string
+        /// Try to create a BoardMove by the given <paramref name="i_MoveStr"/> string
         /// </summary>
-        public static bool TryParse(string moveStr, Board board, out BoardMove o_move)
+        public static bool TryParse(string i_MoveStr, Board i_Board, out BoardMove o_Move)
         {
-            o_move = null;
-            string[] parts = moveStr.Split('>');
+            o_Move = null;
+            string[] parts = i_MoveStr.Split('>');
             bool isValidMove = parts.Length == 2;
 
             string fromPart = string.Empty;
@@ -58,23 +58,23 @@ namespace EnglandCheckers.Components
 
             // from column
             int fromColumn = -1;
-            isValidMove = isValidMove && TryParseColumn(fromPart[0], out fromColumn);
+            isValidMove = isValidMove && tryParseColumn(fromPart[0], out fromColumn);
 
             // from row
             int fromRow = -1;
-            isValidMove = isValidMove && TryParseRow(fromPart[1], out fromRow);
+            isValidMove = isValidMove && tryParseRow(fromPart[1], out fromRow);
 
             // to column
             int toColumn = -1;
-            isValidMove = isValidMove && TryParseColumn(toPart[0], out toColumn);
+            isValidMove = isValidMove && tryParseColumn(toPart[0], out toColumn);
 
             // to row
             int toRow = -1;
-            isValidMove = isValidMove && TryParseRow(toPart[1], out toRow);
+            isValidMove = isValidMove && tryParseRow(toPart[1], out toRow);
 
             if (isValidMove)
             {
-                o_move = new BoardMove(new BoardPoint(fromColumn, fromRow), new BoardPoint(toColumn, toRow));
+                o_Move = new BoardMove(new BoardPoint(fromColumn, fromRow), new BoardPoint(toColumn, toRow));
             }
             
             return isValidMove;
@@ -83,19 +83,19 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Try to convert the row character into row index
         /// </summary>
-        private static bool TryParseRow(char i_Row, out int o_RowIndex)
+        private static bool tryParseRow(char i_Row, out int o_RowIndex)
         {
-            return TryGetIndex(i_Row, Board.RowStartLetter, Board.RowEndLetter, out o_RowIndex);
+            return tryGetIndex(i_Row, Board.RowStartLetter, Board.RowEndLetter, out o_RowIndex);
         }
 
         /// <summary>
         /// Helper function that convert between the given character <paramref name="i_Character"/> to the correlate index
-        /// according to the start (<paramref name="i_StartLetter"/>) and end (<paramref name="i_endLetter"/>) boarders.
+        /// according to the start (<paramref name="i_StartLetter"/>) and end (<paramref name="i_EndLetter"/>) boarders.
         /// </summary>
-        private static bool TryGetIndex(char i_Character, char i_StartLetter, char i_endLetter, out int o_Index)
+        private static bool tryGetIndex(char i_Character, char i_StartLetter, char i_EndLetter, out int o_Index)
         {
             o_Index = -1;
-            if (i_StartLetter <= i_Character && i_Character <= i_endLetter)
+            if (i_StartLetter <= i_Character && i_Character <= i_EndLetter)
             {
                 o_Index = (int)(i_Character - i_StartLetter);
                 return true;
@@ -130,9 +130,10 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Determines whether the specified BoardMove is equal to the current BoardMove.
         /// </summary>
-        public override bool Equals(object obj)
+        public override bool Equals(object i_Obj)
         {
-            BoardMove bordMove = obj as BoardMove;
+            BoardMove bordMove = i_Obj as BoardMove;
+
             return bordMove != null && m_From.Column == bordMove.From.Column && m_From.Row == bordMove.From.Row &&
                     m_To.Column == bordMove.To.Column && m_To.Row == bordMove.To.Row;
         }

@@ -21,34 +21,34 @@ namespace EnglandCheckers.Components
             m_GameBoard = new BoardCell[m_BordSize, m_BordSize];
 
             m_GameDetailes = i_GameDetailes;
-            m_Player1 = i_GameDetailes.Player1;
-            m_Player2 = i_GameDetailes.Player2;
+            r_Player1 = i_GameDetailes.Player1;
+            r_Player2 = i_GameDetailes.Player2;
             m_GameRulesValidator = new GameRulesValidator(this);
 
             // Set each player a different side
-            m_Player1.Sign = eCoinSign.X;
-            m_Player2.Sign = eCoinSign.O;
+            r_Player1.Sign = eCoinSign.X;
+            r_Player2.Sign = eCoinSign.O;
 
             // Set the last column index
-            m_LastBoardIndex = m_BordSize - 1;
+            r_LastBoardIndex = m_BordSize - 1;
 
             // Set the start and end letters
-            m_ColumnEndLetter = (char)((int)sr_ColumnStartLetter + m_LastBoardIndex);
-            m_RowEndLetter = (char)((int)sr_RowStartLetter + m_LastBoardIndex);
+            m_ColumnEndLetter = (char)((int)sr_ColumnStartLetter + r_LastBoardIndex);
+            m_RowEndLetter = (char)((int)sr_RowStartLetter + r_LastBoardIndex);
 
-            FillBoard();
+            fillBoard();
         }
 
         /// <summary>
         /// Fill the board with coin soldiers
         /// </summary>
-        private void FillBoard()
+        private void fillBoard()
         {
-            CreateBoard();
-            FillCoinsOnBoard();
+            createBoard();
+            fillCoinsOnBoard();
         }
 
-        private void FillCoinsOnBoard()
+        private void fillCoinsOnBoard()
         {
             eCoinSign coinSign = eCoinSign.O;
             int topRowIndexForPlayer1 = (m_BordSize - 1) / 2;
@@ -75,7 +75,7 @@ namespace EnglandCheckers.Components
             }
         }
 
-        private void CreateBoard()
+        private void createBoard()
         {
             bool isCellEnabled = false;
 
@@ -84,7 +84,7 @@ namespace EnglandCheckers.Components
                 for (int j = 0; j < this.Size; j++)
                 {
                     m_GameBoard[i, j] = new BoardCell(new BoardPoint(j, i), isCellEnabled);
-                    if (j != m_LastBoardIndex)
+                    if (j != r_LastBoardIndex)
                     {
                         isCellEnabled = !isCellEnabled;
                     }
@@ -145,7 +145,7 @@ namespace EnglandCheckers.Components
         private string getBoardRowsSeperator()
         {
             // (3 '=' for each cell + 1 '=' between cells + 2 '=' for the start + 2 '=' for the end
-            int separatorLength = (3 * m_BordSize) + m_LastBoardIndex - 1 + 2 + 2;
+            int separatorLength = (3 * m_BordSize) + r_LastBoardIndex - 1 + 2 + 2;
             StringBuilder lineSeparator = new StringBuilder();
             for (int i = 0; i < separatorLength; i++)
             {
@@ -161,16 +161,16 @@ namespace EnglandCheckers.Components
         /// and true will return, otherwise <paramref name="o_FailureReason"/> will contain the invalid movce reason
         /// and fale will return.
         /// </summary>
-        internal bool TryMove(Player i_Player, BoardMove i_Move, out string i_FailureReason)
+        internal bool TryMove(Player i_Player, BoardMove i_Move, out string o_FailureReason)
         {
-            i_FailureReason = string.Empty;
-            bool isValidMove = m_GameRulesValidator.IsValidMove(i_Player, i_Move, out i_FailureReason);
+            o_FailureReason = string.Empty;
+            bool isValidMove = m_GameRulesValidator.IsValidMove(i_Player, i_Move, out o_FailureReason);
 
             // Check if the move is a valid move by the given player
             if (isValidMove)
             {
                 i_Player.LastMove = i_Move;
-                MakeMove(i_Move);
+                makeMove(i_Move);
                 isValidMove = true;
             }
 
@@ -180,7 +180,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Applay the given <see cref="i_Move"/> move in the board
         /// </summary>
-        private void MakeMove(BoardMove i_Move)
+        private void makeMove(BoardMove i_Move)
         {
             m_GameBoard[i_Move.To.Row, i_Move.To.Column].Coin = m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin;
             m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin = null;
@@ -246,16 +246,16 @@ namespace EnglandCheckers.Components
             {
                 if (coin.IsKing)
                 {
-                    AddEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
-                    AddEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
+                    addEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
+                    addEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
                 }
                 else if (coin.Sign == eCoinSign.X)
                 {
-                    AddEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
+                    addEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
                 }
                 else if (coin.Sign == eCoinSign.O)
                 {
-                    AddEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
+                    addEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
                 }
             }
 
@@ -265,7 +265,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Add potential eating moves for the given coin (for the player that start the game in the bottom of the board)
         /// </summary>
-        private void AddEatingMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_EatingMoves)
+        private void addEatingMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_EatingMoves)
         {
             // Chcek if has eating movement for to coin in right side
             BoardPoint rightSideCell = new BoardPoint(i_BoardPoint.Column + 2, i_BoardPoint.Row - 2);
@@ -295,7 +295,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Add potential eating moves for the given coin (for the player that start the game in the top of the board)
         /// </summary>
-        private void AddEatingMovesUpToDown(Coin i_Coin, BoardPoint i_Cell, List<BoardMove> i_EatingMoves)
+        private void addEatingMovesUpToDown(Coin i_Coin, BoardPoint i_Cell, List<BoardMove> i_EatingMoves)
         {
             // Chcek if has eating movement for coin in right side
             BoardPoint righSideCell = new BoardPoint(i_Cell.Column + 2, i_Cell.Row + 2);
@@ -325,23 +325,23 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Check if the given coin has different sign than the given sign
         /// </summary>
-        /// <param name="coin"></param>
-        public bool IsDifferentSign(Coin coin, eCoinSign sign)
+        /// <param name="i_Coin"></param>
+        public bool IsDifferentSign(Coin i_Coin, eCoinSign i_Sign)
         {
-            return coin != null && coin.Sign != sign;
+            return i_Coin != null && i_Coin.Sign != i_Sign;
         }
 
         /// <summary>
         /// Check if a moving coin need to be king after the move.
         /// </summary>
-        public bool IsNeedToBeKing(Player player, BoardMove move)
+        public bool IsNeedToBeKing(Player i_Player, BoardMove i_Move)
         {
             bool isNeedToBeKing = false;
-            if (player.Sign == eCoinSign.X && move.To.Row == 0)
+            if (i_Player.Sign == eCoinSign.X && i_Move.To.Row == 0)
             {
                 isNeedToBeKing = true;
             }
-            else if (player.Sign == eCoinSign.O && move.To.Row == m_LastBoardIndex)
+            else if (i_Player.Sign == eCoinSign.O && i_Move.To.Row == r_LastBoardIndex)
             {
                 isNeedToBeKing = true;
             }
@@ -462,7 +462,7 @@ namespace EnglandCheckers.Components
             List<BoardMove> validMoves = new List<BoardMove>();
             if (i_Coin.Sign == eCoinSign.X)
             {
-                AddRegularValidMovesDownToUp(i_Coin, i_BoardPoint, validMoves);
+                addRegularValidMovesDownToUp(i_Coin, i_BoardPoint, validMoves);
             }
             else
             {
@@ -509,7 +509,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Add all the regular moves for the given coin - for player that move down to up
         /// </summary>
-        private void AddRegularValidMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_ValidMoves)
+        private void addRegularValidMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_ValidMoves)
         {
             if (i_Coin.IsKing)
             {   // King can also move back
@@ -612,7 +612,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_LastBoardIndex;
+                return r_LastBoardIndex;
             }
         }
 
@@ -624,9 +624,9 @@ namespace EnglandCheckers.Components
         private GameDetails m_GameDetailes;
         private static char m_ColumnEndLetter;
         private static char m_RowEndLetter;
-        private readonly Player m_Player1;
-        private readonly Player m_Player2;
-        private readonly int m_LastBoardIndex;
+        private readonly Player r_Player1;
+        private readonly Player r_Player2;
+        private readonly int r_LastBoardIndex;
         private BoardCell[,] m_GameBoard;
         private int m_BordSize;
         private GameRulesValidator m_GameRulesValidator;

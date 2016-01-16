@@ -10,8 +10,8 @@ namespace EnglandCheckers.Components
     {
         public BoardPoint(int i_Column, int i_Row)
         {
-            m_Row = i_Row;
-            m_Column = i_Column;
+            r_Row = i_Row;
+            r_Column = i_Column;
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Row;
+                return r_Row;
             }
         }
 
@@ -32,11 +32,11 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Column;
+                return r_Column;
             }
         }
 
-        private readonly int m_Column;
-        private readonly int m_Row;
+        private readonly int r_Column;
+        private readonly int r_Row;
     }
 }

@@ -16,18 +16,18 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         public RandomGameStrategy(Board i_Board) : base(i_Board)
         {
-            m_Random = new Random();
+            r_Random = new Random();
         }
         
         /// <summary>
         /// Gets the next move in the board according to the board state
         /// </summary>
-        protected override BoardMove getNextMove(List<BoardMove> i_ValidMoves)
+        protected override BoardMove GetNextMove(List<BoardMove> i_ValidMoves)
         {
-            int randomMoveIndex = m_Random.Next(0, i_ValidMoves.Count());
+            int randomMoveIndex = r_Random.Next(0, i_ValidMoves.Count());
             return i_ValidMoves[randomMoveIndex];
         }
 
-        private readonly Random m_Random;
+        private readonly Random r_Random;
     }
 }

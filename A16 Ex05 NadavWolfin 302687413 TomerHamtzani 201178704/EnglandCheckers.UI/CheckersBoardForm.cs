@@ -14,12 +14,12 @@ namespace EnglandCheckers.UI
 {
     public delegate void UpadteBoardCell();
 
-    public partial class checkersBoardForm : Form
+    public partial class CheckersBoardForm : Form
     {
-        public checkersBoardForm(GameDetails i_GameDetails)
+        public CheckersBoardForm(GameDetails i_GameDetails)
         {
             InitializeComponent();
-            m_GameManager = new GameManager();
+            r_GameManager = new GameManager();
             updateLabelsPlayersName(i_GameDetails.Player1.Name, i_GameDetails.Player2.Name);
             updateLabelsLocation();
             startNewGame(i_GameDetails);
@@ -52,28 +52,28 @@ namespace EnglandCheckers.UI
         {
             updateLabelsScore(i_GameDetails.Player1.Points, i_GameDetails.Player2.Points);
 
-            m_GameManager.StartNewGame(i_GameDetails);
-            FillBoard(m_GameManager.Board);
+            r_GameManager.StartNewGame(i_GameDetails);
+            fillBoard(r_GameManager.Board);
         }
 
-        private void FillBoard(Board board)
+        private void fillBoard(Board i_Board)
         {
             flowLayoutPanelBoardCells.Controls.Clear();
-            this.ClientSize = calcGameFormSize(board.Size);
+            this.ClientSize = calcGameFormSize(i_Board.Size);
 
-            for (int i = 0; i < board.Size; i++)
+            for (int i = 0; i < i_Board.Size; i++)
             {
-                for (int j = 0; j < board.Size; j++)
+                for (int j = 0; j < i_Board.Size; j++)
                 {
-                    BoardCell boardCell = board.GetBoardCell(new BoardPoint(j, i));
+                    BoardCell boardCell = i_Board.GetBoardCell(new BoardPoint(j, i));
                     UIBoardCell cell = new UIBoardCell(boardCell);
-                    cell.Click += Cell_Click;
+                    cell.Click += cell_Click;
                     flowLayoutPanelBoardCells.Controls.Add(cell);
                 }
             }
         }
 
-        private void Cell_Click(object sender, EventArgs e)
+        private void cell_Click(object sender, EventArgs e)
         {
             UIBoardCell selectedCell = (UIBoardCell)sender;
 
@@ -102,7 +102,7 @@ namespace EnglandCheckers.UI
 
                     if (!isEndGame())
                     {
-                        if (m_GameManager.GameDetails.Player2.Mode == ePlayerMode.Computer)
+                        if (r_GameManager.GameDetails.Player2.Mode == ePlayerMode.Computer)
                         {
                             playComputerMoves();
                         }
@@ -113,9 +113,9 @@ namespace EnglandCheckers.UI
 
         private void playComputerMoves()
         {
-            while (m_GameManager.CurrentPlayer == m_GameManager.GameDetails.Player2)
+            while (r_GameManager.CurrentPlayer == r_GameManager.GameDetails.Player2)
             {
-                m_GameManager.ComputerNextMove(m_GameManager.GameDetails.Player2.Sign);
+                r_GameManager.ComputerNextMove(r_GameManager.GameDetails.Player2.Sign);
                 isEndGame();
             }
         }
@@ -125,7 +125,7 @@ namespace EnglandCheckers.UI
             BoardMove move = new BoardMove(i_FromCell, i_ToCell);
 
             string errorMsg;
-            if (!m_GameManager.TryMove(move, out errorMsg))
+            if (!r_GameManager.TryMove(move, out errorMsg))
             {
                 MessageBox.Show(errorMsg, "Invalid Move", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -135,10 +135,10 @@ namespace EnglandCheckers.UI
         private bool isEndGame()
         {
             Player winner;
-            bool endGame = m_GameManager.NeedToEndGame(out winner);
+            bool endGame = r_GameManager.NeedToEndGame(out winner);
             if (endGame)
             {
-                m_GameManager.EndGame(winner, false);
+                r_GameManager.EndGame(winner, false);
 
                 string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
 
@@ -147,7 +147,7 @@ namespace EnglandCheckers.UI
 
                 if (messageResult == DialogResult.Yes)
                 {
-                    startNewGame(m_GameManager.GameDetails);
+                    startNewGame(r_GameManager.GameDetails);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace EnglandCheckers.UI
             return new Size(width, height);
         }
 
-        private readonly GameManager m_GameManager;
+        private readonly GameManager r_GameManager;
         private UIBoardCell m_FromCell;
         private UIBoardCell m_ToCell;
 

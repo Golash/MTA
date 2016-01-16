@@ -21,8 +21,8 @@ namespace EnglandCheckers.Components
         /// <param name="i_Row"></param>
         public BoardCell(BoardPoint i_BoardPoint, bool i_Enabeld)
         {
-            m_BoardPoint = i_BoardPoint;
-            m_Enabled = i_Enabeld;
+            r_BoardPoint = i_BoardPoint;
+            r_Enabled = i_Enabeld;
         }
 
         public void RemoveCoin()
@@ -53,7 +53,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Enabled;
+                return r_Enabled;
             }
         }
 
@@ -73,13 +73,13 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_BoardPoint;
+                return r_BoardPoint;
             }
         }
 
         public event BoardCellChangedEventHandler BoardCellChanged;
-        private readonly bool m_Enabled;
-        private readonly BoardPoint m_BoardPoint;
+        private readonly bool r_Enabled;
+        private readonly BoardPoint r_BoardPoint;
         private Coin m_Coin;
     }
 }

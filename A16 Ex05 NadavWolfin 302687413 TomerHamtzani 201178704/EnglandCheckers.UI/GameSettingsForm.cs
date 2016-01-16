@@ -27,7 +27,7 @@ namespace EnglandCheckers.UI
         private void buttonDone_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
-            m_GameDetails = FillGameDetails();
+            m_GameDetails = fillGameDetails();
             this.Close();
         }
 
@@ -39,7 +39,7 @@ namespace EnglandCheckers.UI
             }
         }
 
-        private GameDetails FillGameDetails()
+        private GameDetails fillGameDetails()
         {
             int borderSize;
             if (radioButtonSixOnSix.Checked)
@@ -63,7 +63,6 @@ namespace EnglandCheckers.UI
             return new GameDetails(player1, player2, borderSize);
         }
 
-        GameDetails m_GameDetails;
-
+        private GameDetails m_GameDetails;
     }
 }

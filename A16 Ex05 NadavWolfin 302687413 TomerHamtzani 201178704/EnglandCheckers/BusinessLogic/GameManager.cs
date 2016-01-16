@@ -12,11 +12,7 @@ namespace EnglandCheckers.BusinessLogic
     /// Manage the game process
     /// </summary>
     public class GameManager
-    {
-        // Calculate the game points acording to those points
-        private const int PointsForKing = 4;
-        private const int PointsForCoin = 1;
-        
+    {   
         /// <summary>
         /// Start a new game and init all the required components
         /// </summary>
@@ -50,7 +46,7 @@ namespace EnglandCheckers.BusinessLogic
             {
                 m_Winner = i_Winner;
                 Player loser = GameDetails.Player1 == i_Winner ? GameDetails.Player2 : GameDetails.Player1;
-                m_Winner.Points += GetWinnerPoints(i_Winner, loser, i_IsGameEndWithQuit);
+                m_Winner.Points += getWinnerPoints(i_Winner, loser, i_IsGameEndWithQuit);
             }
         }
 
@@ -59,8 +55,8 @@ namespace EnglandCheckers.BusinessLogic
         /// </summary>
         private void addPointsToPlayersInCaseOfTie()
         {
-            int playerOnePoints = GetWinnerPoints(m_GameDetails.Player1, m_GameDetails.Player2, false);
-            int playerTwoPoints = GetWinnerPoints(m_GameDetails.Player2, m_GameDetails.Player1, false);
+            int playerOnePoints = getWinnerPoints(m_GameDetails.Player1, m_GameDetails.Player2, false);
+            int playerTwoPoints = getWinnerPoints(m_GameDetails.Player2, m_GameDetails.Player1, false);
 
             // Give the points to the player that have more points.
             // Pay attention - The points are already the diff between the two players
@@ -115,9 +111,9 @@ namespace EnglandCheckers.BusinessLogic
         /// 1. There is no valid move for both sides (Tie)
         /// 2. There is no valid move for one of the players. In this case, the other player will announced  as the winner 
         /// </summary>
-        public bool NeedToEndGame(out Player i_Winner)
+        public bool NeedToEndGame(out Player o_Winner)
         {
-            i_Winner = null;
+            o_Winner = null;
 
             List<BoardMove> oValidMoves = m_Board.GetValidMoves(eCoinSign.O);
             List<BoardMove> xValidMoves = m_Board.GetValidMoves(eCoinSign.X);
@@ -127,15 +123,15 @@ namespace EnglandCheckers.BusinessLogic
 
             if (oValidMoves.Count > 0 && m_TurnManager.CurrentPlayer.Sign == eCoinSign.X && xValidMoves.Count == 0)
             {
-                i_Winner = GameDetails.GetPlayerBySign(eCoinSign.O);
+                o_Winner = GameDetails.GetPlayerBySign(eCoinSign.O);
             }
 
             if (xValidMoves.Count > 0 && m_TurnManager.CurrentPlayer.Sign == eCoinSign.O && oValidMoves.Count == 0)
             {
-                i_Winner = GameDetails.GetPlayerBySign(eCoinSign.X);
+                o_Winner = GameDetails.GetPlayerBySign(eCoinSign.X);
             }
 
-            return i_Winner != null || !hasValidMoves;
+            return o_Winner != null || !hasValidMoves;
         }
 
         private BoardPoint getEatedCell(Player i_Player, BoardMove i_Move)
@@ -170,31 +166,31 @@ namespace EnglandCheckers.BusinessLogic
         /// <summary>
         /// Get the row of the coin that was eated in the <paramref name="i_EatingMove"/> eating move.
         /// </summary>
-        private int getEatedCoinRow(Player player, BoardMove move)
+        private int getEatedCoinRow(Player i_Player, BoardMove i_Move)
         {
             int row = -1;
-            if (player.Sign == eCoinSign.X)
+            if (i_Player.Sign == eCoinSign.X)
             {
-                if (move.From.Row > move.To.Row)
+                if (i_Move.From.Row > i_Move.To.Row)
                 { 
-                    row = move.From.Row - 1;
+                    row = i_Move.From.Row - 1;
                 }
                 else
                 { 
                     // King can eat back - In this path code, the GameRulesValidator already check if this move is liegle, so it must be a King move
-                    row = move.From.Row + 1;
+                    row = i_Move.From.Row + 1;
                 }
             }
             else
             {
-                if (move.From.Row > move.To.Row)
+                if (i_Move.From.Row > i_Move.To.Row)
                 { 
                     // King can eat back - In this path code, the GameRulesValidator already check if this move is liegle, so it must be a King move
-                    row = move.From.Row - 1;
+                    row = i_Move.From.Row - 1;
                 }
                 else
                 { 
-                    row = move.From.Row + 1;
+                    row = i_Move.From.Row + 1;
                 }
             }
 
@@ -205,7 +201,7 @@ namespace EnglandCheckers.BusinessLogic
         /// Calc the game points.
         /// The winner will get the point diff between the winner and the loser
         /// </summary>
-        private int GetWinnerPoints(Player i_Winner, Player i_Loser, bool i_IsGameEndWithQuit)
+        private int getWinnerPoints(Player i_Winner, Player i_Loser, bool i_IsGameEndWithQuit)
         {
             int winnerPoints = 0;
             int loserPoints = 0;
@@ -217,7 +213,7 @@ namespace EnglandCheckers.BusinessLogic
                     Coin currentCoin = m_Board.GetCoin(new BoardPoint(j, i));
                     if (currentCoin != null)
                     {
-                        int coinPoints = currentCoin.IsKing ? PointsForKing : PointsForCoin;
+                        int coinPoints = currentCoin.IsKing ? k_PointsForKing : k_PointsForCoin;
                         if (currentCoin.Sign == i_Winner.Sign)
                         {
                             winnerPoints += coinPoints;
@@ -237,9 +233,9 @@ namespace EnglandCheckers.BusinessLogic
         /// <summary>
         /// Gets the computer next move according to the computer game strategy.
         /// </summary>
-        public void ComputerNextMove(eCoinSign sign)
+        public void ComputerNextMove(eCoinSign i_Sign)
         {
-            BoardMove move = m_GameStrategy.GetNextMove(sign);
+            BoardMove move = m_GameStrategy.GetNextMove(i_Sign);
             string errorMessage;
             this.TryMove(move, out errorMessage);
         }
@@ -276,6 +272,10 @@ namespace EnglandCheckers.BusinessLogic
                 return m_GameDetails;
             }
         }
+
+        // Calculate the game points acording to those points
+        private const int k_PointsForKing = 4;
+        private const int k_PointsForCoin = 1;
 
         private TurnManager m_TurnManager;
         private Board m_Board;
