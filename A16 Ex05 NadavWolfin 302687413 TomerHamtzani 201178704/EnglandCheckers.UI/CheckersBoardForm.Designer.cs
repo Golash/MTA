@@ -1,6 +1,6 @@
 ﻿namespace EnglandCheckers.UI
 {
-    partial class CheckersBoardForm
+    internal partial class checkersBoardForm
     {
         /// <summary>
         /// Required designer variable.
@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

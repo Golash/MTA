@@ -23,7 +23,7 @@ namespace EnglandCheckers.BusinessLogic
             o_InvalidMoveReason = string.Empty;
             Coin coinToCheck = m_Board.GetCoin(i_MoveToCheck.From);
 
-            if (isValidMove && m_Board.IsEmptyCell(i_MoveToCheck.From))
+            if (m_Board.IsEmptyCell(i_MoveToCheck.From))
             {
                 o_InvalidMoveReason = "Please choose a cell with a coin inside it";
                 isValidMove = false;
@@ -35,7 +35,7 @@ namespace EnglandCheckers.BusinessLogic
                 isValidMove = false;
             }
 
-            if (isValidMove && isMoveToOccupiedCell(i_Player, i_MoveToCheck))
+            if (isValidMove && isMoveToOccupiedCell(i_MoveToCheck))
             {
                 o_InvalidMoveReason = "Can't move to occupied cell";
                 isValidMove = false;
@@ -84,10 +84,10 @@ namespace EnglandCheckers.BusinessLogic
             o_InvalidMoveReason = string.Empty;
 
             bool eatingMoveDownToUp = isEatingMoveDownToUp(i_MoveToCheck, i_Player.Sign);
-            bool isMovingDownToUpInDiagonalLine = eatingMoveDownToUp || isMoveOneStepDownToUpInDiagonalLine(i_Player, i_MoveToCheck);
+            bool isMovingDownToUpInDiagonalLine = eatingMoveDownToUp || isMoveOneStepDownToUpInDiagonalLine(i_MoveToCheck);
 
             bool eatingMoveUpToDown = isEatingMoveUpToDown(i_MoveToCheck, i_Player.Sign);
-            bool isMovingUpToDownInDiagonalLine = eatingMoveUpToDown || isMoveOneStepUpToDownInDiagonalLine(i_Player, i_MoveToCheck);
+            bool isMovingUpToDownInDiagonalLine = eatingMoveUpToDown || isMoveOneStepUpToDownInDiagonalLine(i_MoveToCheck);
 
             if (!(isMovingDownToUpInDiagonalLine || isMovingUpToDownInDiagonalLine))
             {
@@ -116,7 +116,7 @@ namespace EnglandCheckers.BusinessLogic
             if (i_Player.Sign == eCoinSign.X)
             {
                 bool eatingMoveDownToUp = isEatingMoveDownToUp(i_MoveToCheck, i_Player.Sign);
-                if (!eatingMoveDownToUp && !isMoveOneStepDownToUpInDiagonalLine(i_Player, i_MoveToCheck))
+                if (!eatingMoveDownToUp && !isMoveOneStepDownToUpInDiagonalLine(i_MoveToCheck))
                 {
                     o_InvalidMoveReason = "Can only move one step forward in diagonal line (except in eating mode, in this case two steps is allowed)";
                     isValidMove = false;
@@ -127,7 +127,7 @@ namespace EnglandCheckers.BusinessLogic
             else
             {
                 bool eatingMoveUpToDown = isEatingMoveUpToDown(i_MoveToCheck, i_Player.Sign);
-                if (!eatingMoveUpToDown && !isMoveOneStepUpToDownInDiagonalLine(i_Player, i_MoveToCheck))
+                if (!eatingMoveUpToDown && !isMoveOneStepUpToDownInDiagonalLine(i_MoveToCheck))
                 {
                     o_InvalidMoveReason = "Can only move one step forward in diagonal line (except in eating mode, in this case two steps is allowed)";
                     isValidMove = false;
@@ -208,33 +208,18 @@ namespace EnglandCheckers.BusinessLogic
         /// <summary>
         /// Check if move to occupied cell in the board
         /// </summary>
-        private bool isMoveToOccupiedCell(Player i_Player, BoardMove i_MoveToCheck)
+        private bool isMoveToOccupiedCell(BoardMove i_MoveToCheck)
         {
             return !m_Board.IsEmptyCell(i_MoveToCheck.To);
         }
 
         /// <summary>
-        /// Check if the move is forward 
-        /// </summary>
-        private bool isMovingForward(Player i_Player, BoardMove i_MoveToCheck)
-        {
-            int currentRow = i_MoveToCheck.From.Row;
-            return i_Player.Sign == eCoinSign.X ? currentRow > i_MoveToCheck.To.Row : currentRow < i_MoveToCheck.To.Row;
-        }
-
-        /// <summary>
         /// Check if the move in one step up to down is in diagonal line
         /// </summary>
-        private bool isMoveOneStepUpToDownInDiagonalLine(Player i_Player, BoardMove i_MoveToCheck)
+        private bool isMoveOneStepUpToDownInDiagonalLine(BoardMove i_MoveToCheck)
         {
-            bool isOneStepInDiagonalLine = false;
-
-            // Check if the move is one step right or left up to down in diagonal line
-            if ((((i_MoveToCheck.From.Column - 1) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 1) == i_MoveToCheck.To.Row)) ||
-                       (((i_MoveToCheck.From.Column + 1) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 1) == i_MoveToCheck.To.Row)))
-            {
-                isOneStepInDiagonalLine = true;
-            }
+            bool isOneStepInDiagonalLine = (((i_MoveToCheck.From.Column - 1) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 1) == i_MoveToCheck.To.Row)) ||
+                       (((i_MoveToCheck.From.Column + 1) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 1) == i_MoveToCheck.To.Row));
 
             return isOneStepInDiagonalLine;
         }
@@ -242,16 +227,10 @@ namespace EnglandCheckers.BusinessLogic
         /// <summary>
         /// Check if the move in one step down to up is in diagonal line
         /// </summary>
-        private bool isMoveOneStepDownToUpInDiagonalLine(Player i_Player, BoardMove i_MoveToCheck)
+        private bool isMoveOneStepDownToUpInDiagonalLine(BoardMove i_MoveToCheck)
         {
-            bool isValidMove = false;
-
-            // Check if the move is one step right or left down to up in diagonal line
-            if (((i_MoveToCheck.From.Column - 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)) ||
-                ((i_MoveToCheck.From.Column + 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)))
-            {
-                isValidMove = true;
-            }
+            bool isValidMove = ((i_MoveToCheck.From.Column - 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)) ||
+                ((i_MoveToCheck.From.Column + 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row));
 
             return isValidMove;
         }
@@ -319,6 +298,6 @@ namespace EnglandCheckers.BusinessLogic
             return eatingMovments;
         }
 
-        private Board m_Board;
+        private readonly Board m_Board;
     }
 }

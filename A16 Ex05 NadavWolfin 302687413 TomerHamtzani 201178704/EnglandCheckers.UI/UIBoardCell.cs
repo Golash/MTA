@@ -1,11 +1,7 @@
-﻿using EnglandCheckers.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using EnglandCheckers.Components;
 
 namespace EnglandCheckers.UI
 {
@@ -66,6 +62,7 @@ namespace EnglandCheckers.UI
             {
                 return m_IsSelected;
             }
+
             set
             {
                 m_IsSelected = value;

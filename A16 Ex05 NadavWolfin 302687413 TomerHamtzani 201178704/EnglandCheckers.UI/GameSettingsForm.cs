@@ -1,18 +1,10 @@
-﻿using EnglandCheckers.BusinessLogic;
-using EnglandCheckers.Components;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using EnglandCheckers.Components;
 
 namespace EnglandCheckers.UI
 {
-    public partial class GameSettingsForm : Form
+    internal partial class GameSettingsForm : Form
     {
         public GameSettingsForm()
         {
@@ -26,9 +18,9 @@ namespace EnglandCheckers.UI
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
             m_GameDetails = fillGameDetails();
-            this.Close();
+            Close();
         }
 
         public GameDetails GameDetails

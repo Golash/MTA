@@ -33,8 +33,8 @@ namespace EnglandCheckers.Components
             r_LastBoardIndex = m_BordSize - 1;
 
             // Set the start and end letters
-            m_ColumnEndLetter = (char)((int)sr_ColumnStartLetter + r_LastBoardIndex);
-            m_RowEndLetter = (char)((int)sr_RowStartLetter + r_LastBoardIndex);
+            m_ColumnEndLetter = (char)(sr_ColumnStartLetter + r_LastBoardIndex);
+            m_RowEndLetter = (char)(sr_RowStartLetter + r_LastBoardIndex);
 
             fillBoard();
         }
@@ -79,9 +79,9 @@ namespace EnglandCheckers.Components
         {
             bool isCellEnabled = false;
 
-            for (int i = 0; i < this.Size; i++)
+            for (int i = 0; i < Size; i++)
             {
-                for (int j = 0; j < this.Size; j++)
+                for (int j = 0; j < Size; j++)
                 {
                     m_GameBoard[i, j] = new BoardCell(new BoardPoint(j, i), isCellEnabled);
                     if (j != r_LastBoardIndex)
@@ -163,7 +163,6 @@ namespace EnglandCheckers.Components
         /// </summary>
         internal bool TryMove(Player i_Player, BoardMove i_Move, out string o_FailureReason)
         {
-            o_FailureReason = string.Empty;
             bool isValidMove = m_GameRulesValidator.IsValidMove(i_Player, i_Move, out o_FailureReason);
 
             // Check if the move is a valid move by the given player
@@ -171,7 +170,6 @@ namespace EnglandCheckers.Components
             {
                 i_Player.LastMove = i_Move;
                 makeMove(i_Move);
-                isValidMove = true;
             }
 
             return isValidMove;
@@ -222,7 +220,7 @@ namespace EnglandCheckers.Components
         /// </summary>
         public bool IsEmptyCell(BoardPoint i_Cell)
         {
-            return IsCellExists(i_Cell) && (m_GameBoard[i_Cell.Row, i_Cell.Column].IsEmptyCell());
+            return IsCellExists(i_Cell) && m_GameBoard[i_Cell.Row, i_Cell.Column].IsEmptyCell();
         }
 
         /// <summary>
@@ -325,7 +323,6 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Check if the given coin has different sign than the given sign
         /// </summary>
-        /// <param name="i_Coin"></param>
         public bool IsDifferentSign(Coin i_Coin, eCoinSign i_Sign)
         {
             return i_Coin != null && i_Coin.Sign != i_Sign;

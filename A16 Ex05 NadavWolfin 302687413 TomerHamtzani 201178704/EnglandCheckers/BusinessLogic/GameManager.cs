@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EnglandCheckers.Components;
 using EnglandCheckers.Strategy;
 
@@ -45,8 +41,7 @@ namespace EnglandCheckers.BusinessLogic
             else
             {
                 m_Winner = i_Winner;
-                Player loser = GameDetails.Player1 == i_Winner ? GameDetails.Player2 : GameDetails.Player1;
-                m_Winner.Points += getWinnerPoints(i_Winner, loser, i_IsGameEndWithQuit);
+                m_Winner.Points += GetWinnerPoints(i_Winner, i_IsGameEndWithQuit);
             }
         }
 
@@ -55,8 +50,8 @@ namespace EnglandCheckers.BusinessLogic
         /// </summary>
         private void addPointsToPlayersInCaseOfTie()
         {
-            int playerOnePoints = getWinnerPoints(m_GameDetails.Player1, m_GameDetails.Player2, false);
-            int playerTwoPoints = getWinnerPoints(m_GameDetails.Player2, m_GameDetails.Player1, false);
+            int playerOnePoints = GetWinnerPoints(m_GameDetails.Player1, false);
+            int playerTwoPoints = GetWinnerPoints(m_GameDetails.Player2, false);
 
             // Give the points to the player that have more points.
             // Pay attention - The points are already the diff between the two players
@@ -147,7 +142,7 @@ namespace EnglandCheckers.BusinessLogic
         /// </summary>
         private int getEatedCoinColumn(BoardMove i_EatingMove)
         {
-            int column = -1;
+            int column;
 
             if (i_EatingMove.To.Column > i_EatingMove.From.Column)
             {
@@ -164,11 +159,11 @@ namespace EnglandCheckers.BusinessLogic
         }
 
         /// <summary>
-        /// Get the row of the coin that was eated in the <paramref name="i_EatingMove"/> eating move.
+        /// Get the row of the coin that was eated in the <paramref name="i_Move"/> eating move.
         /// </summary>
         private int getEatedCoinRow(Player i_Player, BoardMove i_Move)
         {
-            int row = -1;
+            int row;
             if (i_Player.Sign == eCoinSign.X)
             {
                 if (i_Move.From.Row > i_Move.To.Row)
@@ -227,7 +222,7 @@ namespace EnglandCheckers.BusinessLogic
                 }
             }
 
-            return winnerPoints;
+            return winnerPoints - loserPoints;
         }
 
         /// <summary>
@@ -237,7 +232,7 @@ namespace EnglandCheckers.BusinessLogic
         {
             BoardMove move = m_GameStrategy.GetNextMove(i_Sign);
             string errorMessage;
-            this.TryMove(move, out errorMessage);
+            TryMove(move, out errorMessage);
         }
 
         /// <summary>

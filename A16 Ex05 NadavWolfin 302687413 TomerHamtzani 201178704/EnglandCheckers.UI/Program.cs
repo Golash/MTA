@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EnglandCheckers.UI
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main()
         {
             GameSettingsForm gameSettingsForm = new GameSettingsForm();
             if (gameSettingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)

@@ -1,13 +1,7 @@
-﻿using EnglandCheckers.BusinessLogic;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using EnglandCheckers.BusinessLogic;
 using EnglandCheckers.Components;
 
 namespace EnglandCheckers.UI
@@ -123,12 +117,11 @@ namespace EnglandCheckers.UI
         private void playMove(BoardPoint i_FromCell, BoardPoint i_ToCell)
         {
             BoardMove move = new BoardMove(i_FromCell, i_ToCell);
-
             string errorMsg;
+
             if (!r_GameManager.TryMove(move, out errorMsg))
             {
-                MessageBox.Show(errorMsg, "Invalid Move", MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(errorMsg, "Invalid Move", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -141,9 +134,8 @@ namespace EnglandCheckers.UI
                 r_GameManager.EndGame(winner, false);
 
                 string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
-
-                DialogResult messageResult = MessageBox.Show(string.Format(@"{0}! {1} Another Round ?", endGameMessage, Environment.NewLine),
-                                       "Damka", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                string message = string.Format(@"{0}! {1} Another Round ?", endGameMessage, Environment.NewLine);
+                DialogResult messageResult = MessageBox.Show(message, "Damka", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                 if (messageResult == DialogResult.Yes)
                 {

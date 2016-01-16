@@ -1,6 +1,6 @@
 ﻿namespace EnglandCheckers.UI
 {
-    partial class GameSettingsForm
+    internal partial class GameSettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

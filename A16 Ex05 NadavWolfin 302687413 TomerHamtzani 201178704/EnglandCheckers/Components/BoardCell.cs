@@ -63,6 +63,7 @@ namespace EnglandCheckers.Components
             {
                 return m_Coin;
             }
+
             set
             {
                 m_Coin = value;

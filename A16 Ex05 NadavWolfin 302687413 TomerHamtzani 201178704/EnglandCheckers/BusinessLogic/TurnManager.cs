@@ -16,30 +16,28 @@ namespace EnglandCheckers.BusinessLogic
 
             m_Player1 = i_Player1;
             m_Player2 = i_Player2;
-            m_Board = i_Board;
             
-            m_currentPlayer = m_Player1;
+            m_CurrentPlayer = m_Player1;
         }
 
         public void SwitchPlayerIfNeeded()
         {
-            if (m_currentPlayer == null)
+            if (m_CurrentPlayer == null)
             {
                 // If the current player is null - it's the first turn so set Player1 to play first
-                m_currentPlayer = m_Player1;
+                m_CurrentPlayer = m_Player1;
             }
             else
             {
-                m_currentPlayer.ContinuEating = m_currentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_currentPlayer);
+                m_CurrentPlayer.ContinuEating = m_CurrentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_CurrentPlayer);
 
                 // if the current player, don't need to continue eating - swap the players
-                if (!m_currentPlayer.ContinuEating)
+                if (!m_CurrentPlayer.ContinuEating)
                 {
                     // swap the players
-                    m_currentPlayer = m_currentPlayer == m_Player1 ? m_Player2 : m_Player1;
+                    m_CurrentPlayer = m_CurrentPlayer == m_Player1 ? m_Player2 : m_Player1;
                 }
             }
-
         }
 
         /// <summary>
@@ -50,14 +48,13 @@ namespace EnglandCheckers.BusinessLogic
             get
             {
                 // set the current player
-                return m_currentPlayer;
+                return m_CurrentPlayer;
             }
         }
 
-        private Player m_Player1;
-        private Player m_Player2;
-        private Board m_Board;
-        private Player m_currentPlayer;
-        private GameRulesValidator m_GameRulesValidator;
+        private readonly Player m_Player1;
+        private readonly Player m_Player2;
+        private Player m_CurrentPlayer;
+        private readonly GameRulesValidator m_GameRulesValidator;
     }
 }
