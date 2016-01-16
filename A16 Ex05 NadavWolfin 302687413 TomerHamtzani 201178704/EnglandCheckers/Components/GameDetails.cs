@@ -42,7 +42,7 @@
                 }
             }
 
-            return i_Name.Length <= k_MaxPlayerNameLength && !isContainsWhiteSpace;
+            return !string.IsNullOrEmpty(i_Name) && i_Name.Length <= k_MaxPlayerNameLength && !isContainsWhiteSpace;
         }
 
         /// <summary>

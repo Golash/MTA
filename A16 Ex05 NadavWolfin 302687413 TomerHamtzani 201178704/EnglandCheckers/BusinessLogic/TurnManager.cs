@@ -22,13 +22,13 @@ namespace EnglandCheckers.BusinessLogic
 
         public void SwitchPlayerIfNeeded()
         {
-            m_currentPlayer.ContinuEating = m_currentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_currentPlayer);
+            m_CurrentPlayer.ContinuEating = m_CurrentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_CurrentPlayer);
 
             // if the current player, don't need to continue eating - swap the players
-            if (!m_currentPlayer.ContinuEating)
+            if (!m_CurrentPlayer.ContinuEating)
             {
                 // swap the players
-                m_currentPlayer = AdversaryPlayer;
+                m_CurrentPlayer = AdversaryPlayer;
             }
 
         }
@@ -37,7 +37,7 @@ namespace EnglandCheckers.BusinessLogic
         {
             get
             {
-                return m_currentPlayer == m_Player1 ? m_Player2 : m_Player1;
+                return m_CurrentPlayer == m_Player1 ? m_Player2 : m_Player1;
             }
         }
 

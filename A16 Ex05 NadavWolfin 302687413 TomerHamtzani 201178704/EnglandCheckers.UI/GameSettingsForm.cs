@@ -22,7 +22,6 @@ namespace EnglandCheckers.UI
             if (m_GameDetails != null)
             {
                 DialogResult = DialogResult.OK;
-                Close();
             }
         }
 
@@ -31,7 +30,7 @@ namespace EnglandCheckers.UI
             bool isValidName = GameDetails.IsValidName(i_UserNameTextBox.Text);
             if (!isValidName)
             {
-                nameErrorProvider.SetError(i_UserNameTextBox, "Player name must be between 0 to 20 characters without spaces");
+                nameErrorProvider.SetError(i_UserNameTextBox, "Player name must be between 1 to 20 characters without spaces");
             }
 
             return isValidName;

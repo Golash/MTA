@@ -137,8 +137,6 @@ namespace EnglandCheckers.UI
 
             return endGameIsNedded;
         }
-                string message = string.Format(@"{0}! {1} Another Round ?", endGameMessage, Environment.NewLine);
-                DialogResult messageResult = MessageBox.Show(message, "Damka", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
         private void endGame(Player winner)
         {
