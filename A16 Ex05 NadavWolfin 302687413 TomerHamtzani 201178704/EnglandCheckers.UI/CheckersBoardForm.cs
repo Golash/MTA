@@ -27,16 +27,18 @@ namespace EnglandCheckers.UI
 
         private void updateLabelsPlayersName(string i_Player1Name, string i_Player2Name)
         {
-            labelPlayer1Name.Text = string.Format("{0} :", i_Player1Name);
-            labelPlayer2Name.Text = string.Format("{0} :", i_Player2Name);
+            labelPlayer1Name.Text = string.Format("{0}: ", i_Player1Name);
+            labelPlayer2Name.Text = string.Format("{0}: ", i_Player2Name);
         }
 
         private void updateLabelsLocation()
         {
-            labelPlayer1Name.Left = this.Left + 10;
+            labelPlayer1Name.Left = panelHeaderPlayersInfo.Left + k_LabelsBuffer;
             labelPlayer1Score.Left = labelPlayer1Name.Left + labelPlayer1Name.Width;
 
-            labelPlayer2Score.Left = (this.Left + this.Width) - labelPlayer2Score.Width - 30;
+            int bufferFromSide = labelPlayer1Name.Left - panelHeaderPlayersInfo.Left;
+
+            labelPlayer2Score.Left = panelHeaderPlayersInfo.Right - labelPlayer2Score.Width - bufferFromSide;
             labelPlayer2Name.Left = labelPlayer2Score.Left - labelPlayer2Name.Width;
         }
 
@@ -156,18 +158,6 @@ namespace EnglandCheckers.UI
             return endGame;
         }
 
-        //private void RefreshCells()
-        //{
-        //    foreach (UIBoardCell uiBoardCell in m_UIBorderCells)
-        //    {
-        //        Coin cellCoin = m_GameManager.Board.GetCoin(uiBoardCell.BoardCell);
-
-        //        uiBoardCell.IsSelected = false;
-        //        //uiBoardCell.Coin = cellCoin;
-        //        uiBoardCell.UpdateCell();
-        //    }
-        //}
-
         private Size calcGameFormSize(int i_BoardSize)
         {
             int cellsPanelSize = i_BoardSize * UIBoardCell.k_CellSideSize;
@@ -182,5 +172,7 @@ namespace EnglandCheckers.UI
         private readonly GameManager m_GameManager;
         private UIBoardCell m_FromCell;
         private UIBoardCell m_ToCell;
+
+        private const int k_LabelsBuffer = 10;
     }
 }
