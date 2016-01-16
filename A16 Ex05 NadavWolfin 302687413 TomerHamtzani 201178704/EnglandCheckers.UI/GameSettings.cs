@@ -16,7 +16,6 @@ namespace EnglandCheckers.UI
     {
         public GameSettings()
         {
-            m_GameManager = new GameManager();
             InitializeComponent();
         }
 
@@ -27,10 +26,17 @@ namespace EnglandCheckers.UI
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
+            m_GameDetails = FillGameDetails();
             this.Close();
-            GameDetails gameDetails = FillGameDetails();
-            m_GameManager.StartNewGame(gameDetails);
+        }
 
+        public GameDetails GameDetails
+        {
+            get
+            {
+                return m_GameDetails;
+            }
         }
 
         private GameDetails FillGameDetails()
@@ -57,6 +63,7 @@ namespace EnglandCheckers.UI
             return new GameDetails(player1, player2, borderSize);
         }
 
-        private GameManager m_GameManager;
+        GameDetails m_GameDetails;
+
     }
 }

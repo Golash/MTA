@@ -48,6 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UIBoardCell.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CheckersBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckersBoard.Designer.cs">
+      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    </Compile>
     <Compile Include="GameSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,6 +70,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CheckersBoard.resx">
+      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameSettings.resx">
       <DependentUpon>GameSettings.cs</DependentUpon>
     </EmbeddedResource>

@@ -18,7 +18,28 @@ namespace EnglandCheckers.BusinessLogic
             m_Player2 = i_Player2;
             m_Board = i_Board;
             
-            m_currentPlayer = null;
+            m_currentPlayer = m_Player1;
+        }
+
+        public void SwitchPlayer()
+        {
+            if (m_currentPlayer == null)
+            {
+                // If the current player is null - it's the first turn so set Player1 to play first
+                m_currentPlayer = m_Player1;
+            }
+            else
+            {
+                m_currentPlayer.ContinuEating = m_currentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_currentPlayer);
+
+                // if the current player, don't need to continue eating - swap the players
+                if (!m_currentPlayer.ContinuEating)
+                {
+                    // swap the players
+                    m_currentPlayer = m_currentPlayer == m_Player1 ? m_Player2 : m_Player1;
+                }
+            }
+
         }
 
         /// <summary>
@@ -28,23 +49,6 @@ namespace EnglandCheckers.BusinessLogic
         {
             get
             {
-                if (m_currentPlayer == null)
-                {
-                    // If the current player is null - it's the first turn so set Player1 to play first
-                    m_currentPlayer = m_Player1;
-                }
-                else
-                {
-                    m_currentPlayer.ContinuEating = m_currentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_currentPlayer);
-
-                    // if the current player, don't need to continue eating - swap the players
-                    if (!m_currentPlayer.ContinuEating)
-                    {
-                        // swap the players
-                        m_currentPlayer = m_currentPlayer == m_Player1 ? m_Player2 : m_Player1;
-                    }
-                }
-               
                 // set the current player
                 return m_currentPlayer;
             }

@@ -66,7 +66,7 @@
             this.radioButtonTenOnTen.Location = new System.Drawing.Point(158, 46);
             this.radioButtonTenOnTen.Name = "radioButtonTenOnTen";
             this.radioButtonTenOnTen.Size = new System.Drawing.Size(60, 17);
-            this.radioButtonTenOnTen.TabIndex = 2;
+            this.radioButtonTenOnTen.TabIndex = 3;
             this.radioButtonTenOnTen.TabStop = true;
             this.radioButtonTenOnTen.Text = "10 x 10";
             this.radioButtonTenOnTen.UseVisualStyleBackColor = true;
@@ -77,7 +77,7 @@
             this.radioButtonEightOnEight.Location = new System.Drawing.Point(93, 46);
             this.radioButtonEightOnEight.Name = "radioButtonEightOnEight";
             this.radioButtonEightOnEight.Size = new System.Drawing.Size(48, 17);
-            this.radioButtonEightOnEight.TabIndex = 3;
+            this.radioButtonEightOnEight.TabIndex = 2;
             this.radioButtonEightOnEight.TabStop = true;
             this.radioButtonEightOnEight.Text = "8 x 8";
             this.radioButtonEightOnEight.UseVisualStyleBackColor = true;
@@ -105,7 +105,7 @@
             this.textBoxPlayerOne.Location = new System.Drawing.Point(93, 100);
             this.textBoxPlayerOne.Name = "textBoxPlayerOne";
             this.textBoxPlayerOne.Size = new System.Drawing.Size(141, 20);
-            this.textBoxPlayerOne.TabIndex = 7;
+            this.textBoxPlayerOne.TabIndex = 4;
             // 
             // textBoxPlayerTwo
             // 
@@ -113,7 +113,7 @@
             this.textBoxPlayerTwo.Location = new System.Drawing.Point(93, 131);
             this.textBoxPlayerTwo.Name = "textBoxPlayerTwo";
             this.textBoxPlayerTwo.Size = new System.Drawing.Size(141, 20);
-            this.textBoxPlayerTwo.TabIndex = 8;
+            this.textBoxPlayerTwo.TabIndex = 6;
             this.textBoxPlayerTwo.Text = "[Computer]";
             // 
             // checkBoxPlayerTwo
@@ -122,17 +122,17 @@
             this.checkBoxPlayerTwo.Location = new System.Drawing.Point(26, 133);
             this.checkBoxPlayerTwo.Name = "checkBoxPlayerTwo";
             this.checkBoxPlayerTwo.Size = new System.Drawing.Size(67, 17);
-            this.checkBoxPlayerTwo.TabIndex = 9;
+            this.checkBoxPlayerTwo.TabIndex = 5;
             this.checkBoxPlayerTwo.Text = "Player 2:";
             this.checkBoxPlayerTwo.UseVisualStyleBackColor = true;
             this.checkBoxPlayerTwo.CheckedChanged += new System.EventHandler(this.checkBoxPlayerTwo_CheckedChanged);
             // 
             // buttonDone
             // 
-            this.buttonDone.Location = new System.Drawing.Point(159, 168);
+            this.buttonDone.Location = new System.Drawing.Point(161, 167);
             this.buttonDone.Name = "buttonDone";
             this.buttonDone.Size = new System.Drawing.Size(75, 23);
-            this.buttonDone.TabIndex = 10;
+            this.buttonDone.TabIndex = 7;
             this.buttonDone.Text = "Done";
             this.buttonDone.UseVisualStyleBackColor = true;
             this.buttonDone.Click += new System.EventHandler(this.buttonDone_Click);

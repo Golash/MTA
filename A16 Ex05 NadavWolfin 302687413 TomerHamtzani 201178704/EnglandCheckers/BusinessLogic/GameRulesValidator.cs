@@ -84,10 +84,10 @@ namespace EnglandCheckers.BusinessLogic
             o_InvalidMoveReason = string.Empty;
 
             bool eatingMoveDownToUp = isEatingMoveDownToUp(i_MoveToCheck, i_Player.Sign);
-            bool isMovingDownToUpInDiagonalLine = !eatingMoveDownToUp && !isMoveOneStepDownToUpInDiagonalLine(i_Player, i_MoveToCheck);
+            bool isMovingDownToUpInDiagonalLine = eatingMoveDownToUp || isMoveOneStepDownToUpInDiagonalLine(i_Player, i_MoveToCheck);
 
             bool eatingMoveUpToDown = isEatingMoveUpToDown(i_MoveToCheck, i_Player.Sign);
-            bool isMovingUpToDownInDiagonalLine = !eatingMoveUpToDown && !isMoveOneStepUpToDownInDiagonalLine(i_Player, i_MoveToCheck);
+            bool isMovingUpToDownInDiagonalLine = eatingMoveUpToDown || isMoveOneStepUpToDownInDiagonalLine(i_Player, i_MoveToCheck);
 
             if (!(isMovingDownToUpInDiagonalLine || isMovingUpToDownInDiagonalLine))
             {
@@ -177,7 +177,7 @@ namespace EnglandCheckers.BusinessLogic
                 // Check that in one step left in diagonal line the coin sign is different than the current sign.
                 Coin coin = m_Board.GetCoin(new BoardCell(i_MoveToCheck.From.Column - 1, i_MoveToCheck.From.Row - 1));
                 isEatingMove = m_Board.IsDifferentSign(coin, i_CoinSignToCheck);
-            }            
+            }
             else if (((i_MoveToCheck.From.Column + 2) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row - 2) == i_MoveToCheck.To.Row))
             {
                 // Check if eating down to up in right, by check if the move is two step right in digonal line.A
@@ -247,7 +247,7 @@ namespace EnglandCheckers.BusinessLogic
             bool isValidMove = false;
 
             // Check if the move is one step right or left down to up in diagonal line
-            if (((i_MoveToCheck.From.Column - 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)) || 
+            if (((i_MoveToCheck.From.Column - 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)) ||
                 ((i_MoveToCheck.From.Column + 1 == i_MoveToCheck.To.Column) && (i_MoveToCheck.From.Row - 1 == i_MoveToCheck.To.Row)))
             {
                 isValidMove = true;

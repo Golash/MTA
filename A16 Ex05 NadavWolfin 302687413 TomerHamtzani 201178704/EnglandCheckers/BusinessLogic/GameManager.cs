@@ -42,7 +42,8 @@ namespace EnglandCheckers.BusinessLogic
         public void EndGame(Player i_Winner, bool i_IsGameEndWithQuit)
         {
             if (i_Winner == null)
-            { // Tie
+            { 
+                // Tie
                 addPointsToPlayersInCaseOfTie();
             }
             else
@@ -79,21 +80,28 @@ namespace EnglandCheckers.BusinessLogic
         /// and true will return, otherwise <paramref name="o_FailureReason"/> will contain the invalid movce reason
         /// and fale will return.
         /// </summary>
-        public bool TryMove(Player i_Player, BoardMove i_Move, out string o_FailureReason)
+        public bool TryMove(BoardMove i_Move, out string o_FailureReason)
         {
-            bool isValidMove = m_Board.TryMove(i_Player, i_Move, out o_FailureReason);
+            Player currentPlayer = m_TurnManager.CurrentPlayer;
+
+            bool isValidMove = m_Board.TryMove(currentPlayer, i_Move, out o_FailureReason);
 
             // Set the coin to be king is needed
-            if (isValidMove && m_Board.IsNeedToBeKing(i_Player, i_Move))
+            if (isValidMove && m_Board.IsNeedToBeKing(currentPlayer, i_Move))
             {
                 m_Board.ChangeCoinToKing(i_Move.To);
             }
 
             // Remove the eated coin is needed
-            if (isValidMove && i_Player.EatInLastMove)
+            if (isValidMove && currentPlayer.EatInLastMove)
             {
-                BoardCell eatedCell = getEatedCell(i_Player, i_Move);
+                BoardCell eatedCell = getEatedCell(currentPlayer, i_Move);
                 m_Board.RemoveCoin(eatedCell);
+            }
+
+            if (isValidMove)
+            {
+                m_TurnManager.SwitchPlayer();
             }
 
             return isValidMove;
@@ -105,7 +113,7 @@ namespace EnglandCheckers.BusinessLogic
         /// 1. There is no valid move for both sides (Tie)
         /// 2. There is no valid move for one of the players. In this case, the other player will announced  as the winner 
         /// </summary>
-        public bool NeedToEndGame(Player currentPlayer, out Player i_Winner)
+        public bool NeedToEndGame(out Player i_Winner)
         {
             i_Winner = null;
 
@@ -115,12 +123,12 @@ namespace EnglandCheckers.BusinessLogic
             // Tie - For both sides there is no legal moves
             bool hasValidMoves = oValidMoves.Count != 0 || xValidMoves.Count != 0;
 
-            if (oValidMoves.Count > 0 && currentPlayer.Sign == eCoinSign.X && xValidMoves.Count == 0)
+            if (oValidMoves.Count > 0 && m_TurnManager.CurrentPlayer.Sign == eCoinSign.X && xValidMoves.Count == 0)
             {
                 i_Winner = GameDetails.GetPlayerBySign(eCoinSign.O);
             }
 
-            if (xValidMoves.Count > 0 && currentPlayer.Sign == eCoinSign.O && oValidMoves.Count == 0)
+            if (xValidMoves.Count > 0 && m_TurnManager.CurrentPlayer.Sign == eCoinSign.O && oValidMoves.Count == 0)
             {
                 i_Winner = GameDetails.GetPlayerBySign(eCoinSign.X);
             }
@@ -227,9 +235,11 @@ namespace EnglandCheckers.BusinessLogic
         /// <summary>
         /// Gets the computer next move according to the computer game strategy.
         /// </summary>
-        public BoardMove GetComputerNextMove(eCoinSign sign)
+        public void ComputerNextMove(eCoinSign sign)
         {
-            return m_GameStrategy.GetNextMove(sign);
+            BoardMove move = m_GameStrategy.GetNextMove(sign);
+            string errorMessage;
+            this.TryMove(move, out errorMessage);
         }
 
         /// <summary>

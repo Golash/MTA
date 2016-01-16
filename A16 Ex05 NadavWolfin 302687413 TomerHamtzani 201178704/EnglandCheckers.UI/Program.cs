@@ -10,8 +10,13 @@ namespace EnglandCheckers.UI
     {
         static void Main()
         {
+
             GameSettings gameSettingsForm = new GameSettings();
-            gameSettingsForm.ShowDialog();
+            if (gameSettingsForm.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                checkersBoardForm checkersBoard = new checkersBoardForm(gameSettingsForm.GameDetails);
+                checkersBoard.ShowDialog();
+            }
         }
     }
 }
