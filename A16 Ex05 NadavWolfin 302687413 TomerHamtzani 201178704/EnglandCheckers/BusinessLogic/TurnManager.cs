@@ -16,34 +16,35 @@ namespace EnglandCheckers.BusinessLogic
 
             m_Player1 = i_Player1;
             m_Player2 = i_Player2;
-            
+
             m_CurrentPlayer = m_Player1;
         }
 
         public void SwitchPlayerIfNeeded()
         {
-            if (m_CurrentPlayer == null)
-            {
-                // If the current player is null - it's the first turn so set Player1 to play first
-                m_CurrentPlayer = m_Player1;
-            }
-            else
-            {
-                m_CurrentPlayer.ContinuEating = m_CurrentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_CurrentPlayer);
+            m_currentPlayer.ContinuEating = m_currentPlayer.EatInLastMove && m_GameRulesValidator.IsNeedToContinueEating(m_currentPlayer);
 
-                // if the current player, don't need to continue eating - swap the players
-                if (!m_CurrentPlayer.ContinuEating)
-                {
-                    // swap the players
-                    m_CurrentPlayer = m_CurrentPlayer == m_Player1 ? m_Player2 : m_Player1;
-                }
+            // if the current player, don't need to continue eating - swap the players
+            if (!m_currentPlayer.ContinuEating)
+            {
+                // swap the players
+                m_currentPlayer = AdversaryPlayer;
+            }
+
+        }
+
+        internal Player AdversaryPlayer
+        {
+            get
+            {
+                return m_currentPlayer == m_Player1 ? m_Player2 : m_Player1;
             }
         }
 
         /// <summary>
         /// Gets the current player that need to play
         /// </summary>
-        public Player CurrentPlayer
+        internal Player CurrentPlayer
         {
             get
             {

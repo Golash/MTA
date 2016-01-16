@@ -80,6 +80,6 @@ namespace EnglandCheckers.UI
         private readonly Color r_DefaultColor = Color.Transparent;
         private readonly Color r_DisableColor = Color.LightGray;
         private BoardCell m_BoardCell;
-        internal const int k_CellSideSize = 55;
+        internal const int k_CellSideSize = 50;
     }
 }

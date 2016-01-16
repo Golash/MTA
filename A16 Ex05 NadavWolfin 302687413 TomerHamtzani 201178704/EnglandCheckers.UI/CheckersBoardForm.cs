@@ -52,7 +52,7 @@ namespace EnglandCheckers.UI
 
         private void fillBoard(Board i_Board)
         {
-            flowLayoutPanelBoardCells.Controls.Clear();
+            flowLayoutPanelBoardGame.Controls.Clear();
             this.ClientSize = calcGameFormSize(i_Board.Size);
 
             for (int i = 0; i < i_Board.Size; i++)
@@ -62,7 +62,7 @@ namespace EnglandCheckers.UI
                     BoardCell boardCell = i_Board.GetBoardCell(new BoardPoint(j, i));
                     UIBoardCell cell = new UIBoardCell(boardCell);
                     cell.Click += cell_Click;
-                    flowLayoutPanelBoardCells.Controls.Add(cell);
+                    flowLayoutPanelBoardGame.Controls.Add(cell);
                 }
             }
         }
@@ -128,26 +128,35 @@ namespace EnglandCheckers.UI
         private bool isEndGame()
         {
             Player winner;
-            bool endGame = r_GameManager.NeedToEndGame(out winner);
-            if (endGame)
-            {
-                r_GameManager.EndGame(winner, false);
+            bool endGameIsNedded = r_GameManager.NeedToEndGame(out winner);
 
-                string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
+            if (endGameIsNedded)
+            {
+                endGame(winner);
+            }
+
+            return endGameIsNedded;
+        }
                 string message = string.Format(@"{0}! {1} Another Round ?", endGameMessage, Environment.NewLine);
                 DialogResult messageResult = MessageBox.Show(message, "Damka", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-                if (messageResult == DialogResult.Yes)
-                {
-                    startNewGame(r_GameManager.GameDetails);
-                }
-                else
-                {
-                    this.Close();
-                }
-            }
+        private void endGame(Player winner)
+        {
+            r_GameManager.EndGame(winner, false);
 
-            return endGame;
+            string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
+
+            DialogResult messageResult = MessageBox.Show(string.Format(@"{0}!{1} Another Round ?", endGameMessage, Environment.NewLine),
+                                   k_GameMessageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            if (messageResult == DialogResult.Yes)
+            {
+                startNewGame(r_GameManager.GameDetails);
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private Size calcGameFormSize(int i_BoardSize)
@@ -155,16 +164,43 @@ namespace EnglandCheckers.UI
             int cellsPanelSize = i_BoardSize * UIBoardCell.k_CellSideSize;
 
             // todo check the buffer
-            int width = cellsPanelSize + 5;
-            int height = cellsPanelSize + panelHeaderPlayersInfo.Height;
-            
+            int width = cellsPanelSize + k_GamePanelWidthBuffer;
+            int height = cellsPanelSize + panelHeaderPlayersInfo.Height + k_GamePanelHeightBuffer;
+
             return new Size(width, height);
+        }
+
+        private void CheckersBoardForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString().ToUpper() == k_QuitLetter)
+            {
+                string retireMessage = 
+                    string.Format("{0},{1}Are you shure you want to quit?", r_GameManager.CurrentPlayer.Name, Environment.NewLine);
+
+                DialogResult isPlayerQuit = MessageBox.Show(retireMessage, k_GameMessageCaption, 
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                if (isPlayerQuit == DialogResult.Yes)
+                {
+                    Player winner = r_GameManager.AdversaryPlayer;
+
+                    endGame(winner);
+                    r_GameManager.EndGame(winner, true);
+                }
+            }
         }
 
         private readonly GameManager r_GameManager;
         private UIBoardCell m_FromCell;
         private UIBoardCell m_ToCell;
-
-        private const int k_LabelsBuffer = 10;
+        private const int k_LabelsBuffer = 15;
+        private const int k_GamePanelWidthBuffer = 26;
+        private const int k_GamePanelHeightBuffer = 30;
+        private const string k_QuitLetter = "Q";
+        private const string k_GameMessageCaption = "Damka";
+        
     }
 }
+
+
+

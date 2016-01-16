@@ -246,6 +246,14 @@ namespace EnglandCheckers.BusinessLogic
             }
         }
 
+        public Player AdversaryPlayer
+        {
+            get
+            {
+                return m_TurnManager.AdversaryPlayer;
+            }
+        }
+
         /// <summary>
         /// Gets the game board
         /// </summary>
