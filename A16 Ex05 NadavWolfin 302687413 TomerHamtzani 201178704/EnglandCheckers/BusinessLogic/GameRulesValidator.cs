@@ -150,14 +150,14 @@ namespace EnglandCheckers.BusinessLogic
             if (((i_MoveToCheck.From.Column - 2) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 2) == i_MoveToCheck.To.Row))
             {
                 // Check that in one step left in diagonal line the coin sign is different than the current sign.
-                Coin coin = m_Board.GetCoin(new BoardCell(i_MoveToCheck.From.Column - 1, i_MoveToCheck.From.Row + 1));
+                Coin coin = m_Board.GetCoin(new BoardPoint(i_MoveToCheck.From.Column - 1, i_MoveToCheck.From.Row + 1));
                 isEatingMove = m_Board.IsDifferentSign(coin, i_CoinSignToCheck);
             }
             else if (((i_MoveToCheck.From.Column + 2) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row + 2) == i_MoveToCheck.To.Row))
             {
                 // Check if eating up to down in right side, by check if the move is two step right in digonal line.
                 // Check that in one step right in diagonal line the coin sign is different than the current sign
-                Coin coin = m_Board.GetCoin(new BoardCell(i_MoveToCheck.From.Column + 1, i_MoveToCheck.From.Row + 1));
+                Coin coin = m_Board.GetCoin(new BoardPoint(i_MoveToCheck.From.Column + 1, i_MoveToCheck.From.Row + 1));
                 isEatingMove = m_Board.IsDifferentSign(coin, i_CoinSignToCheck);
             }
 
@@ -175,14 +175,14 @@ namespace EnglandCheckers.BusinessLogic
             if (((i_MoveToCheck.From.Column - 2) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row - 2) == i_MoveToCheck.To.Row))
             {
                 // Check that in one step left in diagonal line the coin sign is different than the current sign.
-                Coin coin = m_Board.GetCoin(new BoardCell(i_MoveToCheck.From.Column - 1, i_MoveToCheck.From.Row - 1));
+                Coin coin = m_Board.GetCoin(new BoardPoint(i_MoveToCheck.From.Column - 1, i_MoveToCheck.From.Row - 1));
                 isEatingMove = m_Board.IsDifferentSign(coin, i_CoinSignToCheck);
             }
             else if (((i_MoveToCheck.From.Column + 2) == i_MoveToCheck.To.Column) && ((i_MoveToCheck.From.Row - 2) == i_MoveToCheck.To.Row))
             {
                 // Check if eating down to up in right, by check if the move is two step right in digonal line.A
                 // Check that in one step right in diagonal line the coin sign is different than the current sign.
-                Coin coin = m_Board.GetCoin(new BoardCell(i_MoveToCheck.From.Column + 1, i_MoveToCheck.From.Row - 1));
+                Coin coin = m_Board.GetCoin(new BoardPoint(i_MoveToCheck.From.Column + 1, i_MoveToCheck.From.Row - 1));
                 isEatingMove = m_Board.IsDifferentSign(coin, i_CoinSignToCheck);
             }
 
@@ -303,15 +303,15 @@ namespace EnglandCheckers.BusinessLogic
                 for (int j = 0; j < m_Board.Size; j++)
                 {
                     // Check if the cell contains the relevant coin sign.
-                    BoardCell cell = new BoardCell(i, j);
-                    Coin currentCoin = m_Board.GetCoin(cell);
+                    BoardPoint boardPoint = new BoardPoint(i, j);
+                    Coin currentCoin = m_Board.GetCoin(boardPoint);
                     if (currentCoin == null || i_CoinSignToCheck != currentCoin.Sign)
                     {
                         continue;
                     }
 
                     // if has eating moves from the cell, add them to the list.
-                    List<BoardMove> eatingMoves = m_Board.GetEatingMoves(cell);
+                    List<BoardMove> eatingMoves = m_Board.GetEatingMoves(boardPoint);
                     eatingMovments.AddRange(eatingMoves);
                 }
             }

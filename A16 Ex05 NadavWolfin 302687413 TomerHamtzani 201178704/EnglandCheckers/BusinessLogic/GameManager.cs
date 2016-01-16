@@ -95,13 +95,15 @@ namespace EnglandCheckers.BusinessLogic
             // Remove the eated coin is needed
             if (isValidMove && currentPlayer.EatInLastMove)
             {
-                BoardCell eatedCell = getEatedCell(currentPlayer, i_Move);
+                BoardPoint eatedCell = getEatedCell(currentPlayer, i_Move);
                 m_Board.RemoveCoin(eatedCell);
             }
 
             if (isValidMove)
             {
-                m_TurnManager.SwitchPlayer();
+                m_TurnManager.SwitchPlayerIfNeeded();
+                m_Board.GetBoardCell(i_Move.From).ApplyChanges();
+                m_Board.GetBoardCell(i_Move.To).ApplyChanges();
             }
 
             return isValidMove;
@@ -136,12 +138,12 @@ namespace EnglandCheckers.BusinessLogic
             return i_Winner != null || !hasValidMoves;
         }
 
-        private BoardCell getEatedCell(Player i_Player, BoardMove i_Move)
+        private BoardPoint getEatedCell(Player i_Player, BoardMove i_Move)
         {
             int eatedCellColumn = getEatedCoinColumn(i_Move);
             int eatedCellRow = getEatedCoinRow(i_Player, i_Move);
 
-            return new BoardCell(eatedCellColumn, eatedCellRow);
+            return new BoardPoint(eatedCellColumn, eatedCellRow);
         }
 
         /// <summary>
@@ -212,7 +214,7 @@ namespace EnglandCheckers.BusinessLogic
             {
                 for (int j = 0; j < m_Board.Size; j++)
                 {
-                    Coin currentCoin = m_Board.GetCoin(new BoardCell(j, i));
+                    Coin currentCoin = m_Board.GetCoin(new BoardPoint(j, i));
                     if (currentCoin != null)
                     {
                         int coinPoints = currentCoin.IsKing ? PointsForKing : PointsForCoin;

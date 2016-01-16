@@ -51,17 +51,17 @@
     <Compile Include="UIBoardCell.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CheckersBoard.cs">
+    <Compile Include="CheckersBoardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CheckersBoard.Designer.cs">
-      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    <Compile Include="CheckersBoardForm.Designer.cs">
+      <DependentUpon>CheckersBoardForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSettings.cs">
+    <Compile Include="GameSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameSettings.Designer.cs">
-      <DependentUpon>GameSettings.cs</DependentUpon>
+    <Compile Include="GameSettingsForm.Designer.cs">
+      <DependentUpon>GameSettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,11 +70,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CheckersBoard.resx">
-      <DependentUpon>CheckersBoard.cs</DependentUpon>
+    <EmbeddedResource Include="CheckersBoardForm.resx">
+      <DependentUpon>CheckersBoardForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GameSettings.resx">
-      <DependentUpon>GameSettings.cs</DependentUpon>
+    <EmbeddedResource Include="GameSettingsForm.resx">
+      <DependentUpon>GameSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

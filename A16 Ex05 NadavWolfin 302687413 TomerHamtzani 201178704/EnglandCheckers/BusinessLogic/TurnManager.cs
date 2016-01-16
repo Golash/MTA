@@ -21,7 +21,7 @@ namespace EnglandCheckers.BusinessLogic
             m_currentPlayer = m_Player1;
         }
 
-        public void SwitchPlayer()
+        public void SwitchPlayerIfNeeded()
         {
             if (m_currentPlayer == null)
             {

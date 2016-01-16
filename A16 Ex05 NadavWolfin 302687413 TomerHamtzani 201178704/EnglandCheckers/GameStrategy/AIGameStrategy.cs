@@ -94,9 +94,9 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isSafeMoveFromRight(BoardMove i_MoveToCheck)
         {
-            BoardCell cellThreatRight = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatLeft = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatBack = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row - 1);
+            BoardPoint cellThreatRight = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatLeft = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatBack = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row - 1);
 
             // 1. Stack in the middle move
             //     X
@@ -112,9 +112,9 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isSafeMoveFromLeft(BoardMove i_MoveToCheck)
         {
-            BoardCell cellThreatRight = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatLeft = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatBack = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatRight = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatLeft = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatBack = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
 
             // 1. Stack in the middle move
             // X
@@ -128,7 +128,7 @@ namespace EnglandCheckers.Strategy
         /// <summary>
         /// Check if the move is to safe cell
         /// </summary>
-        private bool isSafeMove(BoardCell i_CellThreatRight, BoardCell i_CellThreatLeft, BoardCell i_CellThreatBack)
+        private bool isSafeMove(BoardPoint i_CellThreatRight, BoardPoint i_CellThreatLeft, BoardPoint i_CellThreatBack)
         {
             bool isMoveToSafeCell = false;
             bool isCellThreatBack = (!isSafeCoin(i_CellThreatBack, true)) || !m_Board.IsCellExists(i_CellThreatBack);
@@ -150,9 +150,9 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isSafeMoveFromRightBack(BoardMove i_MoveToCheck)
         {
-            BoardCell cellThreatRight = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row - 1);
-            BoardCell cellThreatLeft = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row - 1);
-            BoardCell cellThreatBack = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatRight = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row - 1);
+            BoardPoint cellThreatLeft = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row - 1);
+            BoardPoint cellThreatBack = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
 
             return isSafeMove(cellThreatRight, cellThreatLeft, cellThreatBack);
         }
@@ -162,9 +162,9 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isSafeMoveFromLeftBack(BoardMove i_MoveToCheck)
         {
-            BoardCell cellThreatRight = new BoardCell(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatLeft = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
-            BoardCell cellThreatBack = new BoardCell(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row - 1);
+            BoardPoint cellThreatRight = new BoardPoint(i_MoveToCheck.To.Column + 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatLeft = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row + 1);
+            BoardPoint cellThreatBack = new BoardPoint(i_MoveToCheck.To.Column - 1, i_MoveToCheck.To.Row - 1);
 
             return isSafeMove(cellThreatRight, cellThreatLeft, cellThreatBack);
         }
@@ -172,7 +172,7 @@ namespace EnglandCheckers.Strategy
         /// <summary>
         /// Valid that the cell not exists adversary coin that can eat the coin
         /// </summary>
-        private bool isSafeCoin(BoardCell i_CellToCheck, bool i_OnlyKingCanEat = false)
+        private bool isSafeCoin(BoardPoint i_CellToCheck, bool i_OnlyKingCanEat = false)
         {
             Coin coin = m_Board.GetCoin(i_CellToCheck);
             bool isSageCoin = true;

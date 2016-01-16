@@ -18,7 +18,7 @@ namespace EnglandCheckers.Components
         {
             // Create the board matrix according to the requested board size
             m_BordSize = i_GameDetailes.BoardSize;
-            m_GameBoard = new Coin[m_BordSize, m_BordSize];
+            m_GameBoard = new BoardCell[m_BordSize, m_BordSize];
 
             m_GameDetailes = i_GameDetailes;
             m_Player1 = i_GameDetailes.Player1;
@@ -44,7 +44,13 @@ namespace EnglandCheckers.Components
         /// </summary>
         private void FillBoard()
         {
-            bool isCellWithCoin = false;
+            CreateBoard();
+            FillCoinsOnBoard();
+        }
+
+        private void FillCoinsOnBoard()
+        {
+            eCoinSign coinSign = eCoinSign.O;
             int topRowIndexForPlayer1 = (m_BordSize - 1) / 2;
 
             // Run all overt the rows
@@ -53,23 +59,34 @@ namespace EnglandCheckers.Components
                 // keep on two rows space between player1 and player2
                 if (i == topRowIndexForPlayer1 || i == (topRowIndexForPlayer1 + 1))
                 {
+                    coinSign = eCoinSign.X;
                     continue;
                 }
 
                 // Fill the current row (run all over the columns)
                 for (int j = 0; j < m_BordSize; j++)
                 {
-                    // We fill coins alternately
-                    if (isCellWithCoin)
+                    BoardCell boardCell = GetBoardCell(new BoardPoint(j, i));
+                    if (boardCell.Enabled)
                     {
-                        eCoinSign coinSign = i > topRowIndexForPlayer1 ? eCoinSign.X : eCoinSign.O;
-                        m_GameBoard[i, j] = new Coin(coinSign);
+                        boardCell.Coin = new Coin(coinSign);
                     }
+                }
+            }
+        }
 
-                    // Toggle the coin state only if it's not the end of the line
+        private void CreateBoard()
+        {
+            bool isCellEnabled = false;
+
+            for (int i = 0; i < this.Size; i++)
+            {
+                for (int j = 0; j < this.Size; j++)
+                {
+                    m_GameBoard[i, j] = new BoardCell(new BoardPoint(j, i), isCellEnabled);
                     if (j != m_LastBoardIndex)
                     {
-                        isCellWithCoin = !isCellWithCoin;
+                        isCellEnabled = !isCellEnabled;
                     }
                 }
             }
@@ -105,7 +122,7 @@ namespace EnglandCheckers.Components
                 // Fill all the row cells
                 for (int j = 0; j < m_BordSize; j++)
                 {
-                    Coin currentCoin = m_GameBoard[i, j];
+                    Coin currentCoin = m_GameBoard[i, j].Coin;
                     string currentCellValue = k_EmptyCellSign;
                     if (currentCoin != null)
                     {
@@ -165,64 +182,80 @@ namespace EnglandCheckers.Components
         /// </summary>
         private void MakeMove(BoardMove i_Move)
         {
-            m_GameBoard[i_Move.To.Row, i_Move.To.Column] = m_GameBoard[i_Move.From.Row, i_Move.From.Column];
-            m_GameBoard[i_Move.From.Row, i_Move.From.Column] = null;
+            m_GameBoard[i_Move.To.Row, i_Move.To.Column].Coin = m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin;
+            m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin = null;
         }
 
         /// <summary>
         /// Get the coin that locate at the given cell.
         /// If the cell not exists or the cell is empty - null will return
         /// </summary>
-        public Coin GetCoin(BoardCell cell)
+        public Coin GetCoin(BoardPoint i_Cell)
         {
             Coin coin = null;
-            if (IsCellExists(cell))
+            if (IsCellExists(i_Cell))
             {
-                coin = m_GameBoard[cell.Row, cell.Column];
+                coin = m_GameBoard[i_Cell.Row, i_Cell.Column].Coin;
             }
 
             return coin;
         }
 
         /// <summary>
+        /// Get the board cell that locate at the given point.
+        /// If the board cell not exists - null will return
+        /// </summary>
+        public BoardCell GetBoardCell(BoardPoint i_BoardPoint)
+        {
+            BoardCell boardCell = null;
+            if (IsCellExists(i_BoardPoint))
+            {
+                boardCell = m_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column];
+            }
+
+            return boardCell;
+        }
+
+        /// <summary>
         /// Check if the given cell is empty.
         /// If the cell not exists - false will return
         /// </summary>
-        public bool IsEmptyCell(BoardCell cell)
+        public bool IsEmptyCell(BoardPoint i_Cell)
         {
-            return IsCellExists(cell) && (m_GameBoard[cell.Row, cell.Column] == null);
+            return IsCellExists(i_Cell) && (m_GameBoard[i_Cell.Row, i_Cell.Column].IsEmptyCell());
         }
 
         /// <summary>
         /// Check if the given cell is exists in the board.
         /// </summary>
-        public bool IsCellExists(BoardCell cell)
+        public bool IsCellExists(BoardPoint i_BoardPoint)
         {
-            return cell.Row >= 0 && cell.Row < m_BordSize && cell.Column >= 0 && cell.Column < m_BordSize;
+            return i_BoardPoint.Row >= 0 && i_BoardPoint.Row < m_BordSize && 
+                i_BoardPoint.Column >= 0 && i_BoardPoint.Column < m_BordSize;
         }
 
         /// <summary>
         /// Gets the optionsl eating moves for the given cell
         /// </summary>
         /// <returns></returns>
-        public List<BoardMove> GetEatingMoves(BoardCell cell)
+        public List<BoardMove> GetEatingMoves(BoardPoint i_BoardPoint)
         {
             List<BoardMove> eatingMoves = new List<BoardMove>();
-            Coin coin = GetCoin(cell);
+            Coin coin = GetCoin(i_BoardPoint);
             if (coin != null)
             {
                 if (coin.IsKing)
                 {
-                    AddEatingMovesUpToDown(coin, cell, eatingMoves);
-                    AddEatingMovesDownToUp(coin, cell, eatingMoves);
+                    AddEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
+                    AddEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
                 }
                 else if (coin.Sign == eCoinSign.X)
                 {
-                    AddEatingMovesDownToUp(coin, cell, eatingMoves);
+                    AddEatingMovesDownToUp(coin, i_BoardPoint, eatingMoves);
                 }
                 else if (coin.Sign == eCoinSign.O)
                 {
-                    AddEatingMovesUpToDown(coin, cell, eatingMoves);
+                    AddEatingMovesUpToDown(coin, i_BoardPoint, eatingMoves);
                 }
             }
 
@@ -232,29 +265,29 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Add potential eating moves for the given coin (for the player that start the game in the bottom of the board)
         /// </summary>
-        private void AddEatingMovesDownToUp(Coin i_Coin, BoardCell i_Cell, List<BoardMove> i_EatingMoves)
+        private void AddEatingMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_EatingMoves)
         {
             // Chcek if has eating movement for to coin in right side
-            BoardCell rightSideCell = new BoardCell(i_Cell.Column + 2, i_Cell.Row - 2);
+            BoardPoint rightSideCell = new BoardPoint(i_BoardPoint.Column + 2, i_BoardPoint.Row - 2);
             if (IsCellExists(rightSideCell) && IsEmptyCell(rightSideCell))
             {
-                Coin potentailCoinToEat = GetCoin(new BoardCell(i_Cell.Column + 1, i_Cell.Row - 1));
+                Coin potentailCoinToEat = GetCoin(new BoardPoint(i_BoardPoint.Column + 1, i_BoardPoint.Row - 1));
                 bool hasPotentioalCoinToEat = IsDifferentSign(potentailCoinToEat, i_Coin.Sign);
                 if (hasPotentioalCoinToEat)
                 {
-                    i_EatingMoves.Add(new BoardMove(i_Cell, rightSideCell));
+                    i_EatingMoves.Add(new BoardMove(i_BoardPoint, rightSideCell));
                 }
             }
 
             // Chcek if has eating movement for to coin in left side
-            BoardCell leftSideCell = new BoardCell(i_Cell.Column - 2, i_Cell.Row - 2);
+            BoardPoint leftSideCell = new BoardPoint(i_BoardPoint.Column - 2, i_BoardPoint.Row - 2);
             if (IsCellExists(leftSideCell) && IsEmptyCell(leftSideCell))
             {
-                Coin potentailCoinToEat = GetCoin(new BoardCell(i_Cell.Column - 1, i_Cell.Row - 1));
+                Coin potentailCoinToEat = GetCoin(new BoardPoint(i_BoardPoint.Column - 1, i_BoardPoint.Row - 1));
                 bool hasPotentioalCoinToEat = IsDifferentSign(potentailCoinToEat, i_Coin.Sign);
                 if (hasPotentioalCoinToEat)
                 {
-                    i_EatingMoves.Add(new BoardMove(i_Cell, leftSideCell));
+                    i_EatingMoves.Add(new BoardMove(i_BoardPoint, leftSideCell));
                 }
             }
         }
@@ -262,13 +295,13 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Add potential eating moves for the given coin (for the player that start the game in the top of the board)
         /// </summary>
-        private void AddEatingMovesUpToDown(Coin i_Coin, BoardCell i_Cell, List<BoardMove> i_EatingMoves)
+        private void AddEatingMovesUpToDown(Coin i_Coin, BoardPoint i_Cell, List<BoardMove> i_EatingMoves)
         {
             // Chcek if has eating movement for coin in right side
-            BoardCell righSideCell = new BoardCell(i_Cell.Column + 2, i_Cell.Row + 2);
+            BoardPoint righSideCell = new BoardPoint(i_Cell.Column + 2, i_Cell.Row + 2);
             if (IsCellExists(righSideCell) && IsEmptyCell(righSideCell))
             {
-                Coin potentailCoinToEat = GetCoin(new BoardCell(i_Cell.Column + 1, i_Cell.Row + 1));
+                Coin potentailCoinToEat = GetCoin(new BoardPoint(i_Cell.Column + 1, i_Cell.Row + 1));
                 bool hasPotentioalCoinToEat = IsDifferentSign(potentailCoinToEat, i_Coin.Sign);
                 if (hasPotentioalCoinToEat)
                 {
@@ -277,10 +310,10 @@ namespace EnglandCheckers.Components
             }
 
             // Chcek if has eating movement for to coin in left side
-            BoardCell leftSideCell = new BoardCell(i_Cell.Column - 2, i_Cell.Row + 2);
+            BoardPoint leftSideCell = new BoardPoint(i_Cell.Column - 2, i_Cell.Row + 2);
             if (IsCellExists(leftSideCell) && IsEmptyCell(leftSideCell))
             {
-                Coin potentailCoinToEat = GetCoin(new BoardCell(i_Cell.Column - 1, i_Cell.Row + 1));
+                Coin potentailCoinToEat = GetCoin(new BoardPoint(i_Cell.Column - 1, i_Cell.Row + 1));
                 bool hasPotentioalCoinToEat = IsDifferentSign(potentailCoinToEat, i_Coin.Sign);
                 if (hasPotentioalCoinToEat)
                 {
@@ -330,7 +363,7 @@ namespace EnglandCheckers.Components
                 {
                     for (int j = 0; j < Size; j++)
                     {
-                        BoardCell cell = new BoardCell(i, j);
+                        BoardPoint cell = new BoardPoint(i, j);
                         Coin currentCoin = GetCoin(cell);
                         if (currentCoin != null && currentCoin.Sign == i_Sign)
                         {
@@ -348,11 +381,11 @@ namespace EnglandCheckers.Components
         /// </summary>
         /// <param name="i_Row"></param>
         /// <param name="i_Column"></param>
-        public void RemoveCoin(BoardCell i_Cell)
+        public void RemoveCoin(BoardPoint i_BoardPoint)
         {
-            if (GetCoin(i_Cell) != null)
+            if (IsCellExists(i_BoardPoint))
             {
-                m_GameBoard[i_Cell.Row, i_Cell.Column] = null;
+                m_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column].RemoveCoin();
             }
         }
 
@@ -370,11 +403,11 @@ namespace EnglandCheckers.Components
                 {
                     for (int j = 0; j < Size; j++)
                     {
-                        BoardCell currentCell = new BoardCell(i, j);
-                        Coin coin = GetCoin(currentCell);
+                        BoardPoint boardPoint = new BoardPoint(i, j);
+                        Coin coin = GetCoin(boardPoint);
                         if (coin != null && coin.Sign == i_Sign)
                         {
-                            eatingMoves.AddRange(GetEatingMoves(currentCell));
+                            eatingMoves.AddRange(GetEatingMoves(boardPoint));
                         }
                     }
                 }
@@ -397,11 +430,11 @@ namespace EnglandCheckers.Components
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    BoardCell cell = new BoardCell(i, j);
-                    Coin coin = GetCoin(cell);
+                    BoardPoint boardPoint = new BoardPoint(i, j);
+                    Coin coin = GetCoin(boardPoint);
                     if (coin != null && coin.Sign == i_Sign && currentPlayer.ContinuEating)
                     {
-                        doubleEatingMoves.AddRange(GetEatingMoves(cell));
+                        doubleEatingMoves.AddRange(GetEatingMoves(boardPoint));
                     }
                 }
             }
@@ -412,9 +445,9 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Change the coin that locate in the given cell to king
         /// </summary>
-        public void ChangeCoinToKing(BoardCell i_Cell)
+        public void ChangeCoinToKing(BoardPoint i_BoardPoint)
         {
-            Coin coin = GetCoin(i_Cell);
+            Coin coin = GetCoin(i_BoardPoint);
             if (coin != null)
             {
                 coin.IsKing = true;
@@ -424,85 +457,85 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Get all the regular moves (not eating moves) for the given coin
         /// </summary>
-        private IEnumerable<BoardMove> getRegularMoves(Coin i_Coin, BoardCell cell)
+        private IEnumerable<BoardMove> getRegularMoves(Coin i_Coin, BoardPoint i_BoardPoint)
         {
             List<BoardMove> validMoves = new List<BoardMove>();
             if (i_Coin.Sign == eCoinSign.X)
             {
-                AddRegularValidMovesDownToUp(i_Coin, cell, validMoves);
+                AddRegularValidMovesDownToUp(i_Coin, i_BoardPoint, validMoves);
             }
             else
             {
-                addRegularValidMovesUpToDown(i_Coin, cell, validMoves);
+                addRegularValidMovesUpToDown(i_Coin, i_BoardPoint, validMoves);
             }
 
-            validMoves.AddRange(GetEatingMoves(cell));
+            validMoves.AddRange(GetEatingMoves(i_BoardPoint));
             return validMoves;
         }
 
         /// <summary>
         /// Add all the regual moves for the given coin - for player that move up to down
         /// </summary>
-        private void addRegularValidMovesUpToDown(Coin i_Coin, BoardCell i_Cell, List<BoardMove> i_ValidMoves)
+        private void addRegularValidMovesUpToDown(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_ValidMoves)
         {
             if (i_Coin.IsKing)
             {   // King can also move back
-                BoardCell backRightCell = new BoardCell(i_Cell.Column + 1, i_Cell.Row - 1);
+                BoardPoint backRightCell = new BoardPoint(i_BoardPoint.Column + 1, i_BoardPoint.Row - 1);
                 if (IsEmptyCell(backRightCell))
                 {
-                    i_ValidMoves.Add(new BoardMove(i_Cell, backRightCell));
+                    i_ValidMoves.Add(new BoardMove(i_BoardPoint, backRightCell));
                 }
-                
-                BoardCell backLeftCell = new BoardCell(i_Cell.Column - 1, i_Cell.Row - 1);
+
+                BoardPoint backLeftCell = new BoardPoint(i_BoardPoint.Column - 1, i_BoardPoint.Row - 1);
                 if (IsEmptyCell(backLeftCell))
                 {
-                    i_ValidMoves.Add(new BoardMove(i_Cell, backLeftCell));
+                    i_ValidMoves.Add(new BoardMove(i_BoardPoint, backLeftCell));
                 }
             }
 
-            BoardCell rightCell = new BoardCell(i_Cell.Column + 1, i_Cell.Row + 1);
+            BoardPoint rightCell = new BoardPoint(i_BoardPoint.Column + 1, i_BoardPoint.Row + 1);
             if (IsEmptyCell(rightCell))
             {
-                i_ValidMoves.Add(new BoardMove(i_Cell, rightCell));
+                i_ValidMoves.Add(new BoardMove(i_BoardPoint, rightCell));
             }
 
-            BoardCell leftCell = new BoardCell(i_Cell.Column - 1, i_Cell.Row + 1);
+            BoardPoint leftCell = new BoardPoint(i_BoardPoint.Column - 1, i_BoardPoint.Row + 1);
             if (IsEmptyCell(leftCell))
             {
-                i_ValidMoves.Add(new BoardMove(i_Cell, leftCell));
+                i_ValidMoves.Add(new BoardMove(i_BoardPoint, leftCell));
             }
         }
 
         /// <summary>
         /// Add all the regular moves for the given coin - for player that move down to up
         /// </summary>
-        private void AddRegularValidMovesDownToUp(Coin i_Coin, BoardCell i_Cell, List<BoardMove> i_ValidMoves)
+        private void AddRegularValidMovesDownToUp(Coin i_Coin, BoardPoint i_BoardPoint, List<BoardMove> i_ValidMoves)
         {
             if (i_Coin.IsKing)
             {   // King can also move back
-                BoardCell backCellRight = new BoardCell(i_Cell.Column + 1, i_Cell.Row + 1);
+                BoardPoint backCellRight = new BoardPoint(i_BoardPoint.Column + 1, i_BoardPoint.Row + 1);
                 if (IsEmptyCell(backCellRight))
                 {
-                    i_ValidMoves.Add(new BoardMove(i_Cell, backCellRight));
+                    i_ValidMoves.Add(new BoardMove(i_BoardPoint, backCellRight));
                 }
 
-                BoardCell backCellLeft = new BoardCell(i_Cell.Column - 1, i_Cell.Row + 1);
+                BoardPoint backCellLeft = new BoardPoint(i_BoardPoint.Column - 1, i_BoardPoint.Row + 1);
                 if (IsEmptyCell(backCellLeft))
                 {
-                    i_ValidMoves.Add(new BoardMove(i_Cell, backCellLeft));
+                    i_ValidMoves.Add(new BoardMove(i_BoardPoint, backCellLeft));
                 }
             }
 
-            BoardCell rightCell = new BoardCell(i_Cell.Column + 1, i_Cell.Row - 1);
+            BoardPoint rightCell = new BoardPoint(i_BoardPoint.Column + 1, i_BoardPoint.Row - 1);
             if (IsEmptyCell(rightCell))
             {
-                i_ValidMoves.Add(new BoardMove(i_Cell, rightCell));
+                i_ValidMoves.Add(new BoardMove(i_BoardPoint, rightCell));
             }
-            
-            BoardCell leftCell = new BoardCell(i_Cell.Column - 1, i_Cell.Row - 1);
+
+            BoardPoint leftCell = new BoardPoint(i_BoardPoint.Column - 1, i_BoardPoint.Row - 1);
             if (IsEmptyCell(leftCell))
             {
-                i_ValidMoves.Add(new BoardMove(i_Cell, leftCell));
+                i_ValidMoves.Add(new BoardMove(i_BoardPoint, leftCell));
             }
         }
 
@@ -593,8 +626,8 @@ namespace EnglandCheckers.Components
         private static char m_RowEndLetter;
         private readonly Player m_Player1;
         private readonly Player m_Player2;
-        private int m_LastBoardIndex;
-        private Coin[,] m_GameBoard;
+        private readonly int m_LastBoardIndex;
+        private BoardCell[,] m_GameBoard;
         private int m_BordSize;
         private GameRulesValidator m_GameRulesValidator;
     }

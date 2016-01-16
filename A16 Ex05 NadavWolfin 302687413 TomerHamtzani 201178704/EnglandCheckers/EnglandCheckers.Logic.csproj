@@ -53,6 +53,7 @@
     <Compile Include="Components\Board.cs" />
     <Compile Include="Components\BoardCell.cs" />
     <Compile Include="Components\BoardMove.cs" />
+    <Compile Include="Components\BoardPoint.cs" />
     <Compile Include="Components\Coin.cs" />
     <Compile Include="Components\eCoinSign.cs" />
     <Compile Include="Components\eKingCoinSign.cs" />

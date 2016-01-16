@@ -15,14 +15,14 @@ namespace EnglandCheckers.Components
         /// Create a new instance of  the BoardMove by the spesific column and row
         /// </summary>
         public BoardMove(int i_FromColumn, int i_FromRow, int i_ToColumn, int i_ToRow) : 
-            this(new BoardCell(i_FromColumn, i_FromRow), new BoardCell(i_ToColumn, i_ToRow))
+            this(new BoardPoint(i_FromColumn, i_FromRow), new BoardPoint(i_ToColumn, i_ToRow))
         {
         }
 
         /// <summary>
         /// Create a new instace of the BoardMove by the given from cell and to cell
         /// </summary>
-        public BoardMove(BoardCell i_From, BoardCell i_To)
+        public BoardMove(BoardPoint i_From, BoardPoint i_To)
         {
             m_From = i_From;
             m_To = i_To;
@@ -74,7 +74,7 @@ namespace EnglandCheckers.Components
 
             if (isValidMove)
             {
-                o_move = new BoardMove(new BoardCell(fromColumn, fromRow), new BoardCell(toColumn, toRow));
+                o_move = new BoardMove(new BoardPoint(fromColumn, fromRow), new BoardPoint(toColumn, toRow));
             }
             
             return isValidMove;
@@ -151,7 +151,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Gets the from cell of the move
         /// </summary>
-        public BoardCell From
+        public BoardPoint From
         {
             get
             {
@@ -162,7 +162,7 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Gets the To cell of the move
         /// </summary>
-        public BoardCell To
+        public BoardPoint To
         {
             get
             {
@@ -181,8 +181,8 @@ namespace EnglandCheckers.Components
             }
         }
 
-        private BoardCell m_From;
-        private BoardCell m_To;
+        private BoardPoint m_From;
+        private BoardPoint m_To;
         private string m_MoveStr;
     }
 }

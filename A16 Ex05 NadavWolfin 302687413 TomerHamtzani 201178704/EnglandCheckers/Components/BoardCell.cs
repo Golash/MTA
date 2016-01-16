@@ -6,46 +6,80 @@ using System.Threading.Tasks;
 
 namespace EnglandCheckers.Components
 {
+    public delegate void BoardCellChangedEventHandler(object obj, EventArgs e);
+
     /// <summary>
-    /// The BoardCell class represent a cell in the board.
+    /// The BoardPoint class represent a cell in the board.
     /// Each cell is represented by Row and Column indexes
     /// </summary>
-    public struct BoardCell
+    public class BoardCell
     {
         /// <summary>
-        /// Create a new instance of BoardCell by the given column and row
+        /// Create a new instance of BoardPoint by the given column and row
         /// </summary>
         /// <param name="i_Column"></param>
         /// <param name="i_Row"></param>
-        public BoardCell(int i_Column, int i_Row)
+        public BoardCell(BoardPoint i_BoardPoint, bool i_Enabeld)
         {
-            m_Row = i_Row;
-            m_Column = i_Column;
+            m_BoardPoint = i_BoardPoint;
+            m_Enabled = i_Enabeld;
         }
 
-        /// <summary>
-        /// Gets the row of the board cell
-        /// </summary>
-        public int Row 
+        public void RemoveCoin()
         {
-            get
+            m_Coin = null;
+            ApplyChanges();
+        }
+
+        public bool IsEmptyCell()
+        {
+            return m_Coin == null;
+        }
+
+        protected virtual void OnBoardCellChanged()
+        {
+            if (BoardCellChanged != null)
             {
-                return m_Row;
+                BoardCellChanged.Invoke(this, EventArgs.Empty);
             }
         }
 
-        /// <summary>
-        /// Gets the column of the board cell
-        /// </summary>
-        public int Column
+        internal void ApplyChanges()
+        {
+            OnBoardCellChanged();
+        }
+
+        public bool Enabled
         {
             get
             {
-                return m_Column;
+                return m_Enabled;
             }
         }
 
-        private int m_Column;
-        private int m_Row;
+        public Coin Coin
+        {
+            get
+            {
+                return m_Coin;
+            }
+            set
+            {
+                m_Coin = value;
+            }
+        }
+
+        public BoardPoint BoardPoint
+        {
+            get
+            {
+                return m_BoardPoint;
+            }
+        }
+
+        public event BoardCellChangedEventHandler BoardCellChanged;
+        private readonly bool m_Enabled;
+        private readonly BoardPoint m_BoardPoint;
+        private Coin m_Coin;
     }
 }

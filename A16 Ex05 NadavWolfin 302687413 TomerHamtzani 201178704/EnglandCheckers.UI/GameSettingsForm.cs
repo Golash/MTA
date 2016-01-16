@@ -12,9 +12,9 @@ using System.Windows.Forms;
 
 namespace EnglandCheckers.UI
 {
-    public partial class GameSettings : Form
+    public partial class GameSettingsForm : Form
     {
-        public GameSettings()
+        public GameSettingsForm()
         {
             InitializeComponent();
         }

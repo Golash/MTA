@@ -1,6 +1,6 @@
 ﻿namespace EnglandCheckers.UI
 {
-    partial class GameSettings
+    partial class GameSettingsForm
     {
         /// <summary>
         /// Required designer variable.

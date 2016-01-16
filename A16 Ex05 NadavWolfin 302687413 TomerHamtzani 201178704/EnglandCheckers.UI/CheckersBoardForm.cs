@@ -13,56 +13,69 @@ using EnglandCheckers.Components;
 namespace EnglandCheckers.UI
 {
     public delegate void UpadteBoardCell();
+
     public partial class checkersBoardForm : Form
     {
         public checkersBoardForm(GameDetails i_GameDetails)
         {
             InitializeComponent();
             m_GameManager = new GameManager();
-            m_UIBorderCells = new List<UIBoardCell>();
+            updateLabelsPlayersName(i_GameDetails.Player1.Name, i_GameDetails.Player2.Name);
+            updateLabelsLocation();
             startNewGame(i_GameDetails);
+        }
+
+        private void updateLabelsPlayersName(string i_Player1Name, string i_Player2Name)
+        {
+            labelPlayer1Name.Text = string.Format("{0} :", i_Player1Name);
+            labelPlayer2Name.Text = string.Format("{0} :", i_Player2Name);
+        }
+
+        private void updateLabelsLocation()
+        {
+            labelPlayer1Name.Left = this.Left + 10;
+            labelPlayer1Score.Left = labelPlayer1Name.Left + labelPlayer1Name.Width;
+
+            labelPlayer2Score.Left = (this.Left + this.Width) - labelPlayer2Score.Width - 30;
+            labelPlayer2Name.Left = labelPlayer2Score.Left - labelPlayer2Name.Width;
+        }
+
+        private void updateLabelsScore(int i_Player1Score, int i_Player2Score)
+        {
+            labelPlayer1Score.Text = i_Player1Score.ToString();
+            labelPlayer2Score.Text = i_Player2Score.ToString();
         }
 
         private void startNewGame(GameDetails i_GameDetails)
         {
-            labelPlayer1Name.Text = string.Format("{0}:", i_GameDetails.Player1.Name);
-            labelPlayer2Name.Text = string.Format("{0}:", i_GameDetails.Player2.Name);
+            updateLabelsScore(i_GameDetails.Player1.Points, i_GameDetails.Player2.Points);
 
-            labelPlayer1Score.Text = i_GameDetails.Player1.Points.ToString();
-            labelPlayer2Score.Text = i_GameDetails.Player2.Points.ToString();
-
-            labelPlayer1Score.Location = new Point(labelPlayer1Name.Right, labelPlayer1Name.Top);
-            labelPlayer2Score.Location = new Point(labelPlayer2Name.Right, labelPlayer1Name.Top);
-
-            m_UIBorderCells.Clear();
-            flowLayoutPanelBoardCells.Controls.Clear();
             m_GameManager.StartNewGame(i_GameDetails);
             FillBoard(m_GameManager.Board);
         }
 
         private void FillBoard(Board board)
         {
+            flowLayoutPanelBoardCells.Controls.Clear();
             this.ClientSize = calcGameFormSize(board.Size);
 
             for (int i = 0; i < board.Size; i++)
             {
                 for (int j = 0; j < board.Size; j++)
                 {
-                    BoardCell boardCell = new BoardCell(j, i);
-                    Coin currentCoin = board.GetCoin(boardCell);
-                    UIBoardCell newCell = new UIBoardCell(true, currentCoin, boardCell);
-                    m_UIBorderCells.Add(newCell);
-                    newCell.CellSelected += NewCell_CellSelected;
-                    flowLayoutPanelBoardCells.Controls.Add(newCell);
+                    BoardCell boardCell = board.GetBoardCell(new BoardPoint(j, i));
+                    UIBoardCell cell = new UIBoardCell(boardCell);
+                    cell.Click += Cell_Click;
+                    flowLayoutPanelBoardCells.Controls.Add(cell);
                 }
             }
         }
 
-        private void NewCell_CellSelected(object obj, EventArgs e)
+        private void Cell_Click(object sender, EventArgs e)
         {
-            UIBoardCell selectedCell = (UIBoardCell)obj;
+            UIBoardCell selectedCell = (UIBoardCell)sender;
 
-            if (!selectedCell.IsSelected) 
+            if (m_FromCell == selectedCell)
             {
                 // canceled click
                 m_FromCell = null;
@@ -71,17 +84,19 @@ namespace EnglandCheckers.UI
             {
                 if (m_FromCell == null)
                 {
-                    m_FromCell = selectedCell.IsSelected ? selectedCell : null;
+                    m_FromCell = selectedCell;
                 }
                 else
                 {
                     m_ToCell = selectedCell;
-                    playMove(m_FromCell.BoardCell, m_ToCell.BoardCell);
+
+                    playMove(m_FromCell.BoardPoint, m_ToCell.BoardPoint);
+
+                    m_FromCell.IsSelected = false;
+                    m_ToCell.IsSelected = false;
 
                     m_FromCell = null;
                     m_ToCell = null;
-
-                    RefreshCells();
 
                     if (!isEndGame())
                     {
@@ -92,7 +107,6 @@ namespace EnglandCheckers.UI
                     }
                 }
             }
-
         }
 
         private void playComputerMoves()
@@ -100,14 +114,13 @@ namespace EnglandCheckers.UI
             while (m_GameManager.CurrentPlayer == m_GameManager.GameDetails.Player2)
             {
                 m_GameManager.ComputerNextMove(m_GameManager.GameDetails.Player2.Sign);
-                RefreshCells();
                 isEndGame();
             }
         }
 
-        private void playMove(BoardCell boardCell1, BoardCell boardCell2)
+        private void playMove(BoardPoint i_FromCell, BoardPoint i_ToCell)
         {
-            BoardMove move = new BoardMove(m_FromCell.BoardCell, m_ToCell.BoardCell);
+            BoardMove move = new BoardMove(i_FromCell, i_ToCell);
 
             string errorMsg;
             if (!m_GameManager.TryMove(move, out errorMsg))
@@ -143,17 +156,17 @@ namespace EnglandCheckers.UI
             return endGame;
         }
 
-        private void RefreshCells()
-        {
-            foreach (UIBoardCell BoardCell in m_UIBorderCells)
-            {
-                Coin cellCoin = m_GameManager.Board.GetCoin(BoardCell.BoardCell);
+        //private void RefreshCells()
+        //{
+        //    foreach (UIBoardCell uiBoardCell in m_UIBorderCells)
+        //    {
+        //        Coin cellCoin = m_GameManager.Board.GetCoin(uiBoardCell.BoardCell);
 
-                BoardCell.IsSelected = false;
-                BoardCell.Coin = cellCoin;
-                BoardCell.UpdateCell();
-            }
-        }
+        //        uiBoardCell.IsSelected = false;
+        //        //uiBoardCell.Coin = cellCoin;
+        //        uiBoardCell.UpdateCell();
+        //    }
+        //}
 
         private Size calcGameFormSize(int i_BoardSize)
         {
@@ -169,6 +182,5 @@ namespace EnglandCheckers.UI
         private readonly GameManager m_GameManager;
         private UIBoardCell m_FromCell;
         private UIBoardCell m_ToCell;
-        private List<UIBoardCell> m_UIBorderCells; 
     }
 }

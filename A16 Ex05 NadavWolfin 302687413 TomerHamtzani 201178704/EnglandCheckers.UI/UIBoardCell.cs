@@ -9,16 +9,15 @@ using System.Drawing;
 
 namespace EnglandCheckers.UI
 {
-    public delegate void CellSelected(object obj, EventArgs e);
-
     internal class UIBoardCell : Button
     {
-        public UIBoardCell(bool i_Enabled, Coin i_Coin, Components.BoardCell i_BoardCell)
+        public UIBoardCell(BoardCell i_BoardCell)
         {
-            this.Enabled = i_Enabled;
-            this.BackColor = k_DefaultColor;
-            m_Coin = i_Coin;
+            this.Enabled = i_BoardCell.Enabled;
+            this.BackColor = this.Enabled ? k_DefaultColor : k_DisableColor;
+
             m_BoardCell = i_BoardCell;
+            m_BoardCell.BoardCellChanged += m_BoardCell_BoardCellChanged;
 
             this.Size = new Size(k_CellSideSize, k_CellSideSize);
             this.Margin = new Padding(0);
@@ -28,20 +27,13 @@ namespace EnglandCheckers.UI
                 updateText();
                 this.TextAlign = ContentAlignment.MiddleCenter;
                 this.Click += BoardButton_Click;
-                m_IsSelected = false;
+                IsSelected = false;
             }
         }
-        
-        public Coin Coin
+
+        private void m_BoardCell_BoardCellChanged(object obj, EventArgs e)
         {
-            get
-            {
-                return m_Coin;
-            }
-            set
-            {
-                m_Coin = value;
-            }
+            UpdateCell();
         }
 
         public void UpdateCell()
@@ -52,23 +44,19 @@ namespace EnglandCheckers.UI
 
         private void updateColor()
         {
-            this.BackColor = m_IsSelected ? k_SelectedColor : k_DefaultColor;
+            this.BackColor = IsSelected ? k_SelectedColor : k_DefaultColor;
         }
 
         private void updateText()
         {
-            this.Text = m_Coin != null ? Coin.ToString() : string.Empty;
+            this.Text = m_BoardCell.Coin != null ? m_BoardCell.Coin.ToString() : string.Empty;
         }
 
-        public BoardCell BoardCell
+        public BoardPoint BoardPoint
         {
             get
             {
-                return m_BoardCell;
-            }
-            set
-            {
-                m_BoardCell = value;
+                return m_BoardCell.BoardPoint;
             }
         }
 
@@ -81,27 +69,20 @@ namespace EnglandCheckers.UI
             set
             {
                 m_IsSelected = value;
+                updateColor();
             }
         }
 
         private void BoardButton_Click(object sender, EventArgs e)
         {
-            m_IsSelected = !m_IsSelected;
-
-            updateColor();
-
-            if (CellSelected != null)
-            {
-                CellSelected.Invoke(this, EventArgs.Empty);
-            }
+            IsSelected = !IsSelected;
         }
 
         private bool m_IsSelected;
-        private readonly System.Drawing.Color k_SelectedColor = System.Drawing.Color.LightBlue;
-        private readonly System.Drawing.Color k_DefaultColor = System.Drawing.Color.Transparent;
-        private Coin m_Coin;
+        private readonly Color k_SelectedColor = Color.LightBlue;
+        private readonly Color k_DefaultColor = Color.Transparent;
+        private readonly Color k_DisableColor = Color.LightGray;
         internal const int k_CellSideSize = 55;
-        public event CellSelected CellSelected;
         private BoardCell m_BoardCell;
     }
 }
