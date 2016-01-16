@@ -30,7 +30,6 @@ namespace EnglandCheckers.BusinessLogic
                 // swap the players
                 m_CurrentPlayer = AdversaryPlayer;
             }
-
         }
 
         internal Player AdversaryPlayer

@@ -143,9 +143,8 @@ namespace EnglandCheckers.UI
             r_GameManager.EndGame(winner, false);
 
             string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
-
-            DialogResult messageResult = MessageBox.Show(string.Format(@"{0}!{1} Another Round ?", endGameMessage, Environment.NewLine),
-                                   k_GameMessageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            string message = string.Format(@"{0}!{1} Another Round ?", endGameMessage, Environment.NewLine);
+            DialogResult messageResult = MessageBox.Show(message, k_GameMessageCaption, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (messageResult == DialogResult.Yes)
             {
@@ -175,8 +174,7 @@ namespace EnglandCheckers.UI
                 string retireMessage = 
                     string.Format("{0},{1}Are you shure you want to quit?", r_GameManager.CurrentPlayer.Name, Environment.NewLine);
 
-                DialogResult isPlayerQuit = MessageBox.Show(retireMessage, k_GameMessageCaption, 
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult isPlayerQuit = MessageBox.Show(retireMessage, k_GameMessageCaption,  MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
                 if (isPlayerQuit == DialogResult.Yes)
                 {
@@ -196,9 +194,5 @@ namespace EnglandCheckers.UI
         private const int k_GamePanelHeightBuffer = 30;
         private const string k_QuitLetter = "Q";
         private const string k_GameMessageCaption = "Damka";
-        
     }
 }
-
-
-
