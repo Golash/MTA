@@ -132,15 +132,15 @@ namespace EnglandCheckers.UI
 
             if (endGameIsNedded)
             {
-                endGame(winner);
+                endGame(winner, false);
             }
 
             return endGameIsNedded;
         }
 
-        private void endGame(Player winner)
+        private void endGame(Player winner, bool i_IsGameEndWithQuit)
         {
-            r_GameManager.EndGame(winner, false);
+            r_GameManager.EndGame(winner, i_IsGameEndWithQuit);
 
             string endGameMessage = winner == null ? "Tie" : string.Format("{0} Won", winner.Name);
             string message = string.Format(@"{0}!{1} Another Round ?", endGameMessage, Environment.NewLine);
@@ -179,9 +179,7 @@ namespace EnglandCheckers.UI
                 if (isPlayerQuit == DialogResult.Yes)
                 {
                     Player winner = r_GameManager.AdversaryPlayer;
-
-                    endGame(winner);
-                    r_GameManager.EndGame(winner, true);
+                    endGame(winner, true);
                 }
             }
         }

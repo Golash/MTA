@@ -2,9 +2,10 @@
 Exercise No...........: 5
 First Student Details.: 201178704 - Tomer Hamtzani
 Second Student Details: 302687413 - Nadav Wolfin
-Delivery Date.........: 
+Delivery Date.........: 16/01/2016
 Delivered In Delay....: 
 Delay Reason..........: 
 Visual Studio Version.: 2015
-Comments..............: 
+Comments..............: We implemented an event driven implementation for update the board cells.
+						When cell in the backend matrix is chnaged, event will be raised and the UI will triggered accordingliy  
 ========================End Exercise Checking Report========================
