@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnglandCheckers.Components
+﻿namespace EnglandCheckers.Components
 {
     /// <summary>
     /// Represent the user selected options for the game.
@@ -16,16 +10,18 @@ namespace EnglandCheckers.Components
     public class GameDetails
     {
         // The max size that allowed for player name
-        internal const int k_MaxPlayerNameLength = 20;
+        private const int k_MaxPlayerNameLength = 20;
 
         /// <summary>
         /// Create a new instance of GameDetails
         /// </summary>
         public GameDetails(Player i_Player1, Player i_Player2, int i_BoardSize)
         {
-            Player1 = i_Player1;
-            Player2 = i_Player2;
-            BoardSize = i_BoardSize;
+            rm_Player1 = i_Player1;
+            rm_Player2 = i_Player2;
+            Player1.Sign = eCoinSign.X;
+            Player2.Sign = eCoinSign.O;
+            rm_BoardSize = i_BoardSize;
         }
 
         /// <summary>
@@ -56,12 +52,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_BoardSize;
-            }
-
-            set
-            {
-                m_BoardSize = value;
+                return rm_BoardSize;
             }
         }
         
@@ -72,12 +63,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Player1;
-            }
-
-            set
-            {
-                m_Player1 = value;
+                return rm_Player1;
             }
         }
 
@@ -88,12 +74,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Player2;
-            }
-
-            set
-            {
-                m_Player2 = value;
+                return rm_Player2;
             }
         }
 
@@ -104,11 +85,11 @@ namespace EnglandCheckers.Components
         /// <returns></returns>
         internal Player GetPlayerBySign(eCoinSign i_PlayerSign)
         {
-            return m_Player1.Sign == i_PlayerSign ? m_Player1 : m_Player2;
+            return rm_Player1.Sign == i_PlayerSign ? rm_Player1 : rm_Player2;
         }
 
-        private int m_BoardSize;
-        private Player m_Player1;
-        private Player m_Player2;
+        private readonly int rm_BoardSize;
+        private readonly Player rm_Player1;
+        private readonly Player rm_Player2;
     }
 }

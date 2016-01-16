@@ -17,24 +17,18 @@ namespace EnglandCheckers.Components
         public Board(GameDetails i_GameDetailes)
         {
             // Create the board matrix according to the requested board size
-            m_BordSize = i_GameDetailes.BoardSize;
-            m_GameBoard = new BoardCell[m_BordSize, m_BordSize];
+            rm_BordSize = i_GameDetailes.BoardSize;
+            rm_GameBoard = new BoardCell[rm_BordSize, rm_BordSize];
 
             m_GameDetailes = i_GameDetailes;
-            r_Player1 = i_GameDetailes.Player1;
-            r_Player2 = i_GameDetailes.Player2;
-            m_GameRulesValidator = new GameRulesValidator(this);
-
-            // Set each player a different side
-            r_Player1.Sign = eCoinSign.X;
-            r_Player2.Sign = eCoinSign.O;
+            rm_GameRulesValidator = new GameRulesValidator(this);
 
             // Set the last column index
-            r_LastBoardIndex = m_BordSize - 1;
+            r_LastBoardIndex = rm_BordSize - 1;
 
             // Set the start and end letters
-            m_ColumnEndLetter = (char)(sr_ColumnStartLetter + r_LastBoardIndex);
-            m_RowEndLetter = (char)(sr_RowStartLetter + r_LastBoardIndex);
+            sm_ColumnEndLetter = (char)(sr_ColumnStartLetter + r_LastBoardIndex);
+            sm_RowEndLetter = (char)(sr_RowStartLetter + r_LastBoardIndex);
 
             fillBoard();
         }
@@ -51,10 +45,10 @@ namespace EnglandCheckers.Components
         private void fillCoinsOnBoard()
         {
             eCoinSign coinSign = eCoinSign.O;
-            int topRowIndexForPlayer1 = (m_BordSize - 1) / 2;
+            int topRowIndexForPlayer1 = (rm_BordSize - 1) / 2;
 
             // Run all overt the rows
-            for (int i = 0; i < m_BordSize; i++)
+            for (int i = 0; i < rm_BordSize; i++)
             {
                 // keep on two rows space between player1 and player2
                 if (i == topRowIndexForPlayer1 || i == (topRowIndexForPlayer1 + 1))
@@ -64,7 +58,7 @@ namespace EnglandCheckers.Components
                 }
 
                 // Fill the current row (run all over the columns)
-                for (int j = 0; j < m_BordSize; j++)
+                for (int j = 0; j < rm_BordSize; j++)
                 {
                     BoardCell boardCell = GetBoardCell(new BoardPoint(j, i));
                     if (boardCell.Enabled)
@@ -83,7 +77,7 @@ namespace EnglandCheckers.Components
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    m_GameBoard[i, j] = new BoardCell(new BoardPoint(j, i), isCellEnabled);
+                    rm_GameBoard[i, j] = new BoardCell(new BoardPoint(j, i), isCellEnabled);
                     if (j != r_LastBoardIndex)
                     {
                         isCellEnabled = !isCellEnabled;
@@ -113,16 +107,16 @@ namespace EnglandCheckers.Components
 
             // start to build the rows
             char openRowLetter = sr_RowStartLetter;
-            for (int i = 0; i < m_BordSize; i++)
+            for (int i = 0; i < rm_BordSize; i++)
             {
                 // add the open letter to the row
                 boardStringBuilder.AppendFormat("{0}", openRowLetter);
                 openRowLetter++;
 
                 // Fill all the row cells
-                for (int j = 0; j < m_BordSize; j++)
+                for (int j = 0; j < rm_BordSize; j++)
                 {
-                    Coin currentCoin = m_GameBoard[i, j].Coin;
+                    Coin currentCoin = rm_GameBoard[i, j].Coin;
                     string currentCellValue = k_EmptyCellSign;
                     if (currentCoin != null)
                     {
@@ -145,7 +139,7 @@ namespace EnglandCheckers.Components
         private string getBoardRowsSeperator()
         {
             // (3 '=' for each cell + 1 '=' between cells + 2 '=' for the start + 2 '=' for the end
-            int separatorLength = (3 * m_BordSize) + r_LastBoardIndex - 1 + 2 + 2;
+            int separatorLength = (3 * rm_BordSize) + r_LastBoardIndex - 1 + 2 + 2;
             StringBuilder lineSeparator = new StringBuilder();
             for (int i = 0; i < separatorLength; i++)
             {
@@ -163,7 +157,7 @@ namespace EnglandCheckers.Components
         /// </summary>
         internal bool TryMove(Player i_Player, BoardMove i_Move, out string o_FailureReason)
         {
-            bool isValidMove = m_GameRulesValidator.IsValidMove(i_Player, i_Move, out o_FailureReason);
+            bool isValidMove = rm_GameRulesValidator.IsValidMove(i_Player, i_Move, out o_FailureReason);
 
             // Check if the move is a valid move by the given player
             if (isValidMove)
@@ -180,8 +174,8 @@ namespace EnglandCheckers.Components
         /// </summary>
         private void makeMove(BoardMove i_Move)
         {
-            m_GameBoard[i_Move.To.Row, i_Move.To.Column].Coin = m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin;
-            m_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin = null;
+            rm_GameBoard[i_Move.To.Row, i_Move.To.Column].Coin = rm_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin;
+            rm_GameBoard[i_Move.From.Row, i_Move.From.Column].Coin = null;
         }
 
         /// <summary>
@@ -193,7 +187,7 @@ namespace EnglandCheckers.Components
             Coin coin = null;
             if (IsCellExists(i_Cell))
             {
-                coin = m_GameBoard[i_Cell.Row, i_Cell.Column].Coin;
+                coin = rm_GameBoard[i_Cell.Row, i_Cell.Column].Coin;
             }
 
             return coin;
@@ -208,7 +202,7 @@ namespace EnglandCheckers.Components
             BoardCell boardCell = null;
             if (IsCellExists(i_BoardPoint))
             {
-                boardCell = m_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column];
+                boardCell = rm_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column];
             }
 
             return boardCell;
@@ -220,7 +214,7 @@ namespace EnglandCheckers.Components
         /// </summary>
         public bool IsEmptyCell(BoardPoint i_Cell)
         {
-            return IsCellExists(i_Cell) && m_GameBoard[i_Cell.Row, i_Cell.Column].IsEmptyCell();
+            return IsCellExists(i_Cell) && rm_GameBoard[i_Cell.Row, i_Cell.Column].IsEmptyCell();
         }
 
         /// <summary>
@@ -228,8 +222,8 @@ namespace EnglandCheckers.Components
         /// </summary>
         public bool IsCellExists(BoardPoint i_BoardPoint)
         {
-            return i_BoardPoint.Row >= 0 && i_BoardPoint.Row < m_BordSize && 
-                i_BoardPoint.Column >= 0 && i_BoardPoint.Column < m_BordSize;
+            return i_BoardPoint.Row >= 0 && i_BoardPoint.Row < rm_BordSize && 
+                i_BoardPoint.Column >= 0 && i_BoardPoint.Column < rm_BordSize;
         }
 
         /// <summary>
@@ -376,13 +370,11 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Remove the coin from the given board cell
         /// </summary>
-        /// <param name="i_Row"></param>
-        /// <param name="i_Column"></param>
         public void RemoveCoin(BoardPoint i_BoardPoint)
         {
             if (IsCellExists(i_BoardPoint))
             {
-                m_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column].RemoveCoin();
+                rm_GameBoard[i_BoardPoint.Row, i_BoardPoint.Column].RemoveCoin();
             }
         }
 
@@ -543,7 +535,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_BordSize;
+                return rm_BordSize;
             }
         }
 
@@ -554,7 +546,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_ColumnEndLetter;
+                return sm_ColumnEndLetter;
             }
         }
 
@@ -565,7 +557,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_RowEndLetter;
+                return sm_RowEndLetter;
             }
         }
 
@@ -592,17 +584,6 @@ namespace EnglandCheckers.Components
         }
 
         /// <summary>
-        /// Gets the row end latter
-        /// </summary>
-        public static List<int> BoardAllowedSizes
-        {
-            get
-            {
-                return new List<int>(sr_BoardAllowedSizes);
-            }
-        }
-
-        /// <summary>
         /// Gets the last index of the board boarders
         /// </summary>
         public int LastBoardIndex
@@ -617,15 +598,12 @@ namespace EnglandCheckers.Components
         private const string k_EmptyCellSign = " ";
         private static readonly char sr_ColumnStartLetter = k_StartLetter;
         private static readonly char sr_RowStartLetter = char.ToLower(k_StartLetter);
-        private static readonly List<int> sr_BoardAllowedSizes = new List<int>() { 6, 8, 10 };
-        private GameDetails m_GameDetailes;
-        private static char m_ColumnEndLetter;
-        private static char m_RowEndLetter;
-        private readonly Player r_Player1;
-        private readonly Player r_Player2;
+        private readonly GameDetails m_GameDetailes;
+        private static char sm_ColumnEndLetter;
+        private static char sm_RowEndLetter;
         private readonly int r_LastBoardIndex;
-        private BoardCell[,] m_GameBoard;
-        private int m_BordSize;
-        private GameRulesValidator m_GameRulesValidator;
+        private readonly BoardCell[,] rm_GameBoard;
+        private readonly int rm_BordSize;
+        private readonly GameRulesValidator rm_GameRulesValidator;
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnglandCheckers.Components
+﻿namespace EnglandCheckers.Components
 {
     /// <summary>
     /// The Player class represent a player in the game.
@@ -17,8 +11,8 @@ namespace EnglandCheckers.Components
         /// </summary>
         public Player(string i_Name, ePlayerMode i_PlayrMode)
         {
-            m_Name = i_Name;
-            m_Mode = i_PlayrMode;
+            rm_Name = i_Name;
+            rm_Mode = i_PlayrMode;
         }
 
         /// <summary>
@@ -28,7 +22,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Name;
+                return rm_Name;
             }
         }
 
@@ -39,7 +33,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Mode;
+                return rm_Mode;
             }
         }
 
@@ -123,8 +117,8 @@ namespace EnglandCheckers.Components
             }
         }
 
-        private string m_Name;
-        private ePlayerMode m_Mode;
+        private readonly string rm_Name;
+        private readonly ePlayerMode rm_Mode;
         private eCoinSign m_CoinSing;
         private int m_Points;
         private BoardMove m_LastMove;

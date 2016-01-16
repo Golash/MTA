@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EnglandCheckers.Components;
 
-namespace EnglandCheckers.Strategy
+namespace EnglandCheckers.GameStrategy
 {
     /// <summary>
     /// The GameStrategy class is an abstract class that represent a computer game strategy.
@@ -9,9 +9,9 @@ namespace EnglandCheckers.Strategy
     /// </summary>
     public abstract class GameStrategy
     {
-        public GameStrategy(Board i_Board)
+        protected GameStrategy(Board i_Board)
         {
-            m_Board = i_Board;
+            Board = i_Board;
         }
 
         /// <summary>
@@ -19,7 +19,7 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         public BoardMove GetNextMove(eCoinSign i_Sign)
         {
-            List<BoardMove> validMoves = m_Board.GetValidMoves(i_Sign);
+            List<BoardMove> validMoves = Board.GetValidMoves(i_Sign);
             return GetNextMove(validMoves);
         }
 
@@ -31,6 +31,6 @@ namespace EnglandCheckers.Strategy
         /// <summary>
         /// The game board - you can use the board while define your strategy
         /// </summary>
-        protected Board m_Board;
+        protected readonly Board Board;
     }
 }

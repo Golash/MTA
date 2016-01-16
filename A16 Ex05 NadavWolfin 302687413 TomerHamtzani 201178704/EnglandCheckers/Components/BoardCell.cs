@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EnglandCheckers.Components
 {
@@ -17,8 +13,6 @@ namespace EnglandCheckers.Components
         /// <summary>
         /// Create a new instance of BoardPoint by the given column and row
         /// </summary>
-        /// <param name="i_Column"></param>
-        /// <param name="i_Row"></param>
         public BoardCell(BoardPoint i_BoardPoint, bool i_Enabeld)
         {
             r_BoardPoint = i_BoardPoint;
@@ -79,6 +73,7 @@ namespace EnglandCheckers.Components
         }
 
         public event BoardCellChangedEventHandler BoardCellChanged;
+
         private readonly bool r_Enabled;
         private readonly BoardPoint r_BoardPoint;
         private Coin m_Coin;

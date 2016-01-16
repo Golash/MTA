@@ -18,9 +18,23 @@ namespace EnglandCheckers.UI
 
         private void buttonDone_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
             m_GameDetails = fillGameDetails();
-            Close();
+            if (m_GameDetails != null)
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
+
+        private bool validateNames(TextBox i_UserNameTextBox)
+        {
+            bool isValidName = GameDetails.IsValidName(i_UserNameTextBox.Text);
+            if (!isValidName)
+            {
+                nameErrorProvider.SetError(i_UserNameTextBox, "Player name must be between 0 to 20 characters without spaces");
+            }
+
+            return isValidName;
         }
 
         public GameDetails GameDetails
@@ -33,6 +47,8 @@ namespace EnglandCheckers.UI
 
         private GameDetails fillGameDetails()
         {
+            GameDetails gameDetails = null;
+
             int borderSize;
             if (radioButtonSixOnSix.Checked)
             {
@@ -47,12 +63,19 @@ namespace EnglandCheckers.UI
                 borderSize = 10;
             }
 
-            Player player1 = new Player(this.textBoxPlayerOne.Text, ePlayerMode.Human);
+            bool isValidName = validateNames(textBoxPlayerOne) && validateNames(textBoxPlayerTwo);
 
-            ePlayerMode player2Mode = checkBoxPlayerTwo.Checked ? ePlayerMode.Human : ePlayerMode.Computer;
-            Player player2 = new Player(this.textBoxPlayerTwo.Text, player2Mode);
+            if (isValidName)
+            {
+                Player player1 = new Player(textBoxPlayerOne.Text, ePlayerMode.Human);
 
-            return new GameDetails(player1, player2, borderSize);
+                ePlayerMode player2Mode = checkBoxPlayerTwo.Checked ? ePlayerMode.Human : ePlayerMode.Computer;
+                Player player2 = new Player(this.textBoxPlayerTwo.Text, player2Mode);
+
+                gameDetails = new GameDetails(player1, player2, borderSize);
+            }
+
+            return gameDetails;
         }
 
         private GameDetails m_GameDetails;

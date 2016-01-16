@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using EnglandCheckers.Components;
-using EnglandCheckers.Strategy;
+using EnglandCheckers.GameStrategy;
 
 namespace EnglandCheckers.BusinessLogic
 {
@@ -41,7 +41,7 @@ namespace EnglandCheckers.BusinessLogic
             else
             {
                 m_Winner = i_Winner;
-                m_Winner.Points += GetWinnerPoints(i_Winner, i_IsGameEndWithQuit);
+                m_Winner.Points += getWinnerPoints(i_Winner, i_IsGameEndWithQuit);
             }
         }
 
@@ -50,8 +50,8 @@ namespace EnglandCheckers.BusinessLogic
         /// </summary>
         private void addPointsToPlayersInCaseOfTie()
         {
-            int playerOnePoints = GetWinnerPoints(m_GameDetails.Player1, false);
-            int playerTwoPoints = GetWinnerPoints(m_GameDetails.Player2, false);
+            int playerOnePoints = getWinnerPoints(m_GameDetails.Player1, false);
+            int playerTwoPoints = getWinnerPoints(m_GameDetails.Player2, false);
 
             // Give the points to the player that have more points.
             // Pay attention - The points are already the diff between the two players
@@ -66,7 +66,7 @@ namespace EnglandCheckers.BusinessLogic
         }
 
         /// <summary>
-        /// Try to make the given <paramref name="i_Move"/> by the given <paramref name="i_Player"/>.
+        /// Try to make the given <paramref name="i_Move"/>
         /// If the move is a valid move (according to rules in <see cref="GameRulesValidator"/>) it will be applay
         /// and true will return, otherwise <paramref name="o_FailureReason"/> will contain the invalid movce reason
         /// and fale will return.
@@ -196,7 +196,7 @@ namespace EnglandCheckers.BusinessLogic
         /// Calc the game points.
         /// The winner will get the point diff between the winner and the loser
         /// </summary>
-        private int getWinnerPoints(Player i_Winner, Player i_Loser, bool i_IsGameEndWithQuit)
+        private int getWinnerPoints(Player i_Winner, bool i_IsGameEndWithQuit)
         {
             int winnerPoints = 0;
             int loserPoints = 0;
@@ -276,6 +276,6 @@ namespace EnglandCheckers.BusinessLogic
         private Board m_Board;
         private GameDetails m_GameDetails;
         private Player m_Winner;
-        private GameStrategy m_GameStrategy;
+        private AIGameStrategy m_GameStrategy;
     }
 }

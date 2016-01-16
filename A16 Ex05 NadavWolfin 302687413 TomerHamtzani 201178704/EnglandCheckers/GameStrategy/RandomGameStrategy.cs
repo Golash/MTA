@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using EnglandCheckers.Components;
 
-namespace EnglandCheckers.Strategy
+namespace EnglandCheckers.GameStrategy
 {
     /// <summary>
     /// The class RandomGameStrategy implement a game strategy mechanism that get all the valid moves according
@@ -24,7 +23,7 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         protected override BoardMove GetNextMove(List<BoardMove> i_ValidMoves)
         {
-            int randomMoveIndex = r_Random.Next(0, i_ValidMoves.Count());
+            int randomMoveIndex = r_Random.Next(0, i_ValidMoves.Count);
             return i_ValidMoves[randomMoveIndex];
         }
 

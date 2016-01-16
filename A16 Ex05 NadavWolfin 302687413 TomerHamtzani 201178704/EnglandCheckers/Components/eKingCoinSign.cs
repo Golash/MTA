@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnglandCheckers.Components
+﻿namespace EnglandCheckers.Components
 {
     /// <summary>
     /// The eKingCoinSign represet the king sign for each one of the coin sign.

@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using EnglandCheckers.Components;
 
-namespace EnglandCheckers.Strategy
+namespace EnglandCheckers.GameStrategy
 {
     /// <summary>
     /// The AIGameStrategy is an AI implementation for O player (the computer side)
@@ -11,7 +10,7 @@ namespace EnglandCheckers.Strategy
     {
         public AIGameStrategy(Board i_Board) : base(i_Board)
         {
-            m_RandomGameStrategy = new RandomGameStrategy(i_Board);
+            rm_RandomGameStrategy = new RandomGameStrategy(i_Board);
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace EnglandCheckers.Strategy
             // if there is no recommended step, tandom from the valid movs
             if (nextMove == null)
             {
-                nextMove = m_RandomGameStrategy.GetNextMove(k_ComputerSign);
+                nextMove = rm_RandomGameStrategy.GetNextMove(k_ComputerSign);
             }
 
             return nextMove;
@@ -50,9 +49,9 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isCreateKingMove(BoardMove i_MoveToCheck)
         {
-            Coin coin = m_Board.GetCoin(i_MoveToCheck.From);
+            Coin coin = Board.GetCoin(i_MoveToCheck.From);
 
-            return i_MoveToCheck.To.Row == m_Board.LastBoardIndex && coin != null && !coin.IsKing;
+            return i_MoveToCheck.To.Row == Board.LastBoardIndex && coin != null && !coin.IsKing;
         }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace EnglandCheckers.Strategy
             // if the move is to board borders is a safe move
             if (!isMoveToBoardBorders(i_MoveToCheck))
             {
-                Coin coin = m_Board.GetCoin(i_MoveToCheck.From);
+                Coin coin = Board.GetCoin(i_MoveToCheck.From);
 
                 // if is king, check also the back moves
                 if (coin.IsKing)
@@ -86,7 +85,7 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isMoveToBoardBorders(BoardMove i_MoveToCheck)
         {
-            return i_MoveToCheck.To.Column == m_Board.LastBoardIndex || i_MoveToCheck.To.Column == 0 || i_MoveToCheck.To.Row == m_Board.LastBoardIndex || i_MoveToCheck.To.Row == 0;
+            return i_MoveToCheck.To.Column == Board.LastBoardIndex || i_MoveToCheck.To.Column == 0 || i_MoveToCheck.To.Row == Board.LastBoardIndex || i_MoveToCheck.To.Row == 0;
         }
 
         /// <summary>
@@ -131,7 +130,7 @@ namespace EnglandCheckers.Strategy
         private bool isSafeMove(BoardPoint i_CellThreatRight, BoardPoint i_CellThreatLeft, BoardPoint i_CellThreatBack)
         {
             bool isMoveToSafeCell = false;
-            bool isCellThreatBack = (!isSafeCoin(i_CellThreatBack, true)) || !m_Board.IsCellExists(i_CellThreatBack);
+            bool isCellThreatBack = (!isSafeCoin(i_CellThreatBack, true)) || !Board.IsCellExists(i_CellThreatBack);
             bool isStackInTheMiddleState = isSafeCoin(i_CellThreatRight) && (!isSafeCoin(i_CellThreatLeft) && isCellThreatBack);
 
             // All posible threat cells are empty
@@ -174,17 +173,17 @@ namespace EnglandCheckers.Strategy
         /// </summary>
         private bool isSafeCoin(BoardPoint i_CellToCheck, bool i_OnlyKingCanEat = false)
         {
-            Coin coin = m_Board.GetCoin(i_CellToCheck);
+            Coin coin = Board.GetCoin(i_CellToCheck);
             bool isSageCoin = true;
-            if (m_Board.IsCellExists(i_CellToCheck))
+            if (Board.IsCellExists(i_CellToCheck))
             {
-                isSageCoin = m_Board.IsEmptyCell(i_CellToCheck) || coin.Sign == k_ComputerSign || (i_OnlyKingCanEat && !coin.IsKing);
+                isSageCoin = Board.IsEmptyCell(i_CellToCheck) || coin.Sign == k_ComputerSign || (i_OnlyKingCanEat && !coin.IsKing);
             }
 
             return isSageCoin;
         }
 
-        private RandomGameStrategy m_RandomGameStrategy;
+        private readonly RandomGameStrategy rm_RandomGameStrategy;
         private const eCoinSign k_ComputerSign = eCoinSign.O; 
     }
 }

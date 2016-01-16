@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EnglandCheckers.Components
+﻿namespace EnglandCheckers.Components
 {
     /// <summary>
     /// The Coin class represent a soldier in the game (can be King or Regular)
@@ -18,7 +11,7 @@ namespace EnglandCheckers.Components
         /// <param name="i_Sign"></param>
         public Coin(eCoinSign i_Sign)
         {
-            m_Sign = i_Sign;
+            rm_Sign = i_Sign;
             m_IsKing = false;
         }
 
@@ -29,7 +22,7 @@ namespace EnglandCheckers.Components
         {
             get
             {
-                return m_Sign;
+                return rm_Sign;
             }
         }
 
@@ -71,16 +64,16 @@ namespace EnglandCheckers.Components
         /// <returns></returns>
         public override string ToString()
         {
-            string coinStrValue = m_Sign.ToString();
+            string coinStrValue = rm_Sign.ToString();
             if (IsKing)
             {
-                coinStrValue = getKingSignByCoinSign(m_Sign).ToString();
+                coinStrValue = getKingSignByCoinSign(rm_Sign).ToString();
             }
 
             return coinStrValue;
         }
 
-        private eCoinSign m_Sign;
+        private readonly eCoinSign rm_Sign;
         private bool m_IsKing;
     }
 }
