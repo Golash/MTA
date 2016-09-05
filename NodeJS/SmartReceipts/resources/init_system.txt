@@ -1,0 +1,2 @@
+// MongoDB Create Compound Index
+db.receipts.createIndex( { "_id": 1, "DateTime": -1 } );
