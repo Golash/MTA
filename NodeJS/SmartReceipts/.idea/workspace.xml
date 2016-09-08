@@ -2,113 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fd717df4-3863-4c42-9124-08bd1b295c8a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/A16 Ex03 Nadav 302687413 Tomer 201178704.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/A16 Ex03 Nadav 302687413 Tomer 201178704.sln" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Ex03.ConsoleUI.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Menu.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/AddNewVehicleOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/ChangeVehicleStatusOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/FillAirInWheelsToMaxOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/FillElectricVehicleOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/FillGasVehicleOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/FillVehicleOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/ShowLicensesNumbersOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/UserOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Operations/VehicleDetailsOperation.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Program.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.ConsoleUI/UIManager.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Engine/ElectricEngine.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Engine/Engine.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Engine/GasEngine.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Enums/eColor.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Enums/eDoors.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Enums/eGasType.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Enums/eLicenseType.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Enums/eVehicleStatus.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Ex03.GarageLogic.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Exceptions/RequiredValueException.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Exceptions/ValueOutOfRangeException.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Exceptions/VehicleNotExistsException.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Factory/CarFactory.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/GarageManager.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/GarageVehicle.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Helpers/EnumHelper.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Helpers/Validator.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/Car.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/ElectricCar.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/ElectricMotorcycle.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/Motorcycle.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/RegularCar.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/RegularMotorcycle.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/Truck.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Vehicles/Vehicle.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/Wheel.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Ex03.GarageLogic/vehicleOwnerdetails.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex03 NadavWolfin 302687413 TomerHamtzani 201178704/Exercise Checking Report.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/A16 Ex04 Nadav 302687413 Tomer 201178704.sln" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Actions/CountSpacesAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Actions/CountWordsAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Actions/MenuItemActionBase.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Actions/ShowDateAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Actions/ShowTimeAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/BackMenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Ex04.Menus.Delegates.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/ExitMenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/MainMenu.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/MenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Delegates/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Actions/CountSpacesAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Actions/CountWordsAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Actions/ShowDateAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Actions/ShowTimeAction.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/BackMenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Ex04.Menus.Interfaces.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/ExitMenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/IMenuItemSelectedObserver.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/MainMenu.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/MenuItem.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Interfaces/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/App.config" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/DelegateMenuRunner.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/Ex04.Menus.Test.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/InterfaceMenuRunner.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/Program.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Ex04.Menus.Test/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex04 NadavWolfin 302687413 TomerHamtzani 201178704/Settings.StyleCop" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/A16 Ex05 Nadav 302687413 Tomer 201178704.sln" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/App.config" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/CheckersBoardForm.Designer.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/CheckersBoardForm.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/CheckersBoardForm.resx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/EnglandCheckers.UI.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/GameSettingsForm.Designer.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/GameSettingsForm.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/GameSettingsForm.resx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/Program.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/Properties/AssemblyInfo.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers.UI/UIBoardCell.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/BusinessLogic/GameManager.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/BusinessLogic/GameRulesValidator.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/BusinessLogic/TurnManager.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/Board.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/BoardCell.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/BoardMove.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/BoardPoint.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/Coin.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/GameDetails.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/Player.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/eCoinSign.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/eKingCoinSign.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/Components/ePlayerMode.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/EnglandCheckers.Logic.csproj" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/GameStrategy/AIGameStrategy (Nadav Wolfin's conflicted copy 2015-12-18).cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/GameStrategy/AIGameStrategy.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/GameStrategy/GameStrategy.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/EnglandCheckers/GameStrategy/RandomGameStrategy.cs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../A16 Ex05 NadavWolfin 302687413 TomerHamtzani 201178704/Exercise Checking Report.txt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../.gitignore" afterPath="$PROJECT_DIR$/../../.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="code.iws" />
@@ -499,12 +392,12 @@
       <workItem from="1472401245146" duration="1254000" />
       <workItem from="1473000889732" duration="254000" />
       <workItem from="1473093432724" duration="5684000" />
-      <workItem from="1473346020647" duration="12000" />
+      <workItem from="1473346020647" duration="349000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9063000" />
+    <option name="totallyTimeSpent" value="9400000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-13" y="-13" width="2586" height="1386" extended-state="6" />
