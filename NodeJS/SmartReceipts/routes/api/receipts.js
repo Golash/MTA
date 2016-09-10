@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var mongodb = require("mongodb");
+var ObjectID = mongodb.ObjectID;
 var RECEIPTS_COLLECTION = "receipts";
 
 // Generic error handler used by all endpoints.
@@ -48,4 +50,22 @@ router.route('/customer/preview').post(function(req, res, next) {
         }
     });
 });
+
+router.route('/details').post(function(req, res, next) {
+    var db = req.db;
+    var receiptID = req.body.ReceiptId;
+
+    var query = {
+        _id : new ObjectID(receiptID)
+    };
+
+    db.collection(RECEIPTS_COLLECTION).findOne(query, function(err, doc) {
+        if (err) {
+            handleError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(doc);
+        }
+    });
+});
+
 module.exports = router;
