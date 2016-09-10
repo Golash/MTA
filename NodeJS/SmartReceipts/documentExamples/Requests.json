@@ -1,0 +1,13 @@
+{
+  "Uri": "api/receipts/preview”,
+  "Body" : {
+    "StartDate" : "01-08-2016”,
+    "EndDate" : "01-08-2016”,
+    "BusinessId" : "124214325"
+  },
+  "Date" : "01-08-2016”,
+  "ProcessingTimeInMiliseconds" : "160”,
+  "RequestedBy" : "325432532",
+  "IsValidRequest" : "False",
+  "RequestError": "Unknown Business ID"
+}
