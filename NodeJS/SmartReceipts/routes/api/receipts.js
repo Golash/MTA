@@ -47,6 +47,7 @@ router.route('/customer/preview').post(function(req, res, next) {
     console.log(query);
     selectFildes = { _id: 1, Business: 1, TotalPrice : 1, DateTime : 1 };
 
+    console.log(query);
     db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -73,8 +74,8 @@ router.route('/business/preview').post(function(req, res, next) {
         query["Customer."+filterType] = filterValue;
     }
 
-    selectFildes = { _id: 1, Business: 1, TotalPrice : 1, DateTime : 1 };
-
+    selectFildes = { _id: 1, Customer: 1, TotalPrice : 1, DateTime : 1 };
+    console.log(query);
     db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -91,7 +92,7 @@ router.route('/details').post(function(req, res, next) {
     var query = {
         _id : new ObjectID(receiptID)
     };
-
+    console.log(query);
     db.collection(RECEIPTS_COLLECTION).findOne(query, function(err, doc) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -114,7 +115,7 @@ router.route('/statistics/requests/count').post(function(req, res, next) {
     if (uri) {
         query.Uri = uri;
     }
-
+    console.log(query);
     db.collection(REQUEST_COLLECTION).find(query).toArray(function(err, docs) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -138,7 +139,7 @@ router.route('/statistics/users/count').post(function(req, res, next) {
     if (uri) {
         query.Uri = uri;
     }
-
+    console.log(query);
     db.collection(REQUEST_COLLECTION).distinct("RequestedBy",query, function(err, docs) {
         if (err) {
             handleError(res, err.message, "Failed to get contacts.");
@@ -149,3 +150,4 @@ router.route('/statistics/users/count').post(function(req, res, next) {
 });
 
 module.exports = router;
+    
