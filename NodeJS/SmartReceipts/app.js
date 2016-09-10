@@ -48,10 +48,18 @@ mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
 var createDBRequest = function (req) {
     var newRequest = {};
     newRequest.Uri = req.originalUrl;
-    newRequest.createTime = new Date();
+    newRequest.DateTime = new Date();
     newRequest.RequestedBy = req.body.RequestedBy;
-    newRequest.IsValid = true;
-    newRequest.ErrorReason = "";
+
+    var errorReason = "";
+    var isValid = true;
+    if (!newRequest.RequestedBy) {
+        isValid = false;
+        errorReason = "'RequestedBy' field can't be empty";
+    }
+
+    newRequest.IsValid = isValid;
+    newRequest.ErrorReason = errorReason;
 
     return newRequest;
 
@@ -68,7 +76,15 @@ app.use(function(req,res,next){
         }
     });
 
-    next();
+    if (!newRequest.IsValid) {
+        var err = new Error('Invalid Request, Reason: '+newRequest.ErrorReason);
+        err.status = 500;
+        next(err);
+    }
+    else
+    {
+        next();
+    }
 });
 
 var routes = require('./routes/index');

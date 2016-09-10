@@ -3,6 +3,7 @@ var router = express.Router();
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 var RECEIPTS_COLLECTION = "receipts";
+var REQUEST_COLLECTION = "requests";
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -27,7 +28,7 @@ router.route('/send').post(function(req, res, next) {
 
 router.route('/customer/preview').post(function(req, res, next) {
     var db = req.db;
-    var clientID = req.body.ClientID;
+    var clientID = req.body.RequestedBy;
     var startDate = req.body.StartDate;
     var endDate = req.body.EndDate;
     var filterType = req.body.FilterType;
@@ -64,6 +65,53 @@ router.route('/details').post(function(req, res, next) {
             handleError(res, err.message, "Failed to get contacts.");
         } else {
             res.status(200).json(doc);
+        }
+    });
+});
+
+router.route('/statistics/requests/count').post(function(req, res, next) {
+    var db = req.db;
+    var startDate = req.body.StartDate;
+    var endDate = req.body.EndDate;
+    var uri = req.body.Uri;
+
+    var query = {
+        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)}
+    };
+
+    if (uri) {
+        query.Uri = uri;
+    }
+
+    db.collection(REQUEST_COLLECTION).find(query).toArray(function(err, docs) {
+        if (err) {
+            handleError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(docs.length);
+        }
+    });
+});
+
+router.route('/statistics/users/count').post(function(req, res, next) {
+    var db = req.db;
+    var startDate = req.body.StartDate;
+    var endDate = req.body.EndDate;
+    var uri = req.body.Uri;
+
+    var query = {
+        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)},
+        'RequestedBy' : { $ne: null }
+    };
+
+    if (uri) {
+        query.Uri = uri;
+    }
+
+    db.collection(REQUEST_COLLECTION).distinct("RequestedBy",query, function(err, docs) {
+        if (err) {
+            handleError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(docs.length);
         }
     });
 });
