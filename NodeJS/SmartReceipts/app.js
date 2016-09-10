@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
+var REQUESTS_COLLECTION = "requests";
 
 
 var app = express();
@@ -44,9 +45,29 @@ mongodb.MongoClient.connect(MONGODB_URI, function (err, database) {
     });
 });
 
+var createDBRequest = function (req) {
+    var newRequest = {};
+    newRequest.Uri = req.originalUrl;
+    newRequest.createTime = new Date();
+    newRequest.RequestedBy = req.body.RequestedBy;
+    newRequest.IsValid = true;
+    newRequest.ErrorReason = "";
+
+    return newRequest;
+
+};
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
+
+    // Save request to db:
+    var newRequest = createDBRequest(req);
+    db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
+        if (err) {
+            console.log("Error: "+ err.message);
+        }
+    });
+
     next();
 });
 

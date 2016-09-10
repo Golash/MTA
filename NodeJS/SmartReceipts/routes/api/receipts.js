@@ -10,16 +10,13 @@ function handleError(res, reason, message, code) {
 
 router.route('/send').post(function(req, res, next) {
     var db = req.db;
-    var newContact = req.body;
-    newContact.createDate = new Date();
+    var newReceipt = req.body;
+    newReceipt.createDate = new Date();
 
-    if (!(req.body.firstName || req.body.lastName)) {
-        handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
-    }
 
-    db.collection(RECEIPTS_COLLECTION).insertOne(newContact, function(err, doc) {
+    db.collection(RECEIPTS_COLLECTION).insertOne(newReceipt, function(err, doc) {
         if (err) {
-            handleError(res, err.message, "Failed to create new contact.");
+            handleError(res, err.message, "Failed to create new receipts.");
         } else {
             res.status(201).json(doc.ops[0]);
         }
