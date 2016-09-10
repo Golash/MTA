@@ -1,7 +1,6 @@
 {
-  "Uri": "api/receipts/preview”,
+  "Uri": "api/receipts//preview",
   "CreateTime" : "",
-  "ProcessingTimeInMiliseconds" : 160,
   "RequestedBy" : "325432532",
   "IsValidRequest" : "True",
   "RequestError": ""

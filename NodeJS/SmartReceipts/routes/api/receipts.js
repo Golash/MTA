@@ -38,9 +38,41 @@ router.route('/customer/preview').post(function(req, res, next) {
         "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)},
         "Customer.Id": clientID
     };
-    query["Business."+filterType] = filterValue;
+
+    if (filterType && filterValue) {
+        query["Business."+filterType] = filterValue;
+    }
+
 
     console.log(query);
+    selectFildes = { _id: 1, Business: 1, TotalPrice : 1, DateTime : 1 };
+
+    db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
+        if (err) {
+            handleError(res, err.message, "Failed to get contacts.");
+        } else {
+            res.status(200).json(docs);
+        }
+    });
+});
+
+router.route('/business/preview').post(function(req, res, next) {
+    var db = req.db;
+    var clientID = req.body.RequestedBy;
+    var startDate = req.body.StartDate;
+    var endDate = req.body.EndDate;
+    var filterType = req.body.FilterType;
+    var filterValue = req.body.FilterValue;
+
+    var query = {
+        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)},
+        "Business.Id": clientID
+    };
+
+    if (filterType && filterValue) {
+        query["Customer."+filterType] = filterValue;
+    }
+
     selectFildes = { _id: 1, Business: 1, TotalPrice : 1, DateTime : 1 };
 
     db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
