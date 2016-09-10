@@ -1,6 +1,5 @@
 {
-  "DateTime" : "2012-08-29T16:04:34-04:00",
-  "RequestedBy" : "12214112412", // Credit Card Provider (like Verifon)
+  "RequestedBy" : "12214112412",
   "Customer": {
     "Id": "123456789",
     "Name": "Israel Israeli"
