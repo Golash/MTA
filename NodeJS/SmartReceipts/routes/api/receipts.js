@@ -1,9 +1,8 @@
 var express = require('express');
+var receiptsDA = require('../../DAL//receiptsDA');
+var requestsDA = require('../../DAL//requestsDA');
 var router = express.Router();
 var mongodb = require("mongodb");
-var ObjectID = mongodb.ObjectID;
-var RECEIPTS_COLLECTION = "receipts";
-var REQUEST_COLLECTION = "requests";
 
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
@@ -12,53 +11,36 @@ function handleError(res, reason, message, code) {
 }
 
 router.route('/send').post(function(req, res, next) {
-    var db = req.db;
     var newReceipt = req.body;
     newReceipt.DateTime = new Date();
-
-
-    db.collection(RECEIPTS_COLLECTION).insertOne(newReceipt, function(err, doc) {
-        if (err) {
-            handleError(res, err.message, "Failed to create new receipts.");
-        } else {
+    receiptsDA.insert(newReceipt,{
+        onSuccess: function(doc){
             res.status(201).json(doc.ops[0]);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to insert receipt", err.message);
         }
     });
 });
 
 router.route('/customer/preview').post(function(req, res, next) {
-    var db = req.db;
     var clientID = req.body.RequestedBy;
     var startDate = req.body.StartDate;
     var endDate = req.body.EndDate;
     var filterType = req.body.FilterType;
     var filterValue = req.body.FilterValue;
 
-    var query = {
-        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)},
-        "Customer.Id": clientID
-    };
-
-    if (filterType && filterValue) {
-        query["Business."+filterType] = filterValue;
-    }
-
-
-    console.log(query);
-    selectFildes = { _id: 1, Business: 1, TotalPrice : 1, DateTime : 1 };
-
-    console.log(query);
-    db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
-        if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
-        } else {
+    receiptsDA.getCustomerPreview(clientID, startDate, endDate, filterType, filterValue, {
+        onSuccess: function(docs){
             res.status(200).json(docs);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to get customer preview", err.message);
         }
     });
 });
 
 router.route('/business/preview').post(function(req, res, next) {
-    var db = req.db;
     var clientID = req.body.RequestedBy;
     var startDate = req.body.StartDate;
     var endDate = req.body.EndDate;
@@ -74,80 +56,57 @@ router.route('/business/preview').post(function(req, res, next) {
         query["Customer."+filterType] = filterValue;
     }
 
-    selectFildes = { _id: 1, Customer: 1, TotalPrice : 1, DateTime : 1 };
-    console.log(query);
-    db.collection(RECEIPTS_COLLECTION).find(query, selectFildes).toArray(function(err, docs) {
-        if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
-        } else {
+    receiptsDA.getBusinessPreview(clientID, startDate, endDate, filterType, filterValue, {
+        onSuccess: function(docs){
             res.status(200).json(docs);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to get business preview", err.message);
         }
     });
 });
 
 router.route('/details').post(function(req, res, next) {
-    var db = req.db;
     var receiptID = req.body.ReceiptId;
 
-    var query = {
-        _id : new ObjectID(receiptID)
-    };
-    console.log(query);
-    db.collection(RECEIPTS_COLLECTION).findOne(query, function(err, doc) {
-        if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
-        } else {
+    receiptsDA.getReceiptDetails(receiptID, {
+        onSuccess: function(doc){
             res.status(200).json(doc);
-        }
-    });
-});
-
-router.route('/statistics/requests/count').post(function(req, res, next) {
-    var db = req.db;
-    var startDate = req.body.StartDate;
-    var endDate = req.body.EndDate;
-    var uri = req.body.Uri;
-
-    var query = {
-        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)}
-    };
-
-    if (uri) {
-        query.Uri = uri;
-    }
-    console.log(query);
-    db.collection(REQUEST_COLLECTION).find(query).toArray(function(err, docs) {
-        if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
-        } else {
-            res.status(200).json(docs.length);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to get details for receipt id: "+receiptID, err.message);
         }
     });
 });
 
 router.route('/statistics/users/count').post(function(req, res, next) {
-    var db = req.db;
     var startDate = req.body.StartDate;
     var endDate = req.body.EndDate;
     var uri = req.body.Uri;
 
-    var query = {
-        "DateTime" : { $gte : new Date(startDate),  $lte : new Date(endDate)},
-        'RequestedBy' : { $ne: null }
-    };
-
-    if (uri) {
-        query.Uri = uri;
-    }
-    console.log(query);
-    db.collection(REQUEST_COLLECTION).distinct("RequestedBy",query, function(err, docs) {
-        if (err) {
-            handleError(res, err.message, "Failed to get contacts.");
-        } else {
-            res.status(200).json(docs.length);
+    requestsDA.getUsersCountStatistics(startDate, endDate, uri, {
+        onSuccess: function(userCount){
+            res.status(200).json(userCount);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to get users count statistics", err.message);
         }
-    });
+    })
+});
+
+router.route('/statistics/requests/count').post(function(req, res, next) {
+    var startDate = req.body.StartDate;
+    var endDate = req.body.EndDate;
+    var uri = req.body.Uri;
+
+    requestsDA.getRequestsCountStatistics(startDate, endDate, uri, {
+        onSuccess: function(requestsCount){
+            res.status(200).json(requestsCount);
+        },
+        onFailed: function (err) {
+            handleError(res, "Failed to get requests count statistics", err.message);
+        }
+    })
 });
 
 module.exports = router;
-    
