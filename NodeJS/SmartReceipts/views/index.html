@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <script src="javascripts/jquery/jquery-2.2.0.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <meta charset="UTF-8">
+    <title>Smart Receipt</title>
+    <h1 class="title">Welcome To Smart Receipt</h1>
+    <div class="main">
+        <button id="btn-new-receipt" onclick="tabButtonClicked(this);" >Add new receipt</button>
+        <button id="btn-get-receipt-data" onclick="tabButtonClicked(this);">Get Receipt Data</button>
+        <button id="btn-get-statistics" onclick="tabButtonClicked(this);">Get Statistics</button>
+        <div id="tab-new-receipt" class="tab-view tab-view-active">
+            <div>
+                <label for="customer-name">Customer Name:</label>
+                <input id="customer-name">
+            </div>
+            <div>
+                <label for="customer-id">Customer Id:</label>
+                <input id="customer-id">
+            </div>
+            <div>
+                <label for="customer-id">Business:</label>
+                <input id="Business">
+            </div>
+            <div>
+                <label for="customer-id">Category:</label>
+                <input id="Category">
+            </div>
+
+            <button id="send" onclick="sendReceipt();"></button>
+        </div>
+        <div id="tab-get-receipt-data" class="tab-view tab-view-inactive">
+
+        </div>
+        <div id="tab-get-statistics" class="tab-view tab-view-inactive">
+
+        </div>
+
+    </div>
+</head>
+<body>
+
+</body>
+</html>

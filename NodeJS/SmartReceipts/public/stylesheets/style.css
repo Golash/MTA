@@ -1,8 +1,49 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: lightblue;
 }
 
-a {
-  color: #00B7FF;
+h1 {
+  text-align: center;
+  margin-left: 20px;
+}
+
+.title{
+
+}
+
+.main{
+}
+
+.main > *{
+  padding: 9px;
+  border: 1px black solid;
+}
+
+#tab-new-receipt{
+  background: dodgerblue;
+}
+
+
+#tab-get-receipt-data{
+  background: green;
+}
+
+#tab-get-statistics{
+  background: yellow;
+}
+
+.tabs-container{
+}
+
+.tab-view{
+  height: 300px;
+  padding: 0px;
+  border: 1px black solid;
+}
+
+.tab-view > * {
+  display: block;
+} 
+.tab-view-inactive {
+  display: none;
 }

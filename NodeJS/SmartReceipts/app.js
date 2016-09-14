@@ -19,8 +19,10 @@ app.use(cookieParser());
 
 
 // view engine setup
+var engine = require('consolidate');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('html', engine.mustache);
+app.set('view engine', 'html');
 
 var onMongoConnectSuccess = function(db) {
     console.log("Database connection ready");
