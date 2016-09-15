@@ -9,17 +9,26 @@ function tabButtonClicked(btn){
     $("#"+tabId).removeClass("tab-view-inactive");
 }
 
+function clean() {
+}
+
+function addProduct() {
+
+}
 function sendReceipt() {
     var customerName = $("#customer-name").val();
     var customerId = $("#customer-id").val();
     var BusinessName = $("#Business").val();
     var Category = $("#Category").val();
+    var LastFourNumbers = $("#LastFourNumbers").val();
+    var Product = $("#Product").val();
 
     var data = getData();
     data.Customer.Name = customerName;
     data.Customer.Id = customerId;
     data.Business.Name = BusinessName;
     data.Business.Category = Category;
+    data.CreditCard.LastFourNumbers = LastFourNumbers;
     
     $.ajax({
         dataType: 'json',

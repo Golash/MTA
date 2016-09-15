@@ -17,15 +17,18 @@ h1 {
 .main > *{
   padding: 9px;
   border: 1px black solid;
+  ;
 }
 
 #tab-new-receipt{
-  background: dodgerblue;
+  background: darkseagreen;
+  width: 80%;
 }
 
 
 #tab-get-receipt-data{
   background: green;
+
 }
 
 #tab-get-statistics{
@@ -46,4 +49,14 @@ h1 {
 } 
 .tab-view-inactive {
   display: none;
+}
+
+.textbox{
+  loca: right;
+}
+
+.btn-send{
+  margin-top: 5px;
+  height: 20px;
+  width: 100px;
 }

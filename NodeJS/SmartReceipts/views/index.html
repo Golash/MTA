@@ -14,22 +14,38 @@
         <div id="tab-new-receipt" class="tab-view tab-view-active">
             <div>
                 <label for="customer-name">Customer Name:</label>
-                <input id="customer-name">
+                <input id="customer-name" class="textbox">
             </div>
             <div>
                 <label for="customer-id">Customer Id:</label>
-                <input id="customer-id">
+                <input id="customer-id" class="textbox">
             </div>
             <div>
-                <label for="customer-id">Business:</label>
-                <input id="Business">
+                <label for="Business">Business:</label>
+                <input id="Business" class="textbox">
             </div>
             <div>
-                <label for="customer-id">Category:</label>
-                <input id="Category">
+                <label for="Category">Category:</label>
+                <input id="Category" class="textbox">
+            </div>
+            <div>
+                <label for="LastFourNumbers">Last Four Numbers:</label>
+                <input id="LastFourNumbers" class="textbox">
+            </div>
+            <div>
+                <label for="Product">Product:</label>
+                <input id="Product">
+                <label for="Price">Price:</label>
+                <input id="Price">
+                <label for="Amount">Amount: </label>
+                <input id="Amount" type="number" min="1"/>
+                <button id="addProduct" onclick="addProduct();"></button>
             </div>
 
-            <button id="send" onclick="sendReceipt();"></button>
+            <div>
+            <button id="send" onclick="sendReceipt();" class="btn-send"></button>
+            <button id="clean" onclick="clean();"></button>
+            </div>
         </div>
         <div id="tab-get-receipt-data" class="tab-view tab-view-inactive">
 
@@ -37,7 +53,6 @@
         <div id="tab-get-statistics" class="tab-view tab-view-inactive">
 
         </div>
-
     </div>
 </head>
 <body>
