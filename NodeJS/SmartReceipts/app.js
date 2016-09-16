@@ -62,28 +62,21 @@ var createDBRequest = function (req) {
 
 };
 // Make our db accessible to our router
-app.use(function(req,res,next){
-    next();
-/*    // Set the db connection for reach request - it will be more easy to access it later.
-    req.db = mongoConnection.db;
-
+app.use("/api",function(req,res,next){
     // Save request to db:
     var newRequest = createDBRequest(req);
-    db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
+    mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
         if (err) {
             console.log("Error: "+ err.message);
         }
-    });*/
+    });
 
-/*    if (!newRequest.IsValid) {
-        var err = new Error('Invalid Request, Reason: '+newRequest.ErrorReason);
+    if (!newRequest.IsValid) {
+        var err = new Error('Invalid Request, Reason: ' + newRequest.ErrorReason);
         err.status = 500;
-        next(err);
     }
-    else
-    {
-        next();
-    }*/
+
+    next();
 });
 
 var routes = require('./routes/index');
