@@ -1,5 +1,8 @@
 body {
-  background-color: lightblue;
+  background: #000428; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #000428 , #004e92); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #000428 , #004e92); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 h1 {
@@ -7,22 +10,17 @@ h1 {
   margin-left: 20px;
 }
 
-.title{
-
-}
-
-.main{
-}
-
 .main > *{
   padding: 9px;
   border: 1px black solid;
-  ;
 }
 
 #tab-new-receipt{
-  background: darkseagreen;
-  width: 80%;
+  background: #CCCCB2; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #CCCCB2 , #757519); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #CCCCB2 , #757519); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  width: 100%;
+  height: 100%
 }
 
 
@@ -35,15 +33,6 @@ h1 {
   background: yellow;
 }
 
-.tabs-container{
-}
-
-.tab-view{
-  height: 300px;
-  padding: 0px;
-  border: 1px black solid;
-}
-
 .tab-view > * {
   display: block;
 } 
@@ -51,12 +40,71 @@ h1 {
   display: none;
 }
 
-.textbox{
-  loca: right;
-}
-
 .btn-send{
   margin-top: 5px;
   height: 20px;
   width: 100px;
+}
+
+.ProductsTable{border: 1px solid black;
+  background: white;
+  width: 50%;
+  margin: 10px;
+  table-layout: fixed;
+}
+
+.titleStyle{
+  color: white;
+  background: gray;
+  width: 25%;
+}
+
+.title{
+  color: white;
+}
+
+.titleCell{
+  width: 25%;
+}
+
+.tableTitleStyle{
+  border-spacing: 0px;
+  padding: 1px;
+  border: 1px solid black;
+  width: 685px;
+}
+
+.MainProductTable{
+  border-spacing: 0px;;
+  padding: 0px;
+  width: 685px;
+  margin-top: 5px;
+}
+
+.ProductTableDivStyle{
+  width: 685px;
+  height: 100px;
+  overflow: auto;
+}
+
+.TableBodyStyle{
+  border-spacing: 0px;
+  padding: 1px;
+  width: 685px;
+  border: 1px solid black;
+}
+
+#btn-addProduct{
+  width: 60px;
+  height: 20px;
+}
+
+#btn-Clean{
+  margin-top: 5px;
+  height: 20px;
+  width: 100px;
+}
+
+.txt-general{
+  width: 200px;
 }

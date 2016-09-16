@@ -1,6 +1,9 @@
 /**
  * Created by t-nawol on 14-Sep-16.
  */
+
+var receiptTotalPrice = 0;
+
 function tabButtonClicked(btn){
     var tabId = btn.id.replace("btn","tab");
     $(".tab-view").each(function() {
@@ -10,26 +13,93 @@ function tabButtonClicked(btn){
 }
 
 function clean() {
+    $('#tab-new-receipt').find('input:text').val('');
+
+    document.getElementById("Price").value = "";
+    document.getElementById("Amount").value = "";
+
+    var table = document.getElementById("ProductsTable-id");
+    while(table.rows.length > 0) {
+        table.deleteRow(0);
+    }
+
+    document.getElementById("receiptTotalPrice").innerHTML = "0";
 }
 
 function addProduct() {
+    var table = document.getElementById("ProductsTable-id");
+    var row = table.insertRow();
 
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    var product = $("#Product").val();
+    var price = $("#Price").val();
+    var amount = $("#Amount").val();
+    var totalPrice = price * amount;
+
+    cell1.width = "25%";
+    cell2.width = "25%";
+    cell3.width = "25%";
+    cell4.width = "25%";
+
+    if (product == "") {
+        alert("You have to chose a product");
+        return;
+    }
+
+    if (price == "") {
+        alert("You have to insert a price");
+        return;
+    }
+
+    if (amount == "") {
+        alert("You have to insert amount");
+        return;
+    }
+
+    cell1.innerHTML = product;
+    cell2.innerHTML = price;
+    cell3.innerHTML = amount;
+    cell4.innerHTML = totalPrice.toString();
+
+    receiptTotalPrice += totalPrice;
+    document.getElementById("receiptTotalPrice").innerHTML = receiptTotalPrice.toString();
 }
 function sendReceipt() {
     var customerName = $("#customer-name").val();
     var customerId = $("#customer-id").val();
     var BusinessName = $("#Business").val();
+    var BusinessID = $("#Business-id").val();
     var Category = $("#Category").val();
     var LastFourNumbers = $("#LastFourNumbers").val();
     var Product = $("#Product").val();
+    var receiptPrice = $("#receiptTotalPrice").val();
 
     var data = getData();
     data.Customer.Name = customerName;
     data.Customer.Id = customerId;
     data.Business.Name = BusinessName;
+    data.Business.Id = BusinessID;
     data.Business.Category = Category;
     data.CreditCard.LastFourNumbers = LastFourNumbers;
-    
+
+    var table = document.getElementById("ProductsTable-id");
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        data.Products.push(
+            {
+                Name : row.cells[0].innerText,
+                Price : row.cells[1].innerText,
+                Amount : row.cells[2].innerText,
+                TotalPrice : row.cells[3].innerText
+            }
+        );
+    }
+
+    data.TotalPrice = receiptTotalPrice;
+
     $.ajax({
         dataType: 'json',
         type: 'POST',
@@ -47,33 +117,20 @@ function sendReceipt() {
 
 function getData() {
     return {
-        "RequestedBy" : "12214112412",
+        "RequestedBy" : "",
         "Customer": {
-            "Id": "123456789",
-            "Name": "Israel Israeli"
+            "Id": "",
+            "Name": ""
         },
         "Business": {
-            "Id": "12214112412",
-            "Name": "Aroma",
-            "Category": "Food"
+            "Id": "",
+            "Name": "",
+            "Category": ""
         },
         "CreditCard": {
-            "LastFourNumbers": "1234"
+            "LastFourNumbers": ""
         },
-        "Products": [
-            {
-                "Name": "Ice Coffae",
-                "Amount": "2",
-                "Price": "16.00",
-                "TotalPrice": "32"
-            },
-            {
-                "Name": "Omelet Sandwiche",
-                "Amount": "2",
-                "Price": "29.00",
-                "TotalPrice": "58"
-            }
-        ],
-        "TotalPrice": "90"
+        "Products": [],
+        "TotalPrice": ""
     }
 }
