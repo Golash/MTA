@@ -107,6 +107,7 @@ function sendReceipt() {
         data: data,
         async: false,
         success: function (data) {
+            clean();
             alert("Sent!");
         },
         error: function (err) {
@@ -131,6 +132,7 @@ function getData() {
             "LastFourNumbers": ""
         },
         "Products": [],
+
         "TotalPrice": ""
     }
 }
