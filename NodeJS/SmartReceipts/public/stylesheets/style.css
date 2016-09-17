@@ -74,18 +74,18 @@ h1 {
   border-spacing: 0px;
   padding: 1px;
   border: 1px solid black;
-  width: 685px;
+  width: 743px;
 }
 
 .MainProductTable{
   border-spacing: 0px;;
   padding: 0px;
-  width: 685px;
+  width: 743px;
   margin-top: 5px;
 }
 
 .ProductTableDivStyle{
-  width: 685px;
+  width: 743px;
   height: 100px;
   overflow: auto;
 }
@@ -93,7 +93,7 @@ h1 {
 .TableBodyStyle{
   border-spacing: 0px;
   padding: 1px;
-  width: 685px;
+  width: 743px;
   border: 1px solid black;
 }
 
@@ -109,5 +109,5 @@ h1 {
 }
 
 .txt-general{
-  width: 200px;
+  width: 220px;
 }
