@@ -28,9 +28,8 @@ h1 {
   margin: 5px;
 }
 
-#tab-get-receipt-data{
+.tab-get-receipt-data{
   background: white;
-
 }
 
 #tab-get-statistics{

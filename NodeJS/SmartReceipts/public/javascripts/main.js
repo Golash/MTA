@@ -4,8 +4,11 @@
 
 var receiptTotalPrice = 0;
 var customersTable;
+var businessTable;
 var startDateCustomers;
 var endDateCustomers;
+var startDateBusiness;
+var endDateBusiness;
 $( document ).ready(function() {
     customersTable = $('#customers-table').DataTable({
         columns: [
@@ -17,6 +20,17 @@ $( document ).ready(function() {
         ]
     });
 
+    businessTable = $('#business-table').DataTable({
+        columns: [
+            { data: 'receipt_id' },
+            { data: 'dateTime' },
+            { data: 'customer_name' },
+            { data: 'total_price' }
+        ]
+    });
+
+
+    // Init Customers
     startDateCustomers = $( "#customers-query-start-date" ).datepicker({
         dateFormat: 'dd/mm/yy'
     });
@@ -26,6 +40,17 @@ $( document ).ready(function() {
 
     startDateCustomers.datepicker('setDate', moment().subtract(1, 'd').toDate());
     endDateCustomers.datepicker('setDate', moment().toDate());
+
+    // Init Business
+    startDateBusiness = $( "#business-query-start-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    endDateBusiness = $( "#business-query-end-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+
+    startDateBusiness.datepicker('setDate', moment().subtract(1, 'd').toDate());
+    endDateBusiness.datepicker('setDate', moment().toDate());
 
 });
 
@@ -95,11 +120,14 @@ function addProduct() {
     receiptTotalPrice += totalPrice;
     document.getElementById("receiptTotalPrice").innerHTML = receiptTotalPrice.toString();
 }
+
+
+// Customers Tab
 function btnCustomersSearchClicked() {
     var startDate = moment(startDateCustomers.datepicker("getDate")).format("YYYY-MM-DD");
     var endDate = moment(endDateCustomers.datepicker("getDate")).format("YYYY-MM-DD")+"T23:59:59.999";
     var query = {
-        RequestedBy : $("#"+"customers-query-customer-id").val(),
+        RequestedBy : $("#"+"query-customer-id").val(),
         StartDate : startDate,
         EndDate : endDate,
         FilterType: "",
@@ -116,7 +144,7 @@ function setCustomerReceiptsGridAsync(query) {
         data: query,
         async: true,
         success: function (data) {
-            var rows = convertDBDataToGridFormat(data);
+            var rows = convertCustomersDBDataToGridFormat(data);
             customersTable.clear();
             customersTable.rows.add(rows);
             customersTable.draw();
@@ -126,7 +154,8 @@ function setCustomerReceiptsGridAsync(query) {
         }
     });
 }
-function convertDBDataToGridFormat(data) {
+
+function convertCustomersDBDataToGridFormat(data) {
     var rows = [];
     for (var i = 0; i < data.length; i++) {
         var row = data[i];
@@ -135,6 +164,54 @@ function convertDBDataToGridFormat(data) {
             "dateTime": row.DateTime,
             "business_name": row.Business.Name,
             "category": row.Business.Category,
+            "total_price": row.TotalPrice
+        });
+    }
+
+    return rows;
+}
+
+// Business Tab
+function btnBusinessSearchClicked() {
+    var startDate = moment(startDateBusiness.datepicker("getDate")).format("YYYY-MM-DD");
+    var endDate = moment(endDateBusiness.datepicker("getDate")).format("YYYY-MM-DD")+"T23:59:59.999";
+    var query = {
+        RequestedBy : $("#"+"query-business-id").val(),
+        StartDate : startDate,
+        EndDate : endDate,
+        FilterType: "",
+        FilterValue: ""
+    };
+    setBusinessReceiptsGridAsync(query);
+}
+
+function setBusinessReceiptsGridAsync(query) {
+    $.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url: "/api/receipts/business/preview",
+        data: query,
+        async: true,
+        success: function (data) {
+            var rows = convertBusinessDBDataToGridFormat(data);
+            businessTable.clear();
+            businessTable.rows.add(rows);
+            businessTable.draw();
+        },
+        error: function (err) {
+            alert("Failed!" + err);
+        }
+    });
+}
+
+function convertBusinessDBDataToGridFormat(data) {
+    var rows = [];
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        rows.push({
+            "receipt_id": row._id,
+            "dateTime": row.DateTime,
+            "customer_name": row.Customer.Name,
             "total_price": row.TotalPrice
         });
     }
@@ -188,25 +265,4 @@ function sendReceipt() {
             alert("Failed!" + err);
         }
     });
-}
-
-function getData() {
-    return {
-        "RequestedBy" : "",
-        "Customer": {
-            "Id": "",
-            "Name": ""
-        },
-        "Business": {
-            "Id": "",
-            "Name": "",
-            "Category": ""
-        },
-        "CreditCard": {
-            "LastFourNumbers": ""
-        },
-        "Products": [],
-
-        "TotalPrice": ""
-    }
 }
