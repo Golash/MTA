@@ -23,9 +23,13 @@ h1 {
   height: 100%
 }
 
+.query-area{
+  text-align: center;
+  margin: 5px;
+}
 
 #tab-get-receipt-data{
-  background: green;
+  background: white;
 
 }
 

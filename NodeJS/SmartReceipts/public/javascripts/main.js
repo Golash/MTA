@@ -4,6 +4,23 @@
 
 var receiptTotalPrice = 0;
 
+var customersTable = $('#table').dataTable().api();
+$( document ).ready(function() {
+    $('#customers-table').DataTable({
+        columns: [
+            { data: 'receipt_id' },
+            { data: 'dateTime' },
+            { data: 'business_name' },
+            { data: 'category' },
+            { data: 'total_price' }
+        ]
+    });
+
+    customersTable = $('#customers-table').dataTable().api();
+});
+
+
+
 function tabButtonClicked(btn){
     var tabId = btn.id.replace("btn","tab");
     $(".tab-view").each(function() {
@@ -68,6 +85,51 @@ function addProduct() {
     receiptTotalPrice += totalPrice;
     document.getElementById("receiptTotalPrice").innerHTML = receiptTotalPrice.toString();
 }
+function btnCustomersSearchClicked() {
+    var query = {
+        RequestedBy : $("#"+"customers-query-customer-id").val(),
+        StartDate : "2012-01-12T20:15:31Z",
+        EndDate : "2017-01-12T20:15:31Z",
+        FilterType: "",
+        FilterValue: ""
+    };
+    setCustomerReceiptsGridAsync(query);
+}
+
+function setCustomerReceiptsGridAsync(query) {
+    $.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url: "/api/receipts/customer/preview",
+        data: query,
+        async: true,
+        success: function (data) {
+            var rows = convertDBDataToGridFormat(data);
+            customersTable.clear();
+            customersTable.rows.add(rows);
+            customersTable.draw();
+        },
+        error: function (err) {
+            alert("Failed!" + err);
+        }
+    });
+}
+function convertDBDataToGridFormat(data) {
+    var rows = [];
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        rows.push({
+            "receipt_id": row._id,
+            "dateTime": row.DateTime,
+            "business_name": row.Business.Name,
+            "category": row.Business.Category,
+            "total_price": row.TotalPrice
+        });
+    }
+
+    return rows;
+}
+
 function sendReceipt() {
     var customerName = $("#customer-name").val();
     var customerId = $("#customer-id").val();
