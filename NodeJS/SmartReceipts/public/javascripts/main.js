@@ -260,7 +260,7 @@ function sendReceipt() {
     var Product = $("#Product").val();
     var receiptPrice = $("#receiptTotalPrice").val();
 
-    var data = getData();
+    var data = getNewReceiptObject();
     data.Customer.Name = customerName;
     data.Customer.Id = customerId;
     data.Business.Name = BusinessName;
@@ -298,6 +298,26 @@ function sendReceipt() {
     });
 }
 
+function getNewReceiptObject() {
+    return {
+        "RequestedBy" : "",
+        "Customer": {
+            "Id": "",
+            "Name": ""
+        },
+        "Business": {
+            "Id": "",
+            "Name": "",
+            "Category": ""
+        },
+        "CreditCard": {
+            "LastFourNumbers": ""
+        },
+        "Products": [],
+
+        "TotalPrice": ""
+    }
+}
 function btnGetStatisticsClicked() {
     btnStatisticsSearchClicked();
 }
