@@ -9,6 +9,12 @@ var startDateCustomers;
 var endDateCustomers;
 var startDateBusiness;
 var endDateBusiness;
+
+var statisticsUrlsTable;
+var statisticsUsersTable;
+var startDateStatistics;
+var endDateStatistics;
+
 $( document ).ready(function() {
     customersTable = $('#customers-table').DataTable({
         columns: [
@@ -51,6 +57,31 @@ $( document ).ready(function() {
 
     startDateBusiness.datepicker('setDate', moment().subtract(1, 'd').toDate());
     endDateBusiness.datepicker('setDate', moment().toDate());
+
+    // Init Statistics for Urls
+    statisticsUrlsTable = $('#statistics-urls-table').DataTable({
+        columns: [
+            { data: 'url' },
+            { data: 'request_count' }
+        ]
+    });
+
+    statisticsUsersTable = $('#statistics-users-table').DataTable({
+        columns: [
+            { data: 'url' },
+            { data: 'users_count' }
+        ]
+    });
+
+    startDateStatistics = $( "#statistics-query-start-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    endDateStatistics = $( "#statistics-query-end-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+
+    startDateStatistics.datepicker('setDate', moment().subtract(1, 'd').toDate());
+    endDateStatistics.datepicker('setDate', moment().toDate());
 
 });
 
@@ -265,4 +296,101 @@ function sendReceipt() {
             alert("Failed!" + err);
         }
     });
+}
+
+function btnGetStatisticsClicked() {
+    btnStatisticsSearchClicked();
+}
+
+function btnStatisticsSearchClicked () {
+    var requestedBy = $("#statistics-query-client-id").val();
+    var startDate = moment(startDateStatistics.datepicker("getDate")).format("YYYY-MM-DD");
+    var endDate = moment(endDateStatistics.datepicker("getDate")).format("YYYY-MM-DD")+"T23:59:59.999";
+
+    fillUsersStatistics(requestedBy, startDate, endDate);
+    fillUrlsStatistics(requestedBy, startDate, endDate);
+}
+
+function fillUsersStatistics(requestedBy, startDate, endDate) {
+    var urls = [
+        "/api/receipts/send",
+        "/api/receipts/customer/preview",
+        "/api/receipts/business/preview",
+        "/api/receipts/details",
+        "/api/receipts/statistics/users/count",
+        "/api/receipts/statistics/requests/count"
+    ];
+
+    var rows = [];
+    for (var i=0; i<urls.length; i++){
+        var uri = urls[i];
+        var query = {
+            "RequestedBy": requestedBy,
+            "StartDate" : startDate,
+            "EndDate" : endDate,
+            "Uri": uri
+        };
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: "/api/receipts/statistics/users/count",
+            data: query,
+            async: false,
+            success: function (count) {
+                rows.push({
+                    url: uri,
+                    users_count : count
+                });
+            },
+            error: function (err) {
+                alert("Failed!" + err);
+            }
+        });
+
+        statisticsUsersTable.clear();
+        statisticsUsersTable.rows.add(rows);
+        statisticsUsersTable.draw();
+    }
+}
+
+function fillUrlsStatistics(requestedBy, startDate, endDate) {
+    var urls = [
+        "/api/receipts/send",
+        "/api/receipts/customer/preview",
+        "/api/receipts/business/preview",
+        "/api/receipts/details",
+        "/api/receipts/statistics/users/count",
+        "/api/receipts/statistics/requests/count"
+    ];
+
+    var rows = [];
+    for (var i=0; i<urls.length; i++){
+        var uri = urls[i];
+        var query = {
+            "RequestedBy": requestedBy,
+            "StartDate" : startDate,
+            "EndDate" : endDate,
+            "Uri": uri
+        };
+        $.ajax({
+            dataType: 'json',
+            type: 'POST',
+            url: "/api/receipts/statistics/requests/count",
+            data: query,
+            async: false,
+            success: function (count) {
+                rows.push({
+                    url: uri,
+                    request_count : count
+                });
+            },
+            error: function (err) {
+                alert("Failed!" + err);
+            }
+        });
+
+        statisticsUrlsTable.clear();
+        statisticsUrlsTable.rows.add(rows);
+        statisticsUrlsTable.draw();
+    }
 }
