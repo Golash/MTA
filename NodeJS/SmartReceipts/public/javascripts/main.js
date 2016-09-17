@@ -3,10 +3,11 @@
  */
 
 var receiptTotalPrice = 0;
-
-var customersTable = $('#table').dataTable().api();
+var customersTable;
+var startDateCustomers;
+var endDateCustomers;
 $( document ).ready(function() {
-    $('#customers-table').DataTable({
+    customersTable = $('#customers-table').DataTable({
         columns: [
             { data: 'receipt_id' },
             { data: 'dateTime' },
@@ -16,7 +17,16 @@ $( document ).ready(function() {
         ]
     });
 
-    customersTable = $('#customers-table').dataTable().api();
+    startDateCustomers = $( "#customers-query-start-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    endDateCustomers = $( "#customers-query-end-date" ).datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+
+    startDateCustomers.datepicker('setDate', moment().subtract(1, 'd').toDate());
+    endDateCustomers.datepicker('setDate', moment().toDate());
+
 });
 
 
@@ -86,10 +96,12 @@ function addProduct() {
     document.getElementById("receiptTotalPrice").innerHTML = receiptTotalPrice.toString();
 }
 function btnCustomersSearchClicked() {
+    var startDate = moment(startDateCustomers.datepicker("getDate")).format("YYYY-MM-DD");
+    var endDate = moment(endDateCustomers.datepicker("getDate")).format("YYYY-MM-DD")+"T23:59:59.999";
     var query = {
         RequestedBy : $("#"+"customers-query-customer-id").val(),
-        StartDate : "2012-01-12T20:15:31Z",
-        EndDate : "2017-01-12T20:15:31Z",
+        StartDate : startDate,
+        EndDate : endDate,
         FilterType: "",
         FilterValue: ""
     };
