@@ -164,6 +164,11 @@ function btnCustomersSearchClicked() {
         FilterType: "",
         FilterValue: ""
     };
+
+    if (!query.RequestedBy) {
+        RequestedBy = "Admin"
+    };
+
     setCustomerReceiptsGridAsync(query);
 }
 
@@ -213,6 +218,10 @@ function btnBusinessSearchClicked() {
         FilterType: "",
         FilterValue: ""
     };
+
+    if (!query.RequestedBy) {
+        RequestedBy = "Admin";
+    }
     setBusinessReceiptsGridAsync(query);
 }
 
@@ -260,13 +269,30 @@ function sendReceipt() {
     var Product = $("#Product").val();
     var receiptPrice = $("#receiptTotalPrice").val();
 
-    var data = getNewReceiptObject();
-    data.Customer.Name = customerName;
-    data.Customer.Id = customerId;
-    data.Business.Name = BusinessName;
-    data.Business.Id = BusinessID;
-    data.Business.Category = Category;
-    data.CreditCard.LastFourNumbers = LastFourNumbers;
+
+    var data = {
+        RequestedBy : BusinessID,
+        Customer: {
+            Id: customerId,
+            Name: customerName
+        },
+        Business: {
+            Id: BusinessID,
+            Name: BusinessName,
+            Category: Category
+        },
+        CreditCard: {
+            LastFourNumbers: LastFourNumbers
+        },
+        Products: [],
+
+        TotalPrice: receiptPrice
+    };
+
+    if (!data.RequestedBy) {
+        alert("please fill all the fields");
+        return;
+    }
 
     var table = document.getElementById("ProductsTable-id");
     for (var i = 0, row; row = table.rows[i]; i++) {
@@ -323,7 +349,7 @@ function btnGetStatisticsClicked() {
 }
 
 function btnStatisticsSearchClicked () {
-    var requestedBy = $("#statistics-query-client-id").val();
+    var requestedBy = "Admin";
     var startDate = moment(startDateStatistics.datepicker("getDate")).format("YYYY-MM-DD");
     var endDate = moment(endDateStatistics.datepicker("getDate")).format("YYYY-MM-DD")+"T23:59:59.999";
 

@@ -7,14 +7,13 @@ var mongoConnection = require("./DAL/mongoConnection");
 var bodyParser = require('body-parser');
 var REQUESTS_COLLECTION = "requests";
 
-
 var app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 
@@ -65,16 +64,19 @@ var createDBRequest = function (req) {
 app.use("/api",function(req,res,next){
     // Save request to db:
     var newRequest = createDBRequest(req);
+
+    if (!newRequest.IsValid) {
+        var err = new Error('Invalid Request, Reason: ' + newRequest.ErrorReason);
+        err.status = 500;
+        res.status = 500;
+        next(err);
+    }
+
     mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
         if (err) {
             console.log("Error: "+ err.message);
         }
     });
-
-    if (!newRequest.IsValid) {
-        var err = new Error('Invalid Request, Reason: ' + newRequest.ErrorReason);
-        err.status = 500;
-    }
 
     next();
 });
