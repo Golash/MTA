@@ -63,20 +63,18 @@ var createDBRequest = function (req) {
 // Make our db accessible to our router
 app.use("/api",function(req,res,next){
     // Save request to db:
-    var newRequest = createDBRequest(req);
+    try{
+        var newRequest = createDBRequest(req);
 
-    if (!newRequest.IsValid) {
-        var err = new Error('Invalid Request, Reason: ' + newRequest.ErrorReason);
-        err.status = 500;
-        res.status = 500;
-        next(err);
+        mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
+            if (err) {
+                console.log("Error: "+ err.message);
+            }
+        });
     }
-
-    mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
-        if (err) {
-            console.log("Error: "+ err.message);
-        }
-    });
+    catch (ex){
+        console.log("Error: "+ ex);
+    }
 
     next();
 });
