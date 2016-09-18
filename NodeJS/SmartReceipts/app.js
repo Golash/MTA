@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var REQUESTS_COLLECTION = "requests";
 
 var app = express();
+app.set('env','production');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.json());
 // uncomment after placing your favicon in /public
@@ -62,21 +63,27 @@ var createDBRequest = function (req) {
 };
 // Make our db accessible to our router
 app.use("/api",function(req,res,next){
-    // Save request to db:
-    try{
-        var newRequest = createDBRequest(req);
-
-        mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function(err, doc) {
-            if (err) {
-                console.log("Error: "+ err.message);
-            }
-        });
+    if (Object.keys(req.body).length == 0) {
+        res.status(200);
+        res.send("Welcome to smart receipt api!");
     }
-    catch (ex){
-        console.log("Error: "+ ex);
-    }
+    else {
+        try {
+            var newRequest = createDBRequest(req);
 
-    next();
+            // Save request to db:
+            mongoConnection.db.collection(REQUESTS_COLLECTION).insertOne(newRequest, function (err, doc) {
+                if (err) {
+                    console.log("Error: " + err.message);
+                }
+            });
+        }
+        catch (ex) {
+            console.log("Error: " + ex);
+        }
+
+        next();
+    }
 });
 
 var routes = require('./routes/index');
