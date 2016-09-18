@@ -15,6 +15,8 @@ var statisticsUsersTable;
 var startDateStatistics;
 var endDateStatistics;
 
+var dialog;
+var tabId;
 $( document ).ready(function() {
     customersTable = $('#customers-table').DataTable({
         columns: [
@@ -22,7 +24,19 @@ $( document ).ready(function() {
             { data: 'dateTime' },
             { data: 'business_name' },
             { data: 'category' },
-            { data: 'total_price' }
+            { data: 'total_price' },
+            { data: 'view_receipt' }
+        ],
+        columnDefs: [
+            {
+                // The `data` parameter refers to the data for the cell (defined by the
+                // `data` option, which defaults to the column being worked with, in
+                // this case `data: 0`.
+                "render": function ( data, type, row ) {
+                    return '<button onclick=\"openDialog($( this ));\" receipt_id="'+row.receipt_id+'">View</button>';
+                },
+                "targets": 5
+            }
         ]
     });
 
@@ -31,7 +45,19 @@ $( document ).ready(function() {
             { data: 'receipt_id' },
             { data: 'dateTime' },
             { data: 'customer_name' },
-            { data: 'total_price' }
+            { data: 'total_price' },
+            { data: 'view_receipt' }
+        ],
+        columnDefs: [
+            {
+                // The `data` parameter refers to the data for the cell (defined by the
+                // `data` option, which defaults to the column being worked with, in
+                // this case `data: 0`.
+                "render": function ( data, type, row ) {
+                    return '<button onclick=\"openDialog($( this ));\" receipt_id="'+row.receipt_id+'">View</button>';
+                },
+                "targets": 4
+            }
         ]
     });
 
@@ -83,12 +109,85 @@ $( document ).ready(function() {
     startDateStatistics.datepicker('setDate', moment().subtract(1, 'd').toDate());
     endDateStatistics.datepicker('setDate', moment().toDate());
 
+    // Init Popup
+    dialog = $( "#dialog-form" ).dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+        buttons: {
+            Cancel: function() {
+                dialog.dialog( "close" );
+            }
+        },
+        close: function() {
+            //form[ 0 ].reset();
+            //allFields.removeClass( "ui-state-error" );
+        }
+    });
+
 });
 
+function openDialog(button) {
+    var receiptId = button.attr('receipt_id');
+    var receipt = getReceiptDetails(receiptId);
 
+    var products = "Name  Amount  Price  Total";
+    for (var i=0; i<receipt.Products.length;i++) {
+        var currentProduct = receipt.Products[i];
+        var productText = currentProduct.Name +"  "+ currentProduct.Amount +"  "+currentProduct.Price+ "  " +currentProduct.TotalPrice;
+        products += "\n"+ productText;
+    }
+
+    $('#dialog-form-receipt-id').html(receipt._id);
+    $('#dialog-form-date-time').html(receipt.DateTime);
+    $('#dialog-form-customer-id').html(receipt.Customer.Id);
+    $('#dialog-form-customer-name').html(receipt.Customer.Name);
+    $('#dialog-form-business-id').html(receipt.Business.Id);
+    $('#dialog-form-business-name').html(receipt.Business.Name);
+    $('#dialog-form-business-category').html(receipt.Business.Category);
+    $('#dialog-form-credit-card').html(receipt.CreditCard.LastFourNumbers);
+    $('#dialog-form-products').html(products);
+    setTimeout(function(){$('#dialog-form-products').scrollTop(0);},10);
+    $('#dialog-form-total-price').html(receipt.TotalPrice);
+
+    dialog.dialog( "open" );
+}
+
+function getReceiptDetails(receiptId) {
+
+    var requestedBy;
+    if (tabId == "tab-get-customers-receipt-data")
+    {
+        requestedBy = $("#query-customer-id").val();
+    }
+    else if (tabId == "tab-get-business-receipt-data"){
+        requestedBy = $("#query-business-id").val();
+    }
+    var query = {
+        RequestedBy : requestedBy,
+        ReceiptId : receiptId
+    };
+    var receipt;
+    $.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url: "/api/receipts/details",
+        data: query,
+        async: false,
+        success: function (data) {
+            receipt = data;
+        },
+        error: function (err) {
+            alert("Failed!" + err);
+        }
+    });
+
+    return receipt;
+}
 
 function tabButtonClicked(btn){
-    var tabId = btn.id.replace("btn","tab");
+    tabId = btn.id.replace("btn","tab");
     $(".tab-view").each(function() {
         $( this ).addClass("tab-view-inactive")
     });
@@ -324,26 +423,6 @@ function sendReceipt() {
     });
 }
 
-function getNewReceiptObject() {
-    return {
-        "RequestedBy" : "",
-        "Customer": {
-            "Id": "",
-            "Name": ""
-        },
-        "Business": {
-            "Id": "",
-            "Name": "",
-            "Category": ""
-        },
-        "CreditCard": {
-            "LastFourNumbers": ""
-        },
-        "Products": [],
-
-        "TotalPrice": ""
-    }
-}
 function btnGetStatisticsClicked() {
     btnStatisticsSearchClicked();
 }

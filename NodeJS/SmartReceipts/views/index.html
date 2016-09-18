@@ -10,11 +10,47 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="http://momentjs.com/downloads/moment.js"></script>
     <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
     <script src="javascripts/main.js"></script>
     <meta charset="UTF-8">
     <title>Smart Receipt</title>
     <h1 class="title">Welcome To Smart Receipt</h1>
+    <div id="dialog-form" title="Receipt Details">
+        <form>
+            <fieldset>
+                <div>
+                    <label class="dialog-form-key">Receipt Id: </label><label class="dialog-form-value" id="dialog-form-receipt-id"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Date Time: </label><label class="dialog-form-value" id="dialog-form-date-time"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Customer Id: </label><label class="dialog-form-value" id="dialog-form-customer-id"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Customer Name: </label><label class="dialog-form-value" id="dialog-form-customer-name"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Business Name: </label><label class="dialog-form-value" id="dialog-form-business-name"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Business Category: </label><label class="dialog-form-value" id="dialog-form-business-category"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Credit Card: </label><label class="dialog-form-value" id="dialog-form-credit-card"></label>
+                </div>
+                <div>
+                    <label class="dialog-form-key">Products: </label>
+                    <textarea id="dialog-form-products">
+                    </textarea>
+                </div>
+                <div>
+                    <label class="dialog-form-key">TotalPrice: </label><label class="dialog-form-value" id="dialog-form-total-price"></label>
+                </div>
+            </fieldset>
+        </form>
+    </div>
     <div class="main">
         <button id="btn-new-receipt" onclick="tabButtonClicked(this);" >Add new receipt</button>
         <button id="btn-get-customers-receipt-data" onclick="tabButtonClicked(this);">Customers</button>
@@ -90,6 +126,7 @@
                     <th>Business Name</th>
                     <th>Category</th>
                     <th>Total Price</th>
+                    <th>View Receipt</th>
                 </thead>
                 <tbody>
                 </tbody>
@@ -111,6 +148,7 @@
                     <th>Date Time</th>
                     <th>Customer Name</th>
                     <th>Total Price</th>
+                    <th>View Receipt</th>
                 </thead>
                 <tbody>
                 </tbody>
